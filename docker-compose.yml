@@ -1,0 +1,10 @@
+# Local development broker. MongoDB is on Atlas (cloud), so it is not here.
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: study-station-mosquitto
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+    restart: unless-stopped

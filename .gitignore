@@ -1,0 +1,22 @@
+# PlatformIO
+.pio/
+firmware/.vscode/
+
+# Firmware secrets (copy include/secrets.example.h -> include/secrets.h)
+firmware/include/secrets.h
+
+# Node
+node_modules/
+dist/
+*.tsbuildinfo
+npm-debug.log*
+
+# Env files (keep the examples)
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
