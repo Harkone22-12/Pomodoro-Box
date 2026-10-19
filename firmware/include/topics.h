@@ -4,10 +4,10 @@
 // Change only through a pull request reviewed by all members.
 
 // ESP32 -> web
-#define TOPIC_DHT   "study/dht"    // member1 {"temp": number, "hum": number}
-#define TOPIC_LIGHT "study/light"  // member2 {"raw": number, "level": string}
-#define TOPIC_RFID  "study/rfid"   // member2 {"uid": string, "action": "start"|"stop"}
+#define TOPIC_DHT   "study/dht"    // minh {"temp": number, "hum": number}
+#define TOPIC_LIGHT "study/light"  // duong {"raw": number, "level": string}
+#define TOPIC_RFID  "study/rfid"   // duong {"uid": string, "action": "start"|"stop"}
 
 // web -> ESP32
-#define TOPIC_TIMER "study/timer"  // member3 {"minutes": number}
-#define TOPIC_LCD   "study/lcd"    // member3 {"text": string}
+#define TOPIC_TIMER "study/timer"  // hao {"minutes": number}
+#define TOPIC_LCD   "study/lcd"    // hao {"text": string}

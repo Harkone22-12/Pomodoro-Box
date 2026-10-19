@@ -2,7 +2,7 @@
 #include <Arduino.h>
 
 // DHT22 -> MQTT study/dht {"temp": number, "hum": number}
-// Owner: member1
+// Owner: minh
 
 void dhtSetup();
 void dhtLoop();

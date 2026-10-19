@@ -2,7 +2,7 @@
 #include <Arduino.h>
 
 // Shared network layer: WiFi + MQTT connection with auto-reconnect.
-// Owner: member2
+// Owner: duong
 //
 // Contract used by every flow:
 // - netLoop() must never block for long; flows keep running while offline.

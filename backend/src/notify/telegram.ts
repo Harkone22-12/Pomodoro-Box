@@ -1,7 +1,7 @@
 // Telegram alerts via the Bot API.
-// Owner: member2
+// Owner: duong
 
-// TODO(member2): send text to TELEGRAM_CHAT_ID using TELEGRAM_BOT_TOKEN.
+// TODO(duong): send text to TELEGRAM_CHAT_ID using TELEGRAM_BOT_TOKEN.
 export async function sendTelegram(text: string): Promise<void> {
-  throw new Error("TODO(member2): sendTelegram not implemented");
+  throw new Error("TODO(duong): sendTelegram not implemented");
 }

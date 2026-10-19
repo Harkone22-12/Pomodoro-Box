@@ -1,12 +1,12 @@
 // RFID study sessions (Socket.IO event "rfid").
-// Owner: member2
+// Owner: duong
 
-// TODO(member2): show the active session and the session history.
+// TODO(duong): show the active session and the session history.
 export default function RfidPanel() {
   return (
     <section>
       <h2>Study sessions</h2>
-      <p>TODO(member2)</p>
+      <p>TODO(duong)</p>
     </section>
   );
 }

@@ -9,8 +9,19 @@ ESP32 ──MQTT──▶ Mosquitto ──MQTT──▶ backend (Express + Socke
   └──────────────MQTT───────────────────┘  └──Socket.IO──▶ frontend (React)
 ```
 
-> This repository is a **scaffold**. Every flow is a stub marked `TODO(memberN)`.
+> This repository is a **scaffold**. Every flow is a stub marked `TODO(<handle>)`.
 > Each member implements their own flows. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Team
+
+Each member works on the git branch named after their handle. The same handle
+marks their files (`Owner: <handle>`) and stubs (`TODO(<handle>)`).
+
+| Handle / branch | Member |
+|---|---|
+| `minh` | Nguyễn Trần Tuấn Minh |
+| `duong` | Nguyễn Quốc Dương |
+| `hao` | La Anh Hào |
 
 ## Repository layout
 
@@ -28,30 +39,30 @@ Full payload details: [docs/topics.md](docs/topics.md).
 
 | Flow | Owner | Devices | Topic | JSON | Firmware | Backend | Frontend |
 |---|---|---|---|---|---|---|---|
-| DHT | member1 | DHT22 | `study/dht` (ESP32 → web) | `{"temp": number, "hum": number}` | `src/flows/dht_flow.*` | `src/flows/dht.flow.ts` | `src/flows/DhtPanel.tsx` |
-| Light | member2 | LDR (analog) | `study/light` (ESP32 → web) | `{"raw": number, "level": string}` | `src/flows/light_flow.*` | `src/flows/light.flow.ts` | `src/flows/LightPanel.tsx` |
-| RFID sessions | member2 | RC522 | `study/rfid` (ESP32 → web) | `{"uid": string, "action": "start"\|"stop"}` | `src/flows/rfid_flow.*` | `src/flows/rfid.flow.ts` | `src/flows/RfidPanel.tsx` |
-| Focus | member2 | button, red LED | none (local on ESP32) | none | `src/flows/focus_flow.*` | none | none |
-| Timer | member3 | active buzzer | `study/timer` (web → ESP32) | `{"minutes": number}` | `src/flows/timer_flow.*` | `src/flows/timer.flow.ts` | `src/flows/TimerForm.tsx` |
-| LCD | member3 | LCD1602 I2C | `study/lcd` (web → ESP32) | `{"text": string}` | `src/flows/lcd_flow.*` | `src/flows/lcd.flow.ts` | `src/flows/LcdForm.tsx` |
+| DHT | minh | DHT22 | `study/dht` (ESP32 → web) | `{"temp": number, "hum": number}` | `src/flows/dht_flow.*` | `src/flows/dht.flow.ts` | `src/flows/DhtPanel.tsx` |
+| Light | duong | LDR (analog) | `study/light` (ESP32 → web) | `{"raw": number, "level": string}` | `src/flows/light_flow.*` | `src/flows/light.flow.ts` | `src/flows/LightPanel.tsx` |
+| RFID sessions | duong | RC522 | `study/rfid` (ESP32 → web) | `{"uid": string, "action": "start"\|"stop"}` | `src/flows/rfid_flow.*` | `src/flows/rfid.flow.ts` | `src/flows/RfidPanel.tsx` |
+| Focus | duong | button, red LED | none (local on ESP32) | none | `src/flows/focus_flow.*` | none | none |
+| Timer | hao | active buzzer | `study/timer` (web → ESP32) | `{"minutes": number}` | `src/flows/timer_flow.*` | `src/flows/timer.flow.ts` | `src/flows/TimerForm.tsx` |
+| LCD | hao | LCD1602 I2C | `study/lcd` (web → ESP32) | `{"text": string}` | `src/flows/lcd_flow.*` | `src/flows/lcd.flow.ts` | `src/flows/LcdForm.tsx` |
 
 Advanced goals:
 
-- **member1**: time-series storage, chart, own analysis model.
-- **member2**: RFID study sessions, button → red LED, Telegram alert
+- **minh**: time-series storage, chart, own analysis model.
+- **duong**: RFID study sessions, button → red LED, Telegram alert
   (`backend/src/notify/telegram.ts`), weekly email (`backend/src/notify/email.ts`).
-- **member3**: own website, register/login with the database (`backend/src/auth/`,
+- **hao**: own website, register/login with the database (`backend/src/auth/`,
   `frontend/src/auth/`), web text → LCD.
 
 ### Shared foundation
 
 | Part | Owner | Files |
 |---|---|---|
-| WiFi + MQTT connect, auto-reconnect | member2 | `firmware/src/net/net.*` |
-| Broker connection | member1 | `backend/src/mqtt/client.ts` |
-| MongoDB connection | member1 | `backend/src/db/connect.ts` |
-| Server, Socket.IO, auth routes | member3 | `backend/src/server.ts`, `backend/src/socket.ts`, `backend/src/auth/` |
-| Frontend layout | member3 | `frontend/src/App.tsx`, `frontend/src/layout/`, `frontend/src/socket.ts` |
+| WiFi + MQTT connect, auto-reconnect | duong | `firmware/src/net/net.*` |
+| Broker connection | minh | `backend/src/mqtt/client.ts` |
+| MongoDB connection | minh | `backend/src/db/connect.ts` |
+| Server, Socket.IO, auth routes | hao | `backend/src/server.ts`, `backend/src/socket.ts`, `backend/src/auth/` |
+| Frontend layout | hao | `frontend/src/App.tsx`, `frontend/src/layout/`, `frontend/src/socket.ts` |
 | Pin map, topics, `main.cpp`, flow registry | everyone, via PR | `firmware/include/pins.h`, `firmware/include/topics.h`, `firmware/src/main.cpp`, `backend/src/topics.ts`, `backend/src/flows/index.ts` |
 
 ## Pin map (ESP32 DevKit V1)

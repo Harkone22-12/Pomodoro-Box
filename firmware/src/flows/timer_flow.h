@@ -2,7 +2,7 @@
 #include <Arduino.h>
 
 // MQTT study/timer {"minutes": number} -> active buzzer (active-LOW)
-// Owner: member3
+// Owner: hao
 
 void timerSetup();
 void timerLoop();

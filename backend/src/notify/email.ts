@@ -1,7 +1,7 @@
 // Weekly study report email over SMTP.
-// Owner: member2
+// Owner: duong
 
-// TODO(member2): send the report using the SMTP_* and EMAIL_* settings.
+// TODO(duong): send the report using the SMTP_* and EMAIL_* settings.
 export async function sendEmail(subject: string, body: string): Promise<void> {
-  throw new Error("TODO(member2): sendEmail not implemented");
+  throw new Error("TODO(duong): sendEmail not implemented");
 }

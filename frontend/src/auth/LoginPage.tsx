@@ -1,7 +1,7 @@
 // Login page, talks to POST /api/auth/login.
-// Owner: member3
+// Owner: hao
 
-// TODO(member3): login form, call the API, keep the user logged in.
+// TODO(hao): login form, call the API, keep the user logged in.
 export default function LoginPage() {
-  return <p>TODO(member3): login</p>;
+  return <p>TODO(hao): login</p>;
 }

@@ -8,20 +8,20 @@ All payloads are JSON objects encoded as UTF-8.
 
 | Topic | Direction | Publisher | Subscriber | Payload | Owner |
 |---|---|---|---|---|---|
-| `study/dht` | ESP32 → web | ESP32 `dht_flow` | backend `dht.flow.ts` | `{"temp": number, "hum": number}` | member1 |
-| `study/light` | ESP32 → web | ESP32 `light_flow` | backend `light.flow.ts` | `{"raw": number, "level": string}` | member2 |
-| `study/rfid` | ESP32 → web | ESP32 `rfid_flow` | backend `rfid.flow.ts` | `{"uid": string, "action": "start" \| "stop"}` | member2 |
-| `study/timer` | web → ESP32 | backend `timer.flow.ts` | ESP32 `timer_flow` | `{"minutes": number}` | member3 |
-| `study/lcd` | web → ESP32 | backend `lcd.flow.ts` | ESP32 `lcd_flow` | `{"text": string}` | member3 |
+| `study/dht` | ESP32 → web | ESP32 `dht_flow` | backend `dht.flow.ts` | `{"temp": number, "hum": number}` | minh |
+| `study/light` | ESP32 → web | ESP32 `light_flow` | backend `light.flow.ts` | `{"raw": number, "level": string}` | duong |
+| `study/rfid` | ESP32 → web | ESP32 `rfid_flow` | backend `rfid.flow.ts` | `{"uid": string, "action": "start" \| "stop"}` | duong |
+| `study/timer` | web → ESP32 | backend `timer.flow.ts` | ESP32 `timer_flow` | `{"minutes": number}` | hao |
+| `study/lcd` | web → ESP32 | backend `lcd.flow.ts` | ESP32 `lcd_flow` | `{"text": string}` | hao |
 
 The focus flow (button → red LED) runs only on the ESP32 and has no topic.
 
 ## Field notes
 
 - `temp`: °C, `hum`: % relative humidity.
-- `raw`: ADC reading 0–4095 (12-bit). `level`: label values to be chosen by member2. Write them here once decided.
+- `raw`: ADC reading 0–4095 (12-bit). `level`: label values to be chosen by duong. Write them here once decided.
 - `uid`: card UID as a hex string. Agree on the format (upper/lower case, separators) and write it here.
-- `minutes`: a positive number. Valid range to be chosen by member3.
+- `minutes`: a positive number. Valid range to be chosen by hao.
 - `text`: the LCD1602 shows 2 × 16 characters. Decide how longer text is handled.
 
 ## Suggested conventions (team to confirm)
@@ -36,8 +36,8 @@ These names are a proposal; the owner of each flow can rename theirs, but must u
 
 | Event | Direction | Payload | Owner |
 |---|---|---|---|
-| `dht` | server → client | same as `study/dht` (+ timestamp) | member1 |
-| `light` | server → client | same as `study/light` (+ timestamp) | member2 |
-| `rfid` | server → client | same as `study/rfid` (+ timestamp) | member2 |
-| `timer:set` | client → server | `{"minutes": number}` | member3 |
-| `lcd:set` | client → server | `{"text": string}` | member3 |
+| `dht` | server → client | same as `study/dht` (+ timestamp) | minh |
+| `light` | server → client | same as `study/light` (+ timestamp) | duong |
+| `rfid` | server → client | same as `study/rfid` (+ timestamp) | duong |
+| `timer:set` | client → server | `{"minutes": number}` | hao |
+| `lcd:set` | client → server | `{"text": string}` | hao |

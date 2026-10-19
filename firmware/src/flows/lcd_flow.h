@@ -2,7 +2,7 @@
 #include <Arduino.h>
 
 // MQTT study/lcd {"text": string} -> LCD1602 over I2C
-// Owner: member3
+// Owner: hao
 
 void lcdSetup();
 void lcdLoop();
