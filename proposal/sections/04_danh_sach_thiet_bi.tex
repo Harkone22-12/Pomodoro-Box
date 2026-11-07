@@ -1,0 +1,57 @@
+\section{Danh sách thiết bị và Linh kiện}
+
+\subsection{Danh sách linh kiện và dự toán chi phí}
+
+Dưới đây là bảng thống kê toàn bộ linh kiện phần cứng được sử dụng để xây dựng trạm học tập Pomodoro. Các thiết bị input và output giữa các yêu cầu chức năng đôi một khác nhau, đảm bảo tính đa dạng và đáp ứng đầy đủ tiêu chí của đồ án.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|c|p{2.8cm}|c|X|c|c|}
+\hline
+\textbf{STT} & \textbf{Thiết bị} & \textbf{SL} & \textbf{Mô tả kỹ thuật} & \textbf{Giá (VNĐ)} & \textbf{Minh chứng} \\ \hline
+1 & ESP32 DevKit V1 & 1 & Vi điều khiển 32-bit Wi-Fi/BLE, 30 chân & \missinginfo{Đơn giá} & \missinginfo{Drive} \\ \hline
+2 & Cảm biến DHT22 & 1 & Đo nhiệt độ (-40 đến 80$^\circ$C) và độ ẩm (0-100\%) & \missinginfo{Đơn giá} & \missinginfo{Drive} \\ \hline
+3 & Module quang trở LM393 & 1 & Cảm biến quang dẫn đọc ngõ ra Analog & \missinginfo{Đơn giá} & \missinginfo{Drive} \\ \hline
+4 & Active Buzzer 5V & 1 & Còi báo chủ động kích mức thấp (Active-LOW) & \missinginfo{Đơn giá} & \missinginfo{Drive} \\ \hline
+5 & Nút nhấn 6$\times$6mm & 1 & Nút nhấn cơ học phản hồi trạng thái & \missinginfo{Đơn giá} & \missinginfo{Drive} \\ \hline
+6 & Đèn LED đỏ (5mm) & 1 & Báo trạng thái tập trung kèm điện trở 220 $\Omega$ & \missinginfo{Đơn giá} & \missinginfo{Drive} \\ \hline
+7 & LCD 1602 kèm I2C & 1 & Màn hình ký tự xanh lá, module PCF8574 & \missinginfo{Đơn giá} & \missinginfo{Drive} \\ \hline
+8 & Module RFID RC522 & 1 & Đầu đọc thẻ tần số 13.56 MHz, giao tiếp SPI & \missinginfo{Đơn giá} & \missinginfo{Drive} \\ \hline
+9 & Thẻ từ RFID S50 & 1 & Thẻ trắng tần số 13.56 MHz chuẩn Mifare & \missinginfo{Đơn giá} & \missinginfo{Drive} \\ \hline
+10 & Hộp nhựa ABS & 1 & Vỏ bảo vệ gia công CNC/In 3D khoét lỗ & \missinginfo{Đơn giá} & \missinginfo{Drive} \\ \hline
+11 & Breadboard \& Dây cắm & 1 & Breadboard MB-102 và bộ 40 sợi Dupont & \missinginfo{Đơn giá} & \missinginfo{Drive} \\ \hline
+12 & Cáp nạp Micro USB & 1 & Cáp cấp nguồn và nạp chương trình cho ESP32 & \missinginfo{Đơn giá} & \missinginfo{Drive} \\ \hline
+\multicolumn{4}{|r|}{\textbf{Tổng chi phí dự kiến:}} & \multicolumn{2}{l|}{\missinginfo{Tổng chi phí VNĐ}} \\ \hline
+\end{tabularx}
+\caption{Bảng danh sách thiết bị, linh kiện phần cứng và dự toán chi phí}
+\label{tab:danh_sach_linh_kien}
+\end{table}
+
+\subsection{Mô tả thiết bị và nguyên lý vật lý}
+
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Vi điều khiển ESP32 DevKit V1:} Là trung tâm điều khiển của toàn bộ hệ thống, sử dụng vi xử lý lõi kép Tensilica Xtensa 32-bit LX6 hoạt động ở xung nhịp lên tới 240 MHz. Tích hợp sẵn bộ thu phát sóng vô tuyến Wi-Fi chuẩn 802.11 b/g/n băng tần 2.4 GHz, hỗ trợ các giao thức mạng TCP/IP và MQTT. ESP32 thực hiện nhiệm vụ đọc tín hiệu từ các cảm biến, điều khiển thiết bị ngoại vi và trao đổi dữ liệu với máy chủ.
+    
+    \item \textbf{Cảm biến nhiệt độ - độ ẩm DHT22 (AM2302):}
+    \begin{itemize}
+        \item \textit{Đo độ ẩm:} Dựa trên nguyên lý cảm biến điện dung. Giữa hai bản cực của tụ điện có một lớp màng polymer nhạy ẩm. Khi độ ẩm không khí thay đổi, lượng hơi nước hấp phụ vào polymer làm thay đổi hằng số điện môi $\varepsilon$, dẫn đến sự biến đổi điện dung của tụ điện. Mạch đo bên trong biến đổi điện dung này thành tín hiệu số.
+        \item \textit{Đo nhiệt độ:} Sử dụng nhiệt điện trở NTC (Negative Temperature Coefficient). Khi nhiệt độ môi trường tăng lên, năng lượng nhiệt kích thích làm tăng mật độ các hạt dẫn tự do trong vật liệu bán dẫn oxit kim loại, khiến điện trở của linh kiện giảm rõ rệt. Tín hiệu điện áp qua cầu chia áp được xử lý và chuyển đổi thành nhiệt độ chính xác với sai số $\pm 0.5^\circ$C.
+    \end{itemize}
+
+    \item \textbf{Module cảm biến quang trở LM393 (LDR):} Dựa trên hiện tượng \textit{quang điện trong} (quang dẫn) của vật liệu bán dẫn Cadmium Sulfide (CdS). Khi có ánh sáng chiếu vào với năng lượng photon đủ lớn ($h\nu \ge E_g$), các electron ở vùng hóa trị hấp thụ năng lượng và nhảy lên vùng dẫn, tạo thành các cặp electron - lỗ trống tự do làm độ dẫn điện tăng lên đột ngột (điện trở giảm từ hàng mega-ohm trong tối xuống vài trăm ohm dưới ánh sáng mạnh). Module sử dụng mạch cầu chia áp biến đổi sự thay đổi điện trở này thành tín hiệu điện áp đưa vào bộ ADC 12-bit tại chân GPIO34 của ESP32.
+
+    \item \textbf{Còi báo chủ động (Active Buzzer):} Hoạt động theo nguyên lý điện từ. Bên trong còi có sẵn một mạch dao động tạo sóng vuông ở tần số cố định khoảng 2.0 – 2.5 kHz. Khi được kích hoạt (kéo chân GPIO25 xuống mức LOW), dòng điện chạy qua cuộn dây sinh ra từ trường biến thiên tác dụng lực hút tuần hoàn lên màng rung kim loại đàn hồi, tạo ra sóng âm thanh truyền lan trong không khí với âm lượng đạt từ 85 dB trở lên.
+
+    \item \textbf{Nút nhấn và Đèn LED đỏ:}
+    \begin{itemize}
+        \item \textit{Nút nhấn cơ học:} Đóng mở mạch điện cơ học đơn giản. Khi người dùng nhấn nút, hai tiếp điểm kim loại ép sát vào nhau tạo kết nối dẫn điện xuống đất (GND), làm điện áp tại chân GPIO27 sụt từ 3.3V xuống 0V (nhận biết mức logic LOW).
+        \item \textit{Đèn LED đỏ:} Hoạt động dựa trên hiện tượng phát xạ tái hợp trong chất bán dẫn (quang điện tử). Khi có dòng điện chạy theo chiều thuận qua lớp tiếp giáp p-n (cực Anode nối chân GPIO26 qua điện trở 220 $\Omega$), các electron từ vùng n tràn qua tái hợp với các lỗ trống ở vùng p. Năng lượng dư thừa được giải phóng trực tiếp dưới dạng các photon ánh sáng có bước sóng màu đỏ đặc trưng ($\lambda \approx 620 - 750$ nm).
+    \end{itemize}
+
+    \item \textbf{Màn hình LCD 1602 kèm module I2C PCF8574:}
+    Màn hình hiển thị 2 dòng, mỗi dòng 16 ký tự. Hoạt động dựa trên tính chất quang học của phân tử tinh thể lỏng nematic xoắn (TN). Dưới tác dụng của điện trường đặt vào các điện cực trong suốt, các phân tử tinh thể lỏng bị định hướng lại, làm thay đổi góc phân cực của ánh sáng truyền qua và tạo ra độ tương phản sáng/tối để hiển thị ký tự. Module đệm I2C PCF8574 nhận dữ liệu nối tiếp qua 2 đường SDA (GPIO21) và SCL (GPIO22), giải mã thành dữ liệu song song 8-bit điều khiển trực tiếp chip điều khiển HD44780 của LCD.
+
+    \item \textbf{Module đọc thẻ RFID RC522:}
+    Hoạt động ở tần số vô tuyến chuẩn công nghiệp 13.56 MHz theo tiêu chuẩn ISO/IEC 14443A. Module tích hợp anten vi dải phát ra từ trường xoay chiều biến thiên. Khi đưa thẻ RFID lại gần (khoảng cách 0 – 3 cm), cuộn dây tích hợp bên trong thẻ nhận năng lượng nhờ hiện tượng cảm ứng điện từ Faraday, tích lũy điện tích nuôi vi mạch chip trên thẻ. Chip thẻ tự động điều chế biên độ dòng tải (load modulation) để phản hồi chuỗi mã định danh duy nhất (UID) về module RC522. Module giải mã và gửi dữ liệu lên ESP32 qua giao thức truyền thông nối tiếp tốc độ cao SPI.
+\end{itemize}

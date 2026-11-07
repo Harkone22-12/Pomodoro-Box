@@ -1,0 +1,106 @@
+\section{Tổ chức thực hiện và Tài liệu tham khảo}
+
+\subsection{Kế hoạch thực hiện theo giai đoạn}
+
+Dự án được chia thành 4 giai đoạn nối tiếp nhau nhằm đảm bảo tính khả thi và chất lượng hoàn thiện của sản phẩm:
+
+\begin{itemize}[leftmargin=0.8cm]
+    \item \textbf{Giai đoạn 1: Khảo sát và Chuẩn bị (Tuần 1 – Tuần 2)}
+    \begin{itemize}
+        \item Khảo sát nhu cầu học tập theo phương pháp Pomodoro và các vấn đề xao nhãng thực tế.
+        \item Tìm hiểu nguyên lý hoạt động của các cảm biến (DHT22, LDR), chuẩn truyền thông MQTT và kiến trúc đám mây Supabase.
+        \item Thống nhất sơ đồ nối chân phần cứng, kiến trúc luồng dữ liệu và lập bản thuyết minh đề tài (Proposal).
+    \end{itemize}
+
+    \item \textbf{Giai đoạn 2: Phát triển hệ thống và Thử nghiệm Breadboard (Tuần 3 – Tuần 5)}
+    \begin{itemize}
+        \item Mua sắm linh kiện, kiểm tra độc lập từng thiết bị ngoại vi trên breadboard.
+        \item Lập trình vi điều khiển ESP32 cho các luồng căn bản: đọc DHT22, đọc quang trở, điều khiển còi buzzer hẹn giờ.
+        \item Cấu hình MQTT Broker và dựng luồng xử lý trung tâm trên Node-RED.
+        \item Thiết lập cơ sở dữ liệu Supabase và tạo bảng lưu trữ.
+    \end{itemize}
+
+    \item \textbf{Giai đoạn 3: Hoàn thiện tính năng nâng cao và Đóng gói sản phẩm (Tuần 6 – Tuần 8)}
+    \begin{itemize}
+        \item Tích hợp đầu đọc thẻ RFID RC522, nút nhấn LED đỏ và màn hình hiển thị LCD 1602.
+        \item Xây dựng chức năng cảnh báo Telegram Bot, gửi email báo cáo tuần và web server cấu hình Wi-Fi AP trên ESP32.
+        \item Thiết kế mô hình hộp 3D trên Autodesk Fusion 360 và tiến hành in 3D vỏ hộp ABS.
+        \item Hàn mạch lên board đục lỗ, lắp ráp toàn bộ linh kiện cố định vào thân hộp.
+    \end{itemize}
+
+    \item \textbf{Giai đoạn 4: Kiểm thử toàn diện và Báo cáo (Tuần 9 – Tuần 12)}
+    \begin{itemize}
+        \item Thực thi toàn bộ bộ kịch bản kiểm thử tích hợp (KT01 đến KT06).
+        \item Tối ưu hóa thuật toán đếm giờ và phân tích dữ liệu điều kiện học tập.
+        \item Hoàn thiện báo cáo tổng kết đồ án, chuẩn bị slide thuyết trình và video demo thực tế.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Phân công công việc}
+
+Nhằm thể hiện rõ năng lực và trách nhiệm của từng cá nhân trong học phần, mỗi thành viên đảm nhận các mảng công việc chuyên biệt từ phần cứng đến phần mềm:
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|p{3.2cm}|p{7.5cm}|c|c|}
+\hline
+\textbf{Thành viên} & \textbf{Công việc phụ trách chính} & \textbf{Phân công} & \textbf{Hoàn thành} \\ \hline
+\multirow{4}{=}{\textbf{Nguyễn Trần Tuấn Minh}} 
+& $\bullet$ Lập trình đọc cảm biến DHT22 gửi MQTT \texttt{study/dht}. & \multirow{4}{*}{100\%} & \multirow{4}{*}{Hoàn thành} \\
+& $\bullet$ Thiết kế và quản trị cơ sở dữ liệu chuỗi thời gian trên Supabase. & & \\
+& $\bullet$ Xây dựng biểu đồ lịch sử môi trường \& phiên học trên Dashboard. & & \\
+& $\bullet$ Xây dựng mô hình phân tích điều kiện học tập tối ưu tự xây dựng. & & \\ \hline
+
+\multirow{4}{=}{\textbf{Nguyễn Quốc Dương}} 
+& $\bullet$ Lập trình đọc quang trở LM393 gửi MQTT \texttt{study/light}. & \multirow{4}{*}{100\%} & \multirow{4}{*}{Hoàn thành} \\
+& $\bullet$ Lập trình đọc thẻ RFID RC522 mở/đóng phiên học qua \texttt{study/rfid}. & & \\
+& $\bullet$ Lập trình nút nhấn cơ học và điều khiển đèn LED đỏ báo tập trung. & & \\
+& $\bullet$ Tích hợp cảnh báo Telegram Bot và báo cáo tuần qua Gmail. & & \\ \hline
+
+\multirow{5}{=}{\textbf{La Anh Hào}} 
+& $\bullet$ Lập trình nhận lệnh hẹn giờ và điều khiển còi báo Active Buzzer. & \multirow{5}{*}{100\%} & \multirow{5}{*}{Hoàn thành} \\
+& $\bullet$ Lập trình giao tiếp I2C hiển thị lời nhắc \& đếm giờ trên LCD 1602. & & \\
+& $\bullet$ Xây dựng chức năng xác thực người dùng bảo mật trên Supabase. & & \\
+& $\bullet$ Lập trình phát Wi-Fi AP \& Web Server nội bộ cấu hình trên ESP32. & & \\
+& $\bullet$ Thiết kế mô hình 3D vỏ hộp Fusion 360 và bản vẽ kích thước. & & \\ \hline
+\end{tabular}
+\caption{Bảng phân công trách nhiệm và mức độ hoàn thành của các thành viên}
+\label{tab:phan_cong_cong_viec}
+\end{table}
+
+\subsection{Tiến độ thực hiện chi tiết}
+
+\begin{longtable}{|c|p{7.2cm}|p{2.5cm}|c|c|}
+\hline
+\textbf{Tuần} & \textbf{Nội dung công việc} & \textbf{Người phụ trách} & \textbf{Hạn nộp} & \textbf{Trạng thái} \\ \hline
+\endhead
+
+1 & Phân tích yêu cầu, xác định kiến trúc hệ thống và luồng dữ liệu MQTT & Minh, Dương, Hào & \missinginfo{Ngày} & Hoàn thành \\ \hline
+2 & Thiết kế sơ đồ nối chân linh kiện, hoàn thiện bản đề cương Proposal & Minh, Dương, Hào & \missinginfo{Ngày} & Hoàn thành \\ \hline
+3 & Lập trình kết nối Wi-Fi, kết nối MQTT Broker trên vi điều khiển ESP32 & Hào & \missinginfo{Ngày} & Hoàn thành \\ \hline
+4 & Lập trình đọc cảm biến DHT22 và quang trở LM393 gửi dữ liệu lên web & Minh, Dương & \missinginfo{Ngày} & Hoàn thành \\ \hline
+5 & Lập trình điều khiển còi buzzer hẹn giờ và dựng giao diện Dashboard cơ bản & Hào & \missinginfo{Ngày} & Hoàn thành \\ \hline
+6 & Tích hợp đầu đọc RFID RC522, thiết kế bảng dữ liệu lưu trữ trên Supabase & Dương, Minh & \missinginfo{Ngày} & Hoàn thành \\ \hline
+7 & Lập trình nút nhấn, điều khiển LED đỏ báo tập trung và gửi chữ lên LCD 1602 & Dương, Hào & \missinginfo{Ngày} & Hoàn thành \\ \hline
+8 & Xây dựng luồng cảnh báo qua Telegram Bot và gửi báo cáo qua Gmail SMTP & Dương & \missinginfo{Ngày} & Hoàn thành \\ \hline
+9 & Lập trình web server cấu hình Wi-Fi AP trên ESP32 và xác thực tài khoản & Hào & \missinginfo{Ngày} & Hoàn thành \\ \hline
+10 & Thiết kế mô hình vỏ hộp 3D, tiến hành gia công in 3D và hàn mạch phần cứng & Hào, Minh, Dương & \missinginfo{Ngày} & Hoàn thành \\ \hline
+11 & Xây dựng mô hình phân tích điều kiện học tập và vẽ đồ thị thống kê lịch sử & Minh & \missinginfo{Ngày} & Hoàn thành \\ \hline
+12 & Kiểm thử toàn diện hệ thống, quay video demo và hoàn thiện báo cáo đồ án & Minh, Dương, Hào & \missinginfo{Ngày} & Hoàn thành \\ \hline
+\caption{Tiến độ thực hiện chi tiết đồ án theo từng tuần}
+\label{tab:tien_do_chi_tiet}
+\end{longtable}
+
+\subsection{Tài liệu tham khảo}
+
+\begin{enumerate}[leftmargin=0.8cm]
+    \item Espressif Systems, \textit{ESP32 Series Datasheet and Hardware Design Guidelines}, Espressif Documentation, 2026.
+    \item Espressif Systems, \textit{Arduino Core for ESP32 WiFi Chip}, Open-source Documentation, 2026.
+    \item OASIS Standard, \textit{MQTT Version 3.1.1 Specification}, OASIS Standard Recommendation, 2014.
+    \item OpenJS Foundation, \textit{Node-RED: Low-code programming for event-driven applications}, Official Documentation, 2026.
+    \item Supabase Inc., \textit{Supabase Architecture and PostgreSQL Cloud Database Documentation}, Supabase Guides, 2026.
+    \item NXP Semiconductors, \textit{MFRC522 Contactless Reader IC Data Sheet}, Rev. 3.9, 2016.
+    \item Aosong Electronics, \textit{Digital-output Relative Humidity and Temperature Sensor DHT22/AM2302}, Aosong Product Manual, 2020.
+    \item Autodesk, \textit{Autodesk Fusion 360 User Guide for 3D Mechanical Modeling}, Autodesk Knowledge Network, 2026.
+\end{enumerate}

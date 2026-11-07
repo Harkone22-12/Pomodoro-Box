@@ -1,0 +1,54 @@
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+
+\usepackage[a4paper, left=2.5cm, right=2cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, backgrounds}
+
+\usepackage[unicode, hidelinks]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=blue
+}
+
+% Định dạng giãn dòng và khoảng cách đoạn
+\setstretch{1.15}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+
+% Cấu hình Header và Footer theo mẫu Trường ĐH KHTN
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Trường Đại học Khoa học Tự nhiên}
+\fancyhead[R]{\small Đồ án cuối kỳ: Trạm học tập Pomodoro}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Đặt lại header footer cho trang đầu của section nếu cần
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyhead[L]{\small Trường Đại học Khoa học Tự nhiên}
+    \fancyhead[R]{\small Đồ án cuối kỳ: Trạm học tập Pomodoro}
+    \fancyfoot[C]{\thepage}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+% Macro cho các trường thông tin chưa có (Zero-Hallucination)
+\newcommand{\missinginfo}[1]{\textbf{\textcolor{red}{[CHƯA CÓ THÔNG TIN - CẦN BỔ SUNG: #1]}}}

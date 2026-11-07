@@ -1,0 +1,38 @@
+\section{Kiểm thử mức độ đáp ứng yêu cầu}
+
+Nhằm chứng minh trạm học tập Pomodoro đáp ứng toàn diện 6 yêu cầu tối thiểu của môn học Vật lý cho Công nghệ Thông tin, nhóm xây dựng bộ kịch bản kiểm thử (Test Cases) chi tiết dưới đây. Mọi trường hợp kiểm thử đều có tiêu chí đánh giá rõ ràng và có thể kiểm chứng qua video demo hoặc bản ghi dữ liệu thực tế.
+
+\subsection{Kịch bản kiểm thử các yêu cầu tối thiểu}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|c|p{3.5cm}|p{9cm}|}
+\hline
+\textbf{Mã} & \textbf{Nội dung kiểm thử} & \textbf{Thao tác thực hiện và Kết quả mong đợi} \\ \hline
+\textbf{KT01} & Kết nối Internet \& MQTT & \textbf{Thao tác:} Cấp nguồn cho ESP32 trong vùng phủ sóng Wi-Fi đã lưu.\par\textbf{Kết quả mong đợi:} ESP32 nhận địa chỉ IP qua DHCP, kết nối thành công đến MQTT Broker; trên Dashboard hiển thị trạng thái thiết bị là ``Online''. \\ \hline
+
+\textbf{KT02} & Thiết bị INPUT: Cảm biến DHT22 \& Quang trở & \textbf{Thao tác:} Dùng tay che quang trở hoặc thổi nhẹ vào cảm biến DHT22.\par\textbf{Kết quả mong đợi:} ESP32 đọc được sự biến thiên điện áp analog và độ ẩm, đóng gói JSON gửi lên \texttt{study/light} và \texttt{study/dht}; giao diện web cập nhật số đo ngay lập tức. \\ \hline
+
+\textbf{KT03} & Thiết bị INPUT: RFID RC522 \& Nút nhấn & \textbf{Thao tác:} Đặt thẻ RFID lên vùng quẹt thẻ và nhấn nút cơ học trên hộp.\par\textbf{Kết quả mong đợi:} RC522 đọc đúng chuỗi UID gửi lên \texttt{study/rfid}; nút nhấn lập tức đảo trạng thái bật/tắt đèn LED đỏ báo tập trung độc lập trên hộp. \\ \hline
+
+\textbf{KT04} & Điều khiển OUTPUT từ Website qua Internet & \textbf{Thao tác:} Từ Dashboard gõ văn bản ``Hoc tap tot'' gửi xuống LCD và đặt phiên Pomodoro thử nghiệm (1 phút).\par\textbf{Kết quả mong đợi:} LCD 1602 lập tức hiển thị dòng chữ trên dòng 1; khi hết 1 phút, còi buzzer phát âm thanh bíp bíp báo hiệu kết thúc. \\ \hline
+
+\textbf{KT05} & Lưu trữ dữ liệu lên Cloud & \textbf{Thao tác:} Quẹt thẻ mở phiên học và để cảm biến chạy trong 5 phút.\par\textbf{Kết quả mong đợi:} Truy cập trang quản trị Supabase Cloud thấy xuất hiện các dòng dữ liệu mới trong bảng \texttt{sensor\_logs} và \texttt{study\_sessions} với đúng mốc thời gian. \\ \hline
+
+\textbf{KT06} & Thông báo cảnh báo qua Telegram \& Email & \textbf{Thao tác:} Giả lập phiên học kéo dài vượt quá ngưỡng cài đặt (hoặc hạ ngưỡng thử nghiệm xuống 2 phút).\par\textbf{Kết quả mong đợi:} Người dùng nhận được thông báo từ Bot Telegram trên điện thoại; kích hoạt gửi email tổng kết thành công từ Node-RED. \\ \hline
+\end{tabular}
+\caption{Bảng kịch bản kiểm thử các yêu cầu tối thiểu của đồ án}
+\label{tab:kich_ban_kiem_thu}
+\end{table}
+
+\subsection{Luồng dữ liệu đáp ứng yêu cầu}
+
+\begin{enumerate}
+    \item \textbf{Khởi động và Thiết lập kết nối:} Khi cắm nguồn cáp USB hoặc Jack DC, ESP32 nạp cấu hình mạng từ bộ nhớ NVS. Nếu kết nối thất bại, ESP32 tự động mở chế độ AP \texttt{PomodoroBox-Setup} và web server cấu hình tại \texttt{192.168.4.1} để người dùng nhập thông tin mạng mới.
+    \item \textbf{Luồng thu thập dữ liệu (Input $\rightarrow$ Cloud):} DHT22 đọc nhiệt độ, độ ẩm qua 1-wire (GPIO4); quang trở LM393 đo cường độ sáng qua ADC1 (GPIO34). ESP32 xuất bản lên các topic MQTT tương ứng. Node-RED đón nhận dữ liệu, cập nhật giao diện Dashboard và thực hiện câu lệnh SQL ghi nhận vào Supabase.
+    \item \textbf{Luồng xác thực và Mở phiên học:} Người dùng quẹt thẻ RFID lên mặt nắp hộp. Module RC522 đọc mã UID và gửi lên topic \texttt{study/rfid}. Node-RED kiểm tra danh tính trong bảng \texttt{users}, kích hoạt phiên học mới trong bảng \texttt{study\_sessions} và gửi lời chào lên màn hình LCD 1602.
+    \item \textbf{Luồng tương tác trạng thái cục bộ:} Người học nhấn nút cơ học (GPIO27) trên hộp. Vi điều khiển ESP32 xử lý chống rung phần mềm và trực tiếp điều khiển bật/tắt đèn LED đỏ (GPIO26) để báo hiệu cho người xung quanh mà không cần phụ thuộc vào độ trễ mạng Internet.
+    \item \textbf{Luồng điều khiển từ xa (Website $\rightarrow$ Output):} Người dùng thiết lập số phút học trên Dashboard và gửi lời nhắc. Node-RED xuất bản thông điệp đến \texttt{study/timer} và \texttt{study/lcd}. ESP32 hiển thị lời nhắc lên dòng 1 LCD 1602, đếm ngược trên dòng 2 và phát còi buzzer (GPIO25) khi hết giờ.
+    \item \textbf{Luồng cảnh báo thông minh:} Khi phiên học kéo dài liên tục quá ngưỡng cho phép, Node-RED tự động gọi Telegram Bot API gửi tin nhắn cảnh báo đến điện thoại người học.
+\end{enumerate}
