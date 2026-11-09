@@ -1,7 +1,9 @@
 # Proposal đồ án cuối kỳ: Trạm học tập Pomodoro
 
-**Môn học:** Vật lý cho Công nghệ thông tin, HK1/2026-2027
-**Nhóm:** [Tên/số nhóm]
+**Môn học:** Vật lý cho Công nghệ thông tin (PHY00007), HK1/2026-2027  
+**Lớp:** 25C07  
+**Nhóm:** Nhóm 07  
+**Giảng viên hướng dẫn:** Bùi Thanh Lâm, Cao Xuân Nam, Đặng Hoài Thương  
 **Thành viên:**
 
 | Vai trò | Họ tên | MSSV |
