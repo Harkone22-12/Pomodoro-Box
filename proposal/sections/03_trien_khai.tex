@@ -66,9 +66,16 @@ Nhằm gắn kết chặt chẽ phần cứng với kiến thức học phần \
 \newpage
 \subsection{Kế hoạch thực hiện}
 
-Dựa trên bảng chức năng đã lập ở Mục 1, nhóm xây dựng kế hoạch triển khai chi tiết cho học kỳ với thời lượng 12 tuần làm việc. Theo đúng quy chế đồ án môn học, \textbf{mỗi chức năng chỉ được phân công cho một thành viên chịu trách nhiệm chính} như trong Bảng \ref{tab:ke_hoach_thuc_hien}.
+Dựa trên bảng danh mục 13 chức năng đã xác định ở Mục 1, nhóm xây dựng kế hoạch triển khai chi tiết với tiến độ 3 tuần tập trung cao độ (bắt đầu từ ngày 15/11 đến ngày 05/12). Lộ trình công việc được phân bổ theo 3 giai đoạn logic chặt chẽ:
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Tuần 1 (15/11 -- 21/11):} Khởi tạo phần cứng cơ sở, lập trình giao tiếp các cảm biến cơ bản (DHT22, Quang trở LM393, Nút nhấn/LED), mạch còi Buzzer và thiết kế lược đồ CSDL Supabase.
+    \item \textbf{Tuần 2 (22/11 -- 28/11):} Tích hợp module RFID RC522, màn hình LCD 1602 qua giao tiếp I2C, xây dựng giao diện Node-RED Dashboard, cảnh báo Telegram Bot và bảo mật tài khoản.
+    \item \textbf{Tuần 3 (29/11 -- 05/12):} Hiện thực dịch vụ gửi email báo cáo Gmail SMTP, cấu hình Web Server SoftAP Captive Portal trên ESP32, xây dựng mô hình phân tích môi trường tối ưu, kiểm thử liên thông toàn hệ thống và đóng gói sản phẩm.
+\end{itemize}
 
-\begin{longtable}{|c|p{7.0cm}|p{3.0cm}|p{3.8cm}|}
+Theo đúng quy chế đồ án môn học, \textbf{mỗi chức năng chỉ được phân công cho một thành viên chịu trách nhiệm chính} như trong Bảng \ref{tab:ke_hoach_thuc_hien}.
+
+\begin{longtable}{|c|p{6.5cm}|p{3.3cm}|p{3.4cm}|}
 \hline
 \textbf{ID CN} & \textbf{Nội dung công việc thực hiện} & \textbf{Thời gian} & \textbf{Phân công**} \\ \hline
 \endfirsthead
@@ -76,33 +83,35 @@ Dựa trên bảng chức năng đã lập ở Mục 1, nhóm xây dựng kế h
 \textbf{ID CN} & \textbf{Nội dung công việc thực hiện} & \textbf{Thời gian} & \textbf{Phân công**} \\ \hline
 \endhead
 \hline
-\textbf{ID 1} & Lập trình đọc cảm biến DHT22, kiểm tra checksum và xuất bản dữ liệu lên topic \texttt{study/dht} & Tuần 3 -- Tuần 4 (15 giờ) & Trần Nguyễn Tuấn Minh \\ \hline
+\textbf{ID 1} & Lập trình đọc cảm biến DHT22, kiểm tra checksum và xuất bản dữ liệu lên topic \texttt{study/dht} & Tuần 1: 15/11 -- 18/11 \newline (15 giờ) & Trần Nguyễn Tuấn Minh \\ \hline
 
-\textbf{ID 2} & Tích hợp đầu đọc RFID RC522 qua chuẩn SPI, đọc UID và đối soát dữ liệu phiên học trên Supabase & Tuần 5 -- Tuần 6 (20 giờ) & Nguyễn Quốc Dương \\ \hline
+\textbf{ID 2} & Tích hợp đầu đọc RFID RC522 qua chuẩn SPI, đọc UID và đối soát dữ liệu phiên học trên Supabase & Tuần 2: 22/11 -- 25/11 \newline (20 giờ) & Nguyễn Quốc Dương \\ \hline
 
-\textbf{ID 3} & Lập trình mạch điều khiển còi Active Buzzer 5V theo nhịp Pomodoro và tạo nút bấm hẹn giờ trên web & Tuần 4 -- Tuần 5 (15 giờ) & La Anh Hào \\ \hline
+\textbf{ID 3} & Lập trình mạch điều khiển còi Active Buzzer 5V theo nhịp Pomodoro và tạo nút bấm hẹn giờ trên web & Tuần 1: 15/11 -- 19/11 \newline (15 giờ) & La Anh Hào \\ \hline
 
-\textbf{ID 4} & Lập trình đọc ADC1 quang trở LM393, tính toán mức sáng và hiển thị cảnh báo thiếu sáng trên Dashboard & Tuần 3 -- Tuần 4 (12 giờ) & Nguyễn Quốc Dương \\ \hline
+\textbf{ID 4} & Lập trình đọc ADC1 quang trở LM393, tính toán mức sáng và hiển thị cảnh báo thiếu sáng trên Dashboard & Tuần 1: 15/11 -- 19/11 \newline (12 giờ) & Nguyễn Quốc Dương \\ \hline
 
-\textbf{ID 5} & Lập trình giao tiếp I2C điều khiển LCD 1602, giải mã gói tin chuỗi văn bản nhận từ topic \texttt{study/lcd} & Tuần 6 -- Tuần 7 (15 giờ) & La Anh Hào \\ \hline
+\textbf{ID 5} & Lập trình giao tiếp I2C điều khiển LCD 1602, giải mã gói tin chuỗi văn bản nhận từ topic \texttt{study/lcd} & Tuần 2: 22/11 -- 25/11 \newline (15 giờ) & La Anh Hào \\ \hline
 
-\textbf{ID 6} & Lập trình ngắt ngoài nút nhấn GPIO27 (chống rung phím) và điều khiển đèn LED đỏ báo tập trung & Tuần 6 -- Tuần 7 (10 giờ) & Nguyễn Quốc Dương \\ \hline
+\textbf{ID 6} & Lập trình ngắt ngoài nút nhấn GPIO27 (chống rung phím) và điều khiển đèn LED đỏ báo tập trung & Tuần 1: 18/11 -- 21/11 \newline (10 giờ) & Nguyễn Quốc Dương \\ \hline
 
-\textbf{ID 7} & Thiết kế lược đồ cơ sở dữ liệu Supabase PostgreSQL, cấu hình bảng \texttt{sensor\_data} và \texttt{study\_sessions} & Tuần 5 -- Tuần 6 (18 giờ) & Trần Nguyễn Tuấn Minh \\ \hline
+\textbf{ID 7} & Thiết kế lược đồ cơ sở dữ liệu Supabase PostgreSQL, cấu hình bảng \texttt{sensor\_data} và \texttt{study\_sessions} & Tuần 1: 18/11 -- 21/11 \newline (18 giờ) & Trần Nguyễn Tuấn Minh \\ \hline
 
-\textbf{ID 8} & Xây dựng giao diện Node-RED Dashboard hiển thị kim đo Gauge, đồ thị chuỗi thời gian và bảng lịch sử & Tuần 7 -- Tuần 8 (22 giờ) & Trần Nguyễn Tuấn Minh \\ \hline
+\textbf{ID 8} & Xây dựng giao diện Node-RED Dashboard hiển thị kim đo Gauge, đồ thị chuỗi thời gian và bảng lịch sử & Tuần 2: 22/11 -- 27/11 \newline (22 giờ) & Trần Nguyễn Tuấn Minh \\ \hline
 
-\textbf{ID 9} & Xây dựng luồng logic đếm thời gian liên tục và tích hợp Telegram Bot API gửi tin nhắn cảnh báo học quá giờ & Tuần 8 -- Tuần 9 (16 giờ) & Nguyễn Quốc Dương \\ \hline
+\textbf{ID 9} & Xây dựng luồng logic đếm thời gian liên tục và tích hợp Telegram Bot API gửi tin nhắn cảnh báo học quá giờ & Tuần 2: 25/11 -- 28/11 \newline (16 giờ) & Nguyễn Quốc Dương \\ \hline
 
-\textbf{ID 10} & Xây dựng luồng tổng hợp dữ liệu cuối tuần và tích hợp dịch vụ Gmail SMTP gửi báo cáo học tập định kỳ & Tuần 9 -- Tuần 10 (16 giờ) & Nguyễn Quốc Dương \\ \hline
+\textbf{ID 10} & Xây dựng luồng tổng hợp dữ liệu cuối tuần và tích hợp dịch vụ Gmail SMTP gửi báo cáo học tập định kỳ & Tuần 3: 29/11 -- 02/12 \newline (16 giờ) & Nguyễn Quốc Dương \\ \hline
 
-\textbf{ID 11} & Xây dựng luồng xác thực tài khoản, mã hóa băm mật khẩu bcrypt và phân quyền bảo mật dữ liệu cá nhân & Tuần 8 -- Tuần 9 (18 giờ) & La Anh Hào \\ \hline
+\textbf{ID 11} & Xây dựng luồng xác thực tài khoản, mã hóa băm mật khẩu bcrypt và phân quyền bảo mật dữ liệu cá nhân & Tuần 2: 25/11 -- 28/11 \newline (18 giờ) & La Anh Hào \\ \hline
 
-\textbf{ID 12} & Lập trình Web Server SoftAP Captive Portal trên vi điều khiển ESP32 cho phép cấu hình Wi-Fi linh hoạt & Tuần 9 -- Tuần 10 (20 giờ) & La Anh Hào \\ \hline
+\textbf{ID 12} & Lập trình Web Server SoftAP Captive Portal trên vi điều khiển ESP32 cho phép cấu hình Wi-Fi linh hoạt & Tuần 3: 29/11 -- 02/12 \newline (20 giờ) & La Anh Hào \\ \hline
 
-\textbf{ID 13} & Thu thập dữ liệu thử nghiệm và lập trình mô hình phân tích điều kiện học tập tối ưu chạy trên Node-RED & Tuần 10 -- Tuần 11 (20 giờ) & Trần Nguyễn Tuấn Minh \\ \hline
-\caption{Kế hoạch triển khai chi tiết và phân công cá nhân cho 13 chức năng}
+\textbf{ID 13} & Thu thập dữ liệu thử nghiệm và lập trình mô hình phân tích điều kiện học tập tối ưu chạy trên Node-RED & Tuần 3: 29/11 -- 03/12 \newline (20 giờ) & Trần Nguyễn Tuấn Minh \\ \hline
+
+\textbf{Tích hợp} & Lắp ráp linh kiện vào vỏ hộp 3D, chạy thử nghiệm liên thông phần cứng với Node-RED và Supabase, đo đạc ổn định 24/7 và hoàn thiện hồ sơ nghiệm thu & Tuần 3: 03/12 -- 05/12 \newline (16 giờ) & Cả nhóm \newline (Minh, Dương, Hào) \\ \hline
+\caption{Kế hoạch triển khai chi tiết và phân công cá nhân cho 13 chức năng (15/11 -- 05/12)}
 \label{tab:ke_hoach_thuc_hien}
 \end{longtable}
 
-\noindent \textit{\footnotesize ** Ghi chú: Mỗi chức năng chỉ phân công cho duy nhất một thành viên chịu trách nhiệm chính theo đúng quy định đồ án cuối kỳ.}
+\noindent \textit{\footnotesize ** Ghi chú: Mỗi chức năng (ID 1 đến ID 13) chỉ phân công cho duy nhất một thành viên chịu trách nhiệm chính theo đúng quy định đồ án cuối kỳ. Giai đoạn nước rút từ ngày 03/12 đến 05/12 cả ba thành viên cùng tham gia kiểm thử liên thông toàn diện và nghiệm thu.}
