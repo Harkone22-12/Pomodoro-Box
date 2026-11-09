@@ -6,9 +6,9 @@
 
 | Vai trò | Họ tên | MSSV |
 |---|---|---|
-| Thành viên 1 (Môi trường và dữ liệu) | [Họ tên] | [MSSV] |
-| Thành viên 2 (Ánh sáng và phiên học) | [Họ tên] | [MSSV] |
-| Thành viên 3 (Web và hẹn giờ) | [Họ tên] | [MSSV] |
+| Thành viên 1 (Môi trường và dữ liệu) | Trần Nguyễn Tuấn Minh | 24127084 |
+| Thành viên 2 (Ánh sáng và phiên học) | Nguyễn Quốc Dương | 24127349 |
+| Thành viên 3 (Web và hẹn giờ) | La Anh Hào | 24127361 |
 
 **Hình thức:** Sản phẩm thật, đóng gói trong hộp.
 
