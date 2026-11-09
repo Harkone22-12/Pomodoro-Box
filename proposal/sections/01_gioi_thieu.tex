@@ -152,7 +152,7 @@ Theo quy định thuyết minh dự án đồ án môn học Vật lý cho Công
 \subsubsection{Chức năng 7: Lưu trữ chuỗi thời gian dữ liệu đám mây (Nâng cao)}
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{Mục đích:} Lưu trữ toàn bộ lịch sử đo lường cảm biến vi khí hậu và nhật ký phiên học phục vụ phân tích dữ liệu lâu dài.
-    \item \textbf{Dịch vụ sử dụng:} Supabase Cloud (cơ sở dữ liệu quan hệ PostgreSQL với các bảng \texttt{users}, \texttt{study\_sessions}, \texttt{sensor\_data}).
+    \item \textbf{Dịch vụ sử dụng:} Supabase Cloud (cơ sở dữ liệu PostgreSQL gồm các bảng \texttt{users}, \texttt{study\_sessions}, \texttt{sensor\_data}).
     \item \textbf{Luồng xử lý chi tiết:} Node-RED nhận các gói tin MQTT thời gian thực. Sau mỗi chu kỳ 60 giây (đối với cảm biến) hoặc ngay lập tức khi phát sinh sự kiện (quẹt thẻ RFID, hoàn thành hẹn giờ), Node-RED thực thi các lệnh SQL \texttt{INSERT} thông qua Supabase RESTful API/PostgREST kèm khóa API Key bảo mật. Dữ liệu được gán nhãn thời gian thực (\texttt{created\_at}) theo múi giờ Việt Nam.
 \end{itemize}
 

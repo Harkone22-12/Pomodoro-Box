@@ -204,125 +204,305 @@ Bảng \ref{tab:map_wireframe_chuc_nang} chỉ rõ từng vùng tương tác tr�
 \newpage
 \subsection{Sơ đồ truyền và nhận dữ liệu giữa các thành phần trong hệ thống}
 
-Nhằm thể hiện bức tranh toàn cảnh về cách thức vận hành của toàn bộ 13 chức năng, nhóm đã xây dựng \textbf{một sơ đồ tổng hợp duy nhất} mô tả chính xác luồng truyền nhận dữ liệu giữa 4 tầng thành phần chính:
-\begin{enumerate}[leftmargin=1.5cm]
-    \item \textbf{Thiết bị phần cứng (ESP32 Box):} Nơi kết nối cảm biến DHT22, quang trở LM393, đầu đọc RFID RC522, nút nhấn, màn hình LCD 1602, còi Active Buzzer và đèn LED đỏ.
-    \item \textbf{Hạ tầng trung chuyển (Mosquitto MQTT Broker):} Máy chủ điều phối bản tin MQTT đóng vai trò trung gian phân phát gói tin thời gian thực.
-    \item \textbf{Máy chủ điều phối trung tâm (Node-RED Flow Engine \& Dashboard):} Nơi đón nhận thông điệp, giải mã JSON, hiển thị giao diện người dùng, điều hành các luồng tự động và kích hoạt cảnh báo ngoại vi.
-    \item \textbf{Cơ sở dữ liệu đám mây \& Dịch vụ bên ngoài (Supabase, Telegram, Gmail):} Nơi lưu trữ vĩnh viễn dữ liệu chuỗi thời gian và gửi thông điệp cảnh báo đến người học.
-\end{enumerate}
-
-Để dễ dàng theo dõi, các luồng xử lý trên sơ đồ được mã hóa bằng các màu sắc và kiểu mũi tên riêng biệt:
+Nhằm bảo đảm tính độc lập module và phân định rõ trách nhiệm kỹ thuật của từng thành viên theo đúng tài liệu thiết kế hệ thống, kiến trúc truyền nhận dữ liệu của Trạm học tập Pomodoro được phân tách thành \textbf{3 luồng xử lý riêng biệt}:
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Màu xanh lá đậm (Mũi tên nét liền):} \textit{Luồng thu thập dữ liệu cảm biến (Input):} DHT22 $\rightarrow$ \texttt{study/dht}, Quang trở $\rightarrow$ \texttt{study/light} (ID 1, ID 4).
-    \item \textbf{Màu xanh dương đậm (Mũi tên nét đôi):} \textit{Luồng định danh và mở phiên học bằng RFID:} Thẻ RFID $\rightarrow$ \texttt{study/rfid} $\rightarrow$ Đối soát dữ liệu (ID 2).
-    \item \textbf{Màu cam đậm (Mũi tên nét đứt gạch):} \textit{Luồng điều khiển từ Web xuống phần cứng (Output):} Lệnh hẹn giờ $\rightarrow$ \texttt{study/timer}, Tin nhắn văn bản $\rightarrow$ \texttt{study/lcd} (ID 3, ID 5).
-    \item \textbf{Màu đỏ đậm (Mũi tên nét liền dày):} \textit{Luồng cảnh báo thông minh và báo cáo định kỳ:} Node-RED kích hoạt Telegram Bot API và gửi Email SMTP (ID 9, ID 10).
-    \item \textbf{Màu tím đậm (Mũi tên chấm chấm):} \textit{Luồng lưu trữ đám mây \& phân tích dữ liệu:} Đồng bộ SQL chuỗi thời gian và cấp khuyến nghị tối ưu (ID 7, ID 8, ID 13).
+    \item \textbf{Luồng 1 (Thành viên 1: Trần Nguyễn Tuấn Minh phụ trách):} Luồng thu thập dữ liệu vi khí hậu (nhiệt độ, độ ẩm), trực quan hóa Dashboard thời gian thực, lưu trữ chuỗi thời gian vào Supabase và huấn luyện mô hình phân tích điều kiện học tập tối ưu.
+    \item \textbf{Luồng 2 (Thành viên 2: Nguyễn Quốc Dương phụ trách):} Luồng giám sát mức độ chiếu sáng, nhận diện phiên học qua thẻ từ RFID RC522, báo hiệu tập trung bằng nút bấm/LED đỏ và gửi cảnh báo thông minh qua Telegram Bot cùng báo cáo tuần qua Gmail SMTP.
+    \item \textbf{Luồng 3 (Thành viên 3: La Anh Hào phụ trách):} Luồng điều khiển chu kỳ Pomodoro từ Web xuống còi báo Active Buzzer, hiển thị lời nhắc trên màn hình LCD 1602 qua I2C, xác thực bảo mật tài khoản và cổng cấu hình mạng Web Server SoftAP Captive Portal.
 \end{itemize}
+
+Dưới đây là sơ đồ chi tiết cho từng luồng riêng biệt cùng sơ đồ tổng hợp liên thông toàn bộ hệ thống.
+
+% ==========================================================
+% 2.3.1 LUỒNG 1
+% ==========================================================
+\subsubsection{Luồng 1: Môi trường vi khí hậu, Lưu trữ CSDL \& Mô hình phân tích (Phụ trách: Trần Nguyễn Tuấn Minh)}
+
+Luồng 1 chịu trách nhiệm thu thập thông số môi trường học tập, giám sát chỉ số sức khỏe không gian làm việc và phân tích dữ liệu:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item \textbf{Thu thập dữ liệu tại trạm:} Vi điều khiển ESP32 đọc tín hiệu số 1-Wire từ cảm biến DHT22 định kỳ 5 giây/lần tại chân GPIO4, giải mã 40-bit dữ liệu và tính toán checksum kiểm tra tính toàn vẹn.
+    \item \textbf{Xuất bản MQTT:} Luồng \texttt{dht\_flow} trên ESP32 đóng gói dữ liệu thành chuỗi JSON dạng \texttt{\{"temp": 28.5, "hum": 65.0\}} và xuất bản (Publish) lên MQTT Broker qua topic \texttt{study/dht} với mức QoS 0.
+    \item \textbf{Trực quan hóa tại Node-RED:} Node-RED Engine đón nhận thông điệp, cập nhật kim đo Gauge và biểu đồ đường biến thiên thời gian thực trên giao diện Dashboard (ID 8).
+    \item \textbf{Lưu trữ đám mây (ID 7):} Định kỳ 60 giây/lần, Node-RED ghi bản ghi mới vào bảng \texttt{sensor\_data} trên cơ sở dữ liệu Supabase PostgreSQL.
+    \item \textbf{Phân tích tối ưu (ID 13):} Mô hình thuật toán chạy trên Node-RED truy vấn lịch sử vi khí hậu kết hợp cùng số phiên học thành công để đưa ra khuyến nghị điều kiện nhiệt ẩm lý tưởng nhất.
+\end{enumerate}
 
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[
-    node distance=1.4cm and 1.8cm,
+    node distance=0.8cm and 0.9cm,
     font=\sffamily\footnotesize,
-    box/.style={draw=blue!80!black, fill=blue!5, thick, rounded corners=4pt, text width=3.2cm, align=center, inner sep=6pt, minimum height=1.3cm},
-    hw/.style={draw=teal!80!black, fill=teal!10, thick, rounded corners=4pt, text width=3.4cm, align=center, inner sep=6pt, minimum height=1.3cm},
-    serv/.style={draw=red!80!black, fill=red!10, thick, rounded corners=4pt, text width=3.4cm, align=center, inner sep=6pt, minimum height=1.5cm},
-    cloud/.style={draw=purple!80!black, fill=purple!10, thick, rounded corners=4pt, text width=3.2cm, align=center, inner sep=6pt, minimum height=1.3cm},
-    ext/.style={draw=orange!80!black, fill=orange!10, thick, rounded corners=4pt, text width=3.0cm, align=center, inner sep=5pt, minimum height=1.1cm}
+    hw/.style={draw=teal!80!black, fill=teal!10, thick, rounded corners=4pt, text width=2.6cm, align=center, inner sep=5pt, minimum height=1.3cm},
+    esp/.style={draw=blue!80!black, fill=blue!10, thick, rounded corners=4pt, text width=2.7cm, align=center, inner sep=5pt, minimum height=1.3cm},
+    broker/.style={draw=cyan!80!black, fill=cyan!10, thick, rounded corners=4pt, text width=2.4cm, align=center, inner sep=5pt, minimum height=1.3cm},
+    nr/.style={draw=red!80!black, fill=red!10, thick, rounded corners=4pt, text width=2.9cm, align=center, inner sep=5pt, minimum height=1.3cm},
+    db/.style={draw=purple!80!black, fill=purple!10, thick, rounded corners=4pt, text width=2.8cm, align=center, inner sep=5pt, minimum height=1.3cm},
+    ml/.style={draw=teal!80!black, fill=teal!20, thick, rounded corners=4pt, text width=3.0cm, align=center, inner sep=5pt, minimum height=1.1cm}
 ]
 
-    % Cột 1: Phần cứng tại chỗ
-    \node[hw] (esp) {\textbf{Trạm ESP32 Box}\\(DHT22, Quang trở, RFID,\\LCD1602, Buzzer, LED, Nút)};
+    % Hàng trên: Luồng truyền nhận thời gian thực
+    \node[hw] (dht) {\textbf{Cảm biến DHT22}\\(Chân GPIO4)\\Đo nhiệt độ, độ ẩm};
+    \node[esp, right=of dht] (esp) {\textbf{ESP32 Box}\\\texttt{dht\_flow}\\Kiểm tra checksum};
+    \node[broker, right=of esp] (broker) {\textbf{MQTT Broker}\\(Mosquitto Server)\\Port: 1883};
+    \node[nr, right=of broker] (nr) {\textbf{Node-RED Engine}\\Flow \texttt{dht.flow.ts}\\Dashboard Gauge/Chart};
     
-    % Cột 2: Broker trung gian
-    \node[box, right=of esp] (broker) {\textbf{MQTT Broker}\\(Mosquitto Server)\\Port: 1883 / 8883};
-    
-    % Cột 3: Node-RED Server
-    \node[serv, right=of broker] (nodered) {\textbf{Node-RED Engine}\\(Flows Core +\\Web Dashboard)};
-    
-    % Cột 4: Cloud Database
-    \node[cloud, right=of nodered] (supabase) {\textbf{Supabase Cloud}\\(PostgreSQL DB\\Bảng \texttt{sensor\_data},\\bảng \texttt{study\_sessions})};
-    
-    % Dịch vụ cảnh báo bên ngoài (dưới Node-RED)
-    \node[ext, below=1.2cm of nodered] (telegram) {\textbf{Telegram Bot API}\\(Cảnh báo ngồi quá lâu)};
-    \node[ext, right=0.8cm of telegram] (gmail) {\textbf{Gmail SMTP Server}\\(Báo cáo tuần 20h CN)};
-    
-    % Thiết bị di động của người dùng (dưới ESP32)
-    \node[box, below=1.2cm of esp] (user_phone) {\textbf{Người học / Điện thoại}\\(Xem Web, nhận tin nhắn)};
+    % Hàng dưới: Lưu trữ & Phân tích tối ưu
+    \node[db, below=1.2cm of nr] (db) {\textbf{Supabase Cloud}\\Bảng \texttt{sensor\_data}\\PostgreSQL DB};
+    \node[ml, left=1.2cm of db] (ml) {\textbf{Mô hình phân tích AI}\\Đánh giá môi trường\\tối ưu cho phiên học};
 
-    % 1. LUỒNG CẢM BIẾN (Xanh lá - Nét liền)
-    \draw[-{Latex[length=3mm]}, color=green!60!black, very thick] 
-        ($(esp.north east)!0.3!(esp.south east)$) -- 
-        node[above, font=\scriptsize\bfseries, color=green!50!black] {study/dht, light}
-        node[below, font=\tiny, color=black] {\{temp, hum, lux\}} 
-        ($(broker.north west)!0.3!(broker.south west)$);
+    % Các mũi tên kết nối
+    \draw[-{Latex[length=3mm]}, color=teal!80!black, very thick] (dht) -- 
+        node[above, font=\tiny\bfseries] {1-Wire (GPIO4)} 
+        node[below, font=\tiny] {40-bit raw data} (esp);
         
-    \draw[-{Latex[length=3mm]}, color=green!60!black, very thick] 
-        ($(broker.north east)!0.3!(broker.south east)$) -- 
-        node[above, font=\scriptsize\bfseries, color=green!50!black] {Forward gói tin}
-        ($(nodered.north west)!0.3!(nodered.south west)$);
-
-    % 2. LUỒNG RFID (Xanh dương - Nét đôi)
-    \draw[-{Latex[length=3mm]}, color=blue!70!black, double, thick] 
-        ($(esp.north east)!0.7!(esp.south east)$) -- 
-        node[above, font=\scriptsize\bfseries, color=blue!70!black] {study/rfid}
-        node[below, font=\tiny, color=black] {\{uid: A1B2C3D4\}} 
-        ($(broker.north west)!0.7!(broker.south west)$);
+    \draw[-{Latex[length=3mm]}, color=blue!80!black, very thick] (esp) -- 
+        node[above, font=\tiny\bfseries] {Publish: \texttt{study/dht}} 
+        node[below, font=\tiny] {\texttt{\{"temp","hum"\}}} (broker);
         
-    \draw[-{Latex[length=3mm]}, color=blue!70!black, double, thick] 
-        ($(broker.north east)!0.7!(broker.south east)$) -- 
-        node[above, font=\scriptsize\bfseries, color=blue!70!black] {Xác thực phiên}
-        ($(nodered.north west)!0.7!(nodered.south west)$);
-
-    % 3. LUỒNG ĐIỀU KHIỂN XUỐNG PHẦN CỨNG (Cam - Nét đứt)
-    \draw[{Latex[length=3mm]}-, color=orange!80!black, dashed, very thick] 
-        (broker.north) to[bend left=30] 
-        node[above, font=\scriptsize\bfseries, color=orange!70!black] {Lệnh: study/timer, study/lcd}
-        node[below, font=\tiny, color=black] {\{minutes: 25\}, \{text: "..."\}} 
-        (esp.north);
+    \draw[-{Latex[length=3mm]}, color=cyan!80!black, very thick] (broker) -- 
+        node[above, font=\tiny\bfseries] {Subscribe: \texttt{study/dht}} 
+        node[below, font=\tiny] {Forward JSON} (nr);
         
-    \draw[{Latex[length=3mm]}-, color=orange!80!black, dashed, very thick] 
-        (nodered.north) to[bend left=30] 
-        node[above, font=\scriptsize\bfseries, color=orange!70!black] {Publish lệnh điều khiển} 
-        (broker.north);
-
-    % 4. LUỒNG SUPABASE (Tím - Nét chấm)
-    \draw[{Latex[length=3mm]}-{Latex[length=3mm]}, color=purple!80!black, loosely dotted, line width=1.5pt] 
-        (nodered) -- 
-        node[above, font=\scriptsize\bfseries, color=purple!80!black] {SQL / HTTPS API}
-        node[below, font=\tiny, color=black] {Ghi chuỗi thời gian \& Lấy lịch sử} 
-        (supabase);
-
-    % 5. LUỒNG CẢNH BÁO TELEGRAM & EMAIL (Đỏ - Nét liền đậm)
-    \draw[-{Latex[length=3mm]}, color=red!70!black, very thick] 
-        ($(nodered.south)!0.3!(nodered.south west)$) -- 
-        node[left, font=\tiny\bfseries, color=red!70!black] {Học $>60$p} 
-        (telegram.north);
+    \draw[{Latex[length=3mm]}-{Latex[length=3mm]}, color=purple!80!black, very thick] (nr) -- 
+        node[right, font=\tiny\bfseries] {HTTPS / REST API} 
+        node[left, font=\tiny] {Insert \& Query} (db);
         
-    \draw[-{Latex[length=3mm]}, color=red!70!black, very thick] 
-        ($(nodered.south)!0.3!(nodered.south east)$) -- 
-        node[right, font=\tiny\bfseries, color=red!70!black] {Báo cáo 20h CN} 
-        (gmail.north);
-
-    \draw[-{Latex[length=2.5mm]}, color=red!60!black, dashed] 
-        (telegram.west) -- 
-        node[above, font=\tiny] {Tin nhắn Bot} 
-        (user_phone.east);
-
-    % 6. TƯƠNG TÁC NGƯỜI DÙNG VỚI WEB DASHBOARD
-    \draw[{Latex[length=2.5mm]}-{Latex[length=2.5mm]}, color=gray!70!black] 
-        (user_phone.north) -- 
-        node[left, font=\tiny] {Thao tác Web / Nút bấm} 
-        (esp.south);
+    \draw[-{Latex[length=3mm]}, color=teal!70!black, very thick, dashed] (db) -- 
+        node[above, font=\tiny\bfseries] {Lịch sử vi khí hậu} (ml);
         
-    \draw[{Latex[length=2.5mm]}-{Latex[length=2.5mm]}, color=blue!70!black, bend right=25] 
-        (user_phone.south) to 
-        node[below, font=\tiny] {Truy cập Dashboard qua HTTPS} 
-        (nodered.south);
+    \draw[-{Latex[length=3mm]}, color=teal!70!black, very thick, dashed] (ml) -| 
+        node[near end, left, font=\tiny\bfseries] {Khuyến nghị tối ưu} (nr);
 
 \end{tikzpicture}
-\caption{Sơ đồ gộp duy nhất mô tả toàn bộ các luồng truyền nhận dữ liệu trong hệ thống}
-\label{fig:so_do_truyen_nhan}
+\caption{Sơ đồ kiến trúc và luồng truyền nhận dữ liệu Luồng 1 (Phụ trách: Trần Nguyễn Tuấn Minh)}
+\label{fig:so_do_luong_1}
+\end{figure}
+
+% ==========================================================
+% 2.3.2 LUỒNG 2
+% ==========================================================
+\subsubsection{Luồng 2: Giám sát ánh sáng, Quản lý phiên học RFID \& Cảnh báo (Phụ trách: Nguyễn Quốc Dương)}
+
+Luồng 2 đảm nhận khâu bảo vệ thị lực, định danh người học và phát cảnh báo đa kênh:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item \textbf{Đo ánh sáng (ID 4):} Mạch quang trở LM393 phân áp đưa điện áp Analog vào chân ADC1 (GPIO34) của ESP32. Luồng \texttt{light\_flow} tính toán mức sáng và xuất bản lên topic \texttt{study/light} dạng \texttt{\{"raw": 2150, "level": "du\_sang"\}}.
+    \item \textbf{Điểm danh thẻ RFID (ID 2):} Đầu đọc RC522 giao tiếp SPI quét mã thẻ Mifare 13.56 MHz. Khi người học quẹt thẻ, ESP32 xuất bản lên topic \texttt{study/rfid} bản tin \texttt{\{"uid": "E2A108C3", "action": "start"\}}. Node-RED đối soát với cơ sở dữ liệu để ghi nhận phiên học vào bảng \texttt{study\_sessions}.
+    \item \textbf{Nút nhấn \& LED đỏ báo tập trung (ID 6):} Nút nhấn cơ học cấu hình ngắt \texttt{FALLING} trên GPIO27. Khi bấm nút, ESP32 chuyển trạng thái và kích chân GPIO26 bật/tắt đèn LED đỏ tại trạm mà không làm trễ chu kỳ hệ thống.
+    \item \textbf{Cảnh báo Telegram Bot (ID 9):} Khi bộ đếm thời gian phiên học ghi nhận người dùng học liên tục vượt quá 60 phút không nghỉ, Node-RED kích hoạt Telegram Bot API gửi thông báo khẩn cấp nhắc nhở rời bàn học.
+    \item \textbf{Báo cáo Email định kỳ (ID 10):} Vào 20:00 tối Chủ nhật hàng tuần, luồng tự động trên Node-RED tổng hợp toàn bộ số phiên Pomodoro hoàn thành và gửi email báo cáo chi tiết qua dịch vụ Gmail SMTP.
+\end{enumerate}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node distance=0.6cm and 0.6cm,
+    font=\sffamily\footnotesize,
+    hw/.style={draw=orange!80!black, fill=orange!10, thick, rounded corners=4pt, text width=2.4cm, align=center, inner sep=3pt, minimum height=1.1cm},
+    esp/.style={draw=blue!80!black, fill=blue!10, thick, rounded corners=4pt, text width=2.4cm, align=center, inner sep=4pt, minimum height=1.3cm},
+    broker/.style={draw=cyan!80!black, fill=cyan!10, thick, rounded corners=4pt, text width=2.1cm, align=center, inner sep=4pt, minimum height=1.3cm},
+    nr/.style={draw=red!80!black, fill=red!10, thick, rounded corners=4pt, text width=2.4cm, align=center, inner sep=4pt, minimum height=1.3cm},
+    dest/.style={draw=red!80!black, fill=red!20, thick, rounded corners=4pt, text width=2.3cm, align=center, inner sep=3pt, minimum height=1.1cm},
+    led/.style={draw=green!70!black, fill=green!15, thick, rounded corners=4pt, text width=2.4cm, align=center, inner sep=3pt, minimum height=1.0cm}
+]
+
+    % Cột 1: Cảm biến & Input
+    \node[hw] (ldr) {\textbf{Quang trở LM393}\\Chân ADC1 (GPIO34)};
+    \node[hw, below=0.5cm of ldr] (rfid) {\textbf{Đầu đọc RFID RC522}\\Chuẩn SPI 13.56 MHz};
+    \node[hw, below=0.5cm of rfid] (btn) {\textbf{Nút nhấn 4 chân}\\Ngắt GPIO27 (FALLING)};
+    
+    % Cột 2: ESP32 Box
+    \node[esp, right=0.6cm of rfid] (esp) {\textbf{ESP32 Box}\\\texttt{light, rfid\_flow}\\Ngắt ngoài \& Lọc rung};
+    
+    % Output nội bộ tại trạm
+    \node[led, below=0.5cm of esp] (led) {\textbf{Đèn LED đỏ 5mm}\\GPIO26 (Báo tập trung)};
+    
+    % Cột 3: Broker
+    \node[broker, right=0.6cm of esp] (broker) {\textbf{MQTT Broker}\\(Mosquitto Server)\\Port: 1883};
+    
+    % Cột 4: Node-RED Alert Engine
+    \node[nr, right=0.6cm of broker] (nr) {\textbf{Node-RED Engine}\\Đối soát UID, Đếm giờ\\Logic gửi cảnh báo};
+    
+    % Cột 5: Dịch vụ ngoại vi
+    \node[dest, above right=0.1cm and 0.6cm of nr] (tele) {\textbf{Telegram Bot API}\\Cảnh báo ngồi học\\liên tục $>60$ phút};
+    \node[dest, below right=0.1cm and 0.6cm of nr] (gmail) {\textbf{Gmail SMTP}\\Email báo cáo tuần\\20:00 tối Chủ nhật};
+
+    % Mũi tên từ Input đến ESP32
+    \draw[-{Latex[length=2.5mm]}, color=orange!80!black, very thick] (ldr) -| 
+        node[above, font=\tiny\bfseries] {Analog} (esp);
+    \draw[-{Latex[length=2.5mm]}, color=blue!80!black, very thick] (rfid) -- 
+        node[above, font=\tiny\bfseries] {UID (SPI)} (esp);
+    \draw[-{Latex[length=2.5mm]}, color=gray!80!black, very thick] (btn) -| 
+        node[below, font=\tiny\bfseries] {Ngắt ngoài} (esp);
+        
+    % Nút nhấn kích LED đỏ tại chỗ
+    \draw[-{Latex[length=2.5mm]}, color=green!60!black, very thick] (esp) -- 
+        node[right, font=\tiny\bfseries] {Kích HIGH} (led);
+
+    % ESP32 -> Broker -> Node-RED
+    \draw[-{Latex[length=3mm]}, color=blue!70!black, very thick] (esp) -- 
+        node[above, font=\tiny\bfseries] {Publish topics} 
+        node[below, font=\tiny] {\texttt{study/light, rfid}} (broker);
+        
+    \draw[-{Latex[length=3mm]}, color=cyan!80!black, very thick] (broker) -- 
+        node[above, font=\tiny\bfseries] {Subscribe} 
+        node[below, font=\tiny] {Forward JSON} (nr);
+
+    % Node-RED -> Telegram & Gmail
+    \draw[-{Latex[length=2.5mm]}, color=red!80!black, very thick] (nr) -| 
+        node[above, font=\tiny\bfseries] {Học $>60$ phút} (tele);
+    \draw[-{Latex[length=2.5mm]}, color=red!80!black, very thick] (nr) -| 
+        node[below, font=\tiny\bfseries] {Tổng kết tuần} (gmail);
+
+\end{tikzpicture}
+\caption{Sơ đồ kiến trúc và luồng truyền nhận dữ liệu Luồng 2 (Phụ trách: Nguyễn Quốc Dương)}
+\label{fig:so_do_luong_2}
+\end{figure}
+
+\newpage
+% ==========================================================
+% 2.3.3 LUỒNG 3
+% ==========================================================
+\subsubsection{Luồng 3: Web hẹn giờ Pomodoro, Còi báo âm thanh, Màn hình LCD \& Quản trị (Phụ trách: La Anh Hào)}
+
+Luồng 3 điều phối chu trình hẹn giờ học tập, xuất tín hiệu âm thanh/hình ảnh ra trạm và bảo mật quản trị:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item \textbf{Tương tác trên Web Dashboard:} Người học đăng nhập tài khoản bằng mật khẩu mã hóa bcrypt (ID 11), chọn thời lượng phiên Pomodoro (25 phút học, 5 phút nghỉ) hoặc gõ lời nhắc học tập cần gửi ra trạm.
+    \item \textbf{Truyền lệnh điều khiển xuống MQTT:} Node-RED đóng gói bản tin JSON và phát lệnh:
+    \begin{itemize}
+        \item Topic \texttt{study/timer}: Payload \texttt{\{"minutes": 25\}} (QoS 1, Non-retained) kích hoạt bộ đếm giờ Pomodoro.
+        \item Topic \texttt{study/lcd}: Payload \texttt{\{"text": "Tap trung on bai"\}} (QoS 1, Non-retained) chuyển tải dòng chữ mục tiêu.
+    \end{itemize}
+    \item \textbf{Thực thi tại phần cứng ESP32:}
+    \begin{itemize}
+        \item Luồng \texttt{timer\_flow} tiếp nhận lệnh, duy trì bộ đếm ngược tại trạm. Khi phiên kết thúc, ESP32 kéo chân GPIO25 xuống mức thấp (Active-LOW), kích hoạt còi \textbf{Active Buzzer 5V} (ID 3) phát chuỗi âm thanh bíp bíp báo hiệu chuyển phiên.
+        \item Luồng \texttt{lcd\_flow} gửi chuỗi ký tự qua giao tiếp I2C (SDA GPIO21, SCL GPIO22) tới module PCF8574 để hiển thị đồng hồ và nội dung nhắc nhở trên màn hình \textbf{LCD 1602} (ID 5).
+    \end{itemize}
+    \item \textbf{Cổng cấu hình mạng SoftAP Captive Portal (ID 12):} Khi trạm khởi động mà không tìm thấy Wi-Fi đã lưu, ESP32 tự động kích hoạt chế độ Access Point phát SSID \texttt{PomodoroBox\_Config}. Người dùng kết nối điện thoại vào IP 192.168.4.1 để quét và lưu thông tin mạng mới mà không cần nạp lại mã nguồn.
+\end{enumerate}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node distance=0.6cm and 0.6cm,
+    font=\sffamily\footnotesize,
+    user/.style={draw=purple!80!black, fill=purple!10, thick, rounded corners=4pt, text width=2.4cm, align=center, inner sep=3pt, minimum height=1.3cm},
+    nr/.style={draw=red!80!black, fill=red!10, thick, rounded corners=4pt, text width=2.4cm, align=center, inner sep=4pt, minimum height=1.3cm},
+    broker/.style={draw=cyan!80!black, fill=cyan!10, thick, rounded corners=4pt, text width=2.1cm, align=center, inner sep=4pt, minimum height=1.3cm},
+    esp/.style={draw=blue!80!black, fill=blue!10, thick, rounded corners=4pt, text width=2.5cm, align=center, inner sep=4pt, minimum height=1.5cm},
+    dest/.style={draw=orange!80!black, fill=orange!15, thick, rounded corners=4pt, text width=2.3cm, align=center, inner sep=3pt, minimum height=1.1cm},
+    ap/.style={draw=teal!80!black, fill=teal!15, thick, rounded corners=4pt, text width=2.5cm, align=center, inner sep=3pt, minimum height=1.0cm}
+]
+
+    % Cột 1: Người dùng / Web
+    \node[user] (user) {\textbf{Người học / Trình duyệt}\\Dashboard đặt phiên\\Nhập lời nhắc LCD\\Đăng nhập bcrypt};
+    
+    % Cột 2: Node-RED
+    \node[nr, right=0.6cm of user] (nr) {\textbf{Node-RED Engine}\\Xác thực tài khoản\\Đóng gói JSON lệnh\\Publish điều khiển};
+    
+    % Cột 3: Broker
+    \node[broker, right=0.6cm of nr] (broker) {\textbf{MQTT Broker}\\(Mosquitto Server)\\Port: 1883};
+    
+    % Cột 4: ESP32 Box
+    \node[esp, right=0.6cm of broker] (esp) {\textbf{ESP32 Box}\\\texttt{timer, lcd\_flow}\\Đếm ngược Pomodoro\\SoftAP Web Server};
+    
+    % Cột 5: Thiết bị Output tại trạm
+    \node[dest, above right=0.1cm and 0.6cm of esp] (buzzer) {\textbf{Còi Active Buzzer}\\GPIO25 (Kích âm\\hết phiên học/nghỉ)};
+    \node[dest, below right=0.1cm and 0.6cm of esp] (lcd) {\textbf{Màn hình LCD 1602}\\Giao tiếp I2C PCF8574\\(SDA 21, SCL 22)};
+    
+    % Chế độ SoftAP (bên dưới ESP32)
+    \node[ap, below=0.6cm of esp] (ap) {\textbf{SoftAP Portal}\\Phát Wi-Fi 192.168.4.1\\Cấu hình SSID/Pass};
+
+    % Mũi tên từ User -> Node-RED -> Broker -> ESP32
+    \draw[-{Latex[length=3mm]}, color=purple!80!black, very thick] (user) -- 
+        node[above, font=\tiny\bfseries] {HTTPS / Web} 
+        node[below, font=\tiny] {Đặt phiên, text LCD} (nr);
+        
+    \draw[-{Latex[length=3mm]}, color=red!80!black, very thick] (nr) -- 
+        node[above, font=\tiny\bfseries] {Publish topics} 
+        node[below, font=\tiny] {\texttt{study/timer, lcd}} (broker);
+        
+    \draw[-{Latex[length=3mm]}, color=cyan!80!black, very thick] (broker) -- 
+        node[above, font=\tiny\bfseries] {Subscribe} 
+        node[below, font=\tiny] {Nhận JSON lệnh} (esp);
+
+    % ESP32 -> Outputs
+    \draw[-{Latex[length=2.5mm]}, color=orange!80!black, very thick] (esp) -| 
+        node[above, font=\tiny\bfseries] {Active-LOW} (buzzer);
+    \draw[-{Latex[length=2.5mm]}, color=orange!80!black, very thick] (esp) -| 
+        node[below, font=\tiny\bfseries] {Chuỗi text (I2C)} (lcd);
+        
+    % SoftAP liên kết
+    \draw[{Latex[length=2.5mm]}-{Latex[length=2.5mm]}, color=teal!70!black, dashed] (esp) -- 
+        node[right, font=\tiny] {Mất Wi-Fi} (ap);
+
+\end{tikzpicture}
+\caption{Sơ đồ kiến trúc và luồng truyền nhận dữ liệu Luồng 3 (Phụ trách: La Anh Hào)}
+\label{fig:so_do_luong_3}
+\end{figure}
+
+% ==========================================================
+% 2.3.4 SƠ ĐỒ TỔNG HỢP 3 LÀN
+% ==========================================================
+\subsubsection{Sơ đồ tổng hợp phân tách 3 làn dữ liệu (3 Swimlanes)}
+
+Hình \ref{fig:so_do_tong_hop_3_luong} tổng hợp toàn diện cả 3 luồng hoạt động song song trong hệ thống Pomodoro Box, thể hiện rõ tính gắn kết nhưng hoàn toàn phân tách giữa trách nhiệm phần việc của 3 thành viên:
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    font=\sffamily\scriptsize,
+    box/.style={draw=blue!80!black, fill=blue!8, thick, rounded corners=3pt, text width=2.4cm, align=center, inner sep=4pt, minimum height=1.0cm},
+    hw/.style={draw=teal!80!black, fill=teal!10, thick, rounded corners=3pt, text width=2.4cm, align=center, inner sep=4pt, minimum height=1.0cm},
+    nr/.style={draw=red!80!black, fill=red!10, thick, rounded corners=3pt, text width=2.5cm, align=center, inner sep=4pt, minimum height=1.0cm},
+    dest/.style={draw=orange!80!black, fill=orange!15, thick, rounded corners=3pt, text width=2.4cm, align=center, inner sep=4pt, minimum height=1.0cm}
+]
+
+    % Khung làn 1 (Minh)
+    \draw[draw=teal!50, fill=teal!5, rounded corners=6pt] (-1.5, 0.9) rectangle (14.2, -1.0);
+    \node[anchor=west, font=\scriptsize\bfseries, color=teal!70!black] at (-1.3, 0.65) {Luồng 1 (Phụ trách: Trần Nguyễn Tuấn Minh) -- Input vi khí hậu, Dashboard \& Lưu trữ Supabase};
+
+    \node[hw] (l1_hw) at (0, -0.2) {\textbf{DHT22}\\(GPIO4)};
+    \node[box, right=0.6cm of l1_hw] (l1_esp) {\textbf{ESP32}\\\texttt{dht\_flow}};
+    \node[box, right=0.6cm of l1_esp] (l1_mqtt) {\textbf{MQTT Broker}\\Topic: \texttt{study/dht}};
+    \node[nr, right=0.6cm of l1_mqtt] (l1_nr) {\textbf{Node-RED}\\Gauge \& Charts};
+    \node[dest, right=0.6cm of l1_nr] (l1_db) {\textbf{Supabase DB}\\Bảng \texttt{sensor\_data}};
+
+    \draw[-{Latex}, teal!80!black, thick] (l1_hw) -- (l1_esp);
+    \draw[-{Latex}, blue!80!black, thick] (l1_esp) -- node[above, font=\tiny] {\texttt{\{temp,hum\}}} (l1_mqtt);
+    \draw[-{Latex}, cyan!80!black, thick] (l1_mqtt) -- (l1_nr);
+    \draw[{Latex}-{Latex}, purple!80!black, thick] (l1_nr) -- node[above, font=\tiny] {SQL Sync} (l1_db);
+
+    % Khung làn 2 (Dương)
+    \draw[draw=blue!50, fill=blue!5, rounded corners=6pt] (-1.5, -1.4) rectangle (14.2, -3.3);
+    \node[anchor=west, font=\scriptsize\bfseries, color=blue!70!black] at (-1.3, -1.65) {Luồng 2 (Phụ trách: Nguyễn Quốc Dương) -- Input quang học, Phiên học RFID \& Cảnh báo Telegram/Gmail};
+
+    \node[hw] (l2_hw) at (0, -2.5) {\textbf{LM393 + RFID}\\Quang trở / RC522};
+    \node[box, right=0.6cm of l2_hw] (l2_esp) {\textbf{ESP32}\\\texttt{light, rfid\_flow}\\+ LED đỏ (GPIO26)};
+    \node[box, right=0.6cm of l2_esp] (l2_mqtt) {\textbf{MQTT Broker}\\Topics: \texttt{light, rfid}};
+    \node[nr, right=0.6cm of l2_mqtt] (l2_nr) {\textbf{Node-RED}\\Bộ đếm phiên học};
+    \node[dest, right=0.6cm of l2_nr] (l2_alert) {\textbf{Telegram \& Gmail}\\Cảnh báo $>60$p / Tuần};
+
+    \draw[-{Latex}, teal!80!black, thick] (l2_hw) -- (l2_esp);
+    \draw[-{Latex}, blue!80!black, thick] (l2_esp) -- node[above, font=\tiny] {\texttt{\{lux,uid\}}} (l2_mqtt);
+    \draw[-{Latex}, cyan!80!black, thick] (l2_mqtt) -- (l2_nr);
+    \draw[-{Latex}, red!80!black, thick] (l2_nr) -- node[above, font=\tiny] {API / SMTP} (l2_alert);
+
+    % Khung làn 3 (Hào)
+    \draw[draw=orange!50, fill=orange!5, rounded corners=6pt] (-1.5, -3.7) rectangle (14.2, -5.6);
+    \node[anchor=west, font=\scriptsize\bfseries, color=orange!70!black] at (-1.3, -3.95) {Luồng 3 (Phụ trách: La Anh Hào) -- Output còi Pomodoro, Màn hình LCD \& Cấu hình mạng SoftAP};
+
+    \node[hw] (l3_hw) at (0, -4.8) {\textbf{Buzzer + LCD}\\Còi 5V + LCD 1602};
+    \node[box, right=0.6cm of l3_hw] (l3_esp) {\textbf{ESP32}\\\texttt{timer, lcd\_flow}\\+ SoftAP Wi-Fi};
+    \node[box, right=0.6cm of l3_esp] (l3_mqtt) {\textbf{MQTT Broker}\\Topics: \texttt{timer, lcd}};
+    \node[nr, right=0.6cm of l3_mqtt] (l3_nr) {\textbf{Node-RED}\\Lệnh hẹn giờ \& Text};
+    \node[dest, right=0.6cm of l3_nr] (l3_web) {\textbf{Người dùng / Web}\\Đăng nhập bcrypt};
+
+    \draw[{Latex}-, orange!80!black, thick] (l3_hw) -- (l3_esp);
+    \draw[{Latex}-, orange!80!black, thick] (l3_esp) -- node[above, font=\tiny] {\texttt{\{minutes,text\}}} (l3_mqtt);
+    \draw[{Latex}-, orange!80!black, thick] (l3_mqtt) -- (l3_nr);
+    \draw[{Latex}-, purple!80!black, thick] (l3_nr) -- node[above, font=\tiny] {Đặt phiên} (l3_web);
+
+\end{tikzpicture}
+\caption{Sơ đồ tổng hợp phân tách rõ ràng 3 làn bơi (3 Swimlanes) và trách nhiệm của từng thành viên}
+\label{fig:so_do_tong_hop_3_luong}
 \end{figure}
