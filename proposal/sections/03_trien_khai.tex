@@ -1,0 +1,106 @@
+\section{Triển khai}
+
+\subsection{Danh sách linh kiện điện tử sử dụng trong sản phẩm}
+
+Để bảo đảm tính khả thi và độ tin cậy của Trạm học tập Pomodoro trong điều kiện vận hành liên tục, nhóm đã lựa chọn các module phần cứng và linh kiện điện tử tiêu chuẩn, thông dụng và có sẵn trên thị trường TP.HCM. Bảng \ref{tab:danh_sach_linh_kien} tổng hợp chi tiết danh mục linh kiện, số lượng, giá thành tham khảo và ID chức năng liên quan theo đúng biểu mẫu quy định của môn học.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{|c|p{4.2cm}|c|r|c|p{2.8cm}|c|}
+\hline
+\textbf{STT} & \textbf{Tên linh kiện} & \textbf{SL} & \textbf{Giá (VNĐ)} & \textbf{Hình ảnh*} & \textbf{Link tham khảo**} & \textbf{ID CN} \\ \hline
+1 & Vi điều khiển ESP32 DevKit V1 (30 chân) & 1 & 115.000 & Xem H.3.1 & \href{https://hshop.vn/products/kit-rf-thu-phat-wifi-ble-esp32-nodemcu}{hshop.vn/esp32} & ID 11, 12 \\ \hline
+2 & Cảm biến nhiệt độ \& độ ẩm DHT22 & 1 & 75.000 & Xem H.3.1 & \href{https://hshop.vn/products/cam-bien-do-am-nhiet-do-dht22}{hshop.vn/dht22} & ID 1 \\ \hline
+3 & Module quang trở LM393 (ngõ ra Analog) & 1 & 15.000 & Xem H.3.1 & \href{https://hshop.vn/products/mach-cam-bien-anh-sang-quang-tro}{hshop.vn/ldr-lm393} & ID 4 \\ \hline
+4 & Active Buzzer 5V (kích mức thấp Active-LOW) & 1 & 12.000 & Xem H.3.1 & \href{https://hshop.vn/products/mach-coi-chip-active-buzzer}{hshop.vn/buzzer} & ID 3 \\ \hline
+5 & Nút nhấn cơ học $6 \times 6\text{ mm}$ + Đèn LED đỏ 5mm & 1 & 5.000 & Xem H.3.1 & \href{https://hshop.vn/products/nut-nhan-4-chan-dip}{hshop.vn/button-led} & ID 6 \\ \hline
+6 & Màn hình LCD 1602 kèm module I2C PCF8574 & 1 & 65.000 & Xem H.3.1 & \href{https://hshop.vn/products/man-hinh-lcd1602-kem-i2c}{hshop.vn/lcd1602} & ID 5 \\ \hline
+7 & Module đọc thẻ RFID RC522 (13.56 MHz, SPI) & 1 & 45.000 & Xem H.3.1 & \href{https://hshop.vn/products/mach-rfid-rc522-13-56mhz}{hshop.vn/rc522} & ID 2 \\ \hline
+8 & Thẻ từ RFID Mifare Classic 1K S50 trắng & 2 & 16.000 & Xem H.3.1 & \href{https://hshop.vn/products/the-trang-rfid-mifare-13-56mhz}{hshop.vn/the-s50} & ID 2 \\ \hline
+9 & Vỏ bảo vệ gia công in 3D nhựa ABS & 1 & 120.000 & Xem H.2.1 & \href{https://nshopvn.com/dich-vu-in-3d/}{nshopvn.com/in3d} & Vỏ hộp \\ \hline
+10 & Breadboard MB-102 và bộ 40 dây cắm Dupont & 1 & 35.000 & Xem H.3.1 & \href{https://hshop.vn/products/breadboard-mb-102}{hshop.vn/breadboard} & Kết nối \\ \hline
+11 & Cáp nạp dữ liệu và cấp nguồn Micro USB & 1 & 20.000 & Xem H.3.1 & \href{https://hshop.vn/products/cap-micro-usb}{hshop.vn/cap-usb} & Nguồn điện \\ \hline
+\multicolumn{3}{|r|}{\textbf{Tổng chi phí dự kiến:}} & \textbf{523.000} & \multicolumn{3}{l|}{\textbf{Năm trăm hai mươi ba nghìn đồng}} \\ \hline
+\end{tabular}
+\caption{Danh mục linh kiện điện tử và dự trù kinh phí thực hiện sản phẩm}
+\label{tab:danh_sach_linh_kien}
+\end{table}
+
+\noindent \textit{\footnotesize * Hình ảnh bố trí thực tế của các linh kiện được trình bày chi tiết tại Hình \ref{fig:3d_exterior} và Hình \ref{fig:3d_interior}.}\\
+\noindent \textit{\footnotesize ** Link tham khảo giá có thể click trực tiếp trên file PDF để dẫn đến trang sản phẩm của các nhà cung cấp uy tín tại TP.HCM (Hshop.vn, Nshopvn.com).}
+
+\subsubsection{Cơ sở vật lý của các linh kiện và cảm biến sử dụng}
+Nhằm gắn kết chặt chẽ phần cứng với kiến thức học phần \textit{Vật lý cho Công nghệ Thông tin}, nguyên lý hoạt động của các thiết bị được giải thích chi tiết như sau:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item \textbf{Cảm biến DHT22 (Đo nhiệt độ và độ ẩm):}
+    \begin{itemize}
+        \item \textit{Đo nhiệt độ:} Sử dụng nhiệt điện trở hệ số âm NTC (Negative Temperature Coefficient). Khi nhiệt độ không khí tăng, dao động nhiệt của mạng tinh thể bán dẫn kích thích các electron vượt vùng cấm, làm tăng mật độ hạt dẫn tự do và dẫn đến điện trở giảm theo hàm mũ:
+        \begin{equation}
+            R(T) = R_0 \cdot \exp\left[ \beta \left( \frac{1}{T} - \frac{1}{T_0} \right) \right]
+        \end{equation}
+        \item \textit{Đo độ ẩm:} Dựa trên nguyên lý cảm biến điện dung. Giữa hai bản cực của tụ điện có một lớp màng polymer nhạy ẩm. Khi độ ẩm không khí thay đổi, hơi nước hấp phụ vào polymer làm biến đổi hằng số điện môi $\varepsilon$, dẫn đến sự thay đổi điện dung $C = \frac{\varepsilon \varepsilon_0 S}{d}$. Mạch tích hợp bên trong chuyển đổi giá trị điện dung thành dữ liệu số 40-bit.
+    \end{itemize}
+    \item \textbf{Module quang trở LM393 (Đo cường độ ánh sáng):}
+    \begin{itemize}
+        \item Hoạt động dựa trên \textbf{hiệu ứng quang điện trong} (quang dẫn) của chất bán dẫn Cadmium Sulfide (CdS). Khi photon ánh sáng có năng lượng $h\nu \ge E_g$ chiếu vào bề mặt, các electron trong vùng hóa trị được giải phóng thành electron dẫn tự do, làm điện trở của quang trở giảm mạnh từ hàng trăm k$\Omega$ (trong bóng tối) xuống chỉ còn vài trăm $\Omega$ (dưới ánh sáng đèn).
+        \item Cầu phân áp biến đổi sự thay đổi điện trở này thành tín hiệu điện áp tương tự (Analog Voltage) được đưa vào chân ADC1 (GPIO34) của ESP32.
+    \end{itemize}
+    \item \textbf{Module RFID RC522 (Nhận dạng tần số sóng vô tuyến):}
+    \begin{itemize}
+        \item Dựa trên \textbf{hiện tượng cảm ứng điện từ cộng hưởng} theo định luật Faraday ở tần số cao 13.56 MHz (chuẩn ISO/IEC 14443A).
+        \item Anten trên mạch RC522 bức xạ từ trường biến thiên $B(t)$. Khi thẻ Mifare tiếp cận, từ trường biến thiên xuyên qua cuộn dây tích hợp trong thẻ sinh ra suất điện động cảm ứng $\mathcal{E} = -\frac{d\Phi}{dt}$. Dòng điện này nạp cho tụ điện để cấp nguồn cho vi mạch xử lý trong thẻ hoạt động và phát ngược lại mã UID về đầu đọc thông qua cơ chế điều chế tải (Load Modulation).
+    \end{itemize}
+    \item \textbf{Đèn LED đỏ 5mm (Phát quang trạng thái):}
+    \begin{itemize}
+        \item Hoạt động dựa trên \textbf{hiện tượng phát xạ tái hợp} trong chất bán dẫn quang điện tử. Khi có dòng điện phân cực thuận đi qua lớp tiếp giáp p-n (cực Anode nối chân GPIO26 qua điện trở hạn dòng 220 $\Omega$), các electron từ vùng bán dẫn n tràn qua tái hợp với lỗ trống ở vùng p, giải phóng photon có bước sóng đỏ đặc trưng ($\lambda \approx 620 - 750\text{ nm}$).
+    \end{itemize}
+    \item \textbf{Còi báo Active Buzzer 5V (Âm thanh Pomodoro):}
+    \begin{itemize}
+        \item Sử dụng \textbf{hiệu ứng áp điện nghịch} (Inverse Piezoelectric Effect) hoặc cảm ứng điện từ. Khi cấp điện áp mức thấp (Active-LOW), mạch dao động tích hợp sẵn tạo ra từ trường biến thiên làm màng rung kim loại dao động với tần số âm thanh nghe được ($f \approx 2.5\text{ kHz}$), tạo ra âm thanh bíp rõ ràng báo hiệu hết phiên học.
+    \end{itemize}
+\end{enumerate}
+
+\newpage
+\subsection{Kế hoạch thực hiện}
+
+Dựa trên bảng chức năng đã lập ở Mục 1, nhóm xây dựng kế hoạch triển khai chi tiết cho học kỳ với thời lượng 12 tuần làm việc. Theo đúng quy chế đồ án môn học, \textbf{mỗi chức năng chỉ được phân công cho một thành viên chịu trách nhiệm chính} như trong Bảng \ref{tab:ke_hoach_thuc_hien}.
+
+\begin{longtable}{|c|p{7.0cm}|p{3.0cm}|p{3.8cm}|}
+\hline
+\textbf{ID CN} & \textbf{Nội dung công việc thực hiện} & \textbf{Thời gian} & \textbf{Phân công**} \\ \hline
+\endfirsthead
+\hline
+\textbf{ID CN} & \textbf{Nội dung công việc thực hiện} & \textbf{Thời gian} & \textbf{Phân công**} \\ \hline
+\endhead
+\hline
+\textbf{ID 1} & Lập trình đọc cảm biến DHT22, kiểm tra checksum và xuất bản dữ liệu lên topic \texttt{study/dht} & Tuần 3 -- Tuần 4 (15 giờ) & Trần Nguyễn Tuấn Minh \\ \hline
+
+\textbf{ID 2} & Tích hợp đầu đọc RFID RC522 qua chuẩn SPI, đọc UID và đối soát dữ liệu phiên học trên Supabase & Tuần 5 -- Tuần 6 (20 giờ) & Nguyễn Quốc Dương \\ \hline
+
+\textbf{ID 3} & Lập trình mạch điều khiển còi Active Buzzer 5V theo nhịp Pomodoro và tạo nút bấm hẹn giờ trên web & Tuần 4 -- Tuần 5 (15 giờ) & La Anh Hào \\ \hline
+
+\textbf{ID 4} & Lập trình đọc ADC1 quang trở LM393, tính toán mức sáng và hiển thị cảnh báo thiếu sáng trên Dashboard & Tuần 3 -- Tuần 4 (12 giờ) & Nguyễn Quốc Dương \\ \hline
+
+\textbf{ID 5} & Lập trình giao tiếp I2C điều khiển LCD 1602, giải mã gói tin chuỗi văn bản nhận từ topic \texttt{study/lcd} & Tuần 6 -- Tuần 7 (15 giờ) & La Anh Hào \\ \hline
+
+\textbf{ID 6} & Lập trình ngắt ngoài nút nhấn GPIO27 (chống rung phím) và điều khiển đèn LED đỏ báo tập trung & Tuần 6 -- Tuần 7 (10 giờ) & Nguyễn Quốc Dương \\ \hline
+
+\textbf{ID 7} & Thiết kế lược đồ cơ sở dữ liệu Supabase PostgreSQL, cấu hình bảng \texttt{sensor\_data} và \texttt{study\_sessions} & Tuần 5 -- Tuần 6 (18 giờ) & Trần Nguyễn Tuấn Minh \\ \hline
+
+\textbf{ID 8} & Xây dựng giao diện Node-RED Dashboard hiển thị kim đo Gauge, đồ thị chuỗi thời gian và bảng lịch sử & Tuần 7 -- Tuần 8 (22 giờ) & Trần Nguyễn Tuấn Minh \\ \hline
+
+\textbf{ID 9} & Xây dựng luồng logic đếm thời gian liên tục và tích hợp Telegram Bot API gửi tin nhắn cảnh báo học quá giờ & Tuần 8 -- Tuần 9 (16 giờ) & Nguyễn Quốc Dương \\ \hline
+
+\textbf{ID 10} & Xây dựng luồng tổng hợp dữ liệu cuối tuần và tích hợp dịch vụ Gmail SMTP gửi báo cáo học tập định kỳ & Tuần 9 -- Tuần 10 (16 giờ) & Nguyễn Quốc Dương \\ \hline
+
+\textbf{ID 11} & Xây dựng luồng xác thực tài khoản, mã hóa băm mật khẩu bcrypt và phân quyền bảo mật dữ liệu cá nhân & Tuần 8 -- Tuần 9 (18 giờ) & La Anh Hào \\ \hline
+
+\textbf{ID 12} & Lập trình Web Server SoftAP Captive Portal trên vi điều khiển ESP32 cho phép cấu hình Wi-Fi linh hoạt & Tuần 9 -- Tuần 10 (20 giờ) & La Anh Hào \\ \hline
+
+\textbf{ID 13} & Thu thập dữ liệu thử nghiệm và lập trình mô hình phân tích điều kiện học tập tối ưu chạy trên Node-RED & Tuần 10 -- Tuần 11 (20 giờ) & Trần Nguyễn Tuấn Minh \\ \hline
+\caption{Kế hoạch triển khai chi tiết và phân công cá nhân cho 13 chức năng}
+\label{tab:ke_hoach_thuc_hien}
+\end{longtable}
+
+\noindent \textit{\footnotesize ** Ghi chú: Mỗi chức năng chỉ phân công cho duy nhất một thành viên chịu trách nhiệm chính theo đúng quy định đồ án cuối kỳ.}

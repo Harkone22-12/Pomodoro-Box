@@ -1,0 +1,328 @@
+\section{Thiết kế}
+
+\subsection{Hình ảnh thiết kế hình dáng 3D của sản phẩm}
+
+Nhằm bảo đảm tính thẩm mỹ, độ bền cơ học và tối ưu hóa không gian trên bàn học của sinh viên, nhóm đã tiến hành thiết kế toàn bộ kết cấu vỏ hộp 3D chuyên dụng bằng phần mềm Autodesk Fusion 360 và thực hiện gia công bằng công nghệ in 3D nhựa nhiệt dẻo ABS. 
+
+\subsubsection{Kích thước tổng thể và kết cấu vỏ hộp}
+Vỏ hộp Trạm học tập Pomodoro được thiết kế dạng hình hộp chữ nhật bo tròn 4 góc ($R = 5\text{ mm}$), chia làm 2 phần: \textbf{Thân hộp (Bottom Case)} và \textbf{Nắp hộp (Top Cover)} ghép nối chính xác bằng 4 ngàm cài bên hông kết hợp 4 cọc ốc vít M3 góc:
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Kích thước ngoài:} Chiều dài $150\text{ mm} \times$ Chiều rộng $100\text{ mm} \times$ Chiều cao $47\text{ mm}$.
+    \item \textbf{Độ dày thành vỏ:} $2.5\text{ mm}$ (thành bên) và $3.0\text{ mm}$ (mặt nắp), đảm bảo chống biến dạng nhiệt và che chắn tốt linh kiện bên trong.
+    \item \textbf{Phân khoang cách nhiệt thông minh:} Bên trong thân hộp được thiết kế vách ngăn composite chia thành 2 khoang độc lập:
+    \begin{itemize}
+        \item \textit{Khoang điều khiển chính:} Chứa vi điều khiển ESP32, mạch chuyển tiếp và còi buzzer.
+        \item \textit{Khoang cảm biến môi trường:} Cảm biến DHT22 được bố trí biệt lập tại khoang này, có các khe tản nhiệt hướng ra ngoài để nhiệt lượng tỏa ra từ chip Wi-Fi ESP32 không làm sai lệch kết quả đo nhiệt độ bàn học.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Ánh xạ vị trí linh kiện trên mô hình 3D tương ứng với ID chức năng}
+Để phục vụ công tác kiểm thử và giám sát sản phẩm thực tế, Bảng \ref{tab:map_3d_chuc_nang} ghi chú cụ thể vị trí bố trí của từng linh kiện trên vỏ hộp tương ứng với ID chức năng đã đăng ký ở Mục 1.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|p{4.2cm}|p{5.5cm}|c|}
+\hline
+\textbf{STT} & \textbf{Vị trí bố trí trên vỏ hộp 3D} & \textbf{Chi tiết khoét lỗ / Gia công cơ khí} & \textbf{ID Chức năng} \\ \hline
+1 & Màn hình LCD 1602 mặt trên & Khoét cửa sổ chữ nhật $71.0 \times 24.0\text{ mm}$ & \textbf{ID 5} \\ \hline
+2 & Nút nhấn cơ học đổi trạng thái & Khoét lỗ tròn $\varnothing 7.0\text{ mm}$ cách mép phải $15\text{ mm}$ & \textbf{ID 6} \\ \hline
+3 & Đèn LED đỏ báo tập trung & Khoét lỗ xuyên $\varnothing 5.2\text{ mm}$ viền vát $45^\circ$ & \textbf{ID 6} \\ \hline
+4 & Vùng cảm ứng quẹt thẻ RFID & Khu vực $52 \times 34\text{ mm}$ dán sát mặt dưới nắp (đọc xuyên 3mm) & \textbf{ID 2} \\ \hline
+5 & Đầu đón sáng quang trở LM393 & Khoét lỗ tròn $\varnothing 5.5\text{ mm}$ đón quang thông & \textbf{ID 4} \\ \hline
+6 & Còi báo âm thanh Active Buzzer & Cụm 5 lỗ tròn thoát âm $\varnothing 1.5\text{ mm}$ & \textbf{ID 3} \\ \hline
+7 & Khe cảm biến nhiệt ẩm DHT22 & 4 khe thông khí $12.0 \times 2.0\text{ mm}$ vách hông & \textbf{ID 1} \\ \hline
+8 & Khoang vi điều khiển ESP32 & 4 trụ đỡ ốc vít M3 có ren đồng cấy nhiệt ở đáy & \textbf{ID 11, ID 12} \\ \hline
+9 & Cổng cấp nguồn Micro USB & Khoét lỗ vát bo tròn $12.0 \times 7.0\text{ mm}$ ở vách sau & Cấp nguồn \\ \hline
+\end{tabular}
+\caption{Bảng ánh xạ vị trí lắp đặt linh kiện trên vỏ hộp 3D với ID chức năng}
+\label{tab:map_3d_chuc_nang}
+\end{table}
+
+\newpage
+\subsubsection{Hình ảnh các góc nhìn thiết kế 3D sản phẩm}
+
+Dưới đây là các hình ảnh dựng hình 3D thực tế chi tiết từ phần mềm Autodesk Fusion 360:
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/design/hinh_3d_1_ben_ngoai_truoc.png}
+        \caption{Phối cảnh bên ngoài nhìn từ mặt trước}
+        \label{fig:3d_front}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/design/hinh_3d_2_ben_ngoai_sau.png}
+        \caption{Phối cảnh bên ngoài nhìn từ mặt sau}
+        \label{fig:3d_back}
+    \end{subfigure}
+    \vspace{0.4cm}
+    \caption{Phối cảnh 3D ngoại quan sản phẩm Trạm học tập Pomodoro}
+    \label{fig:3d_exterior}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/design/hinh_3d_3_ben_trong_than_hop.png}
+        \caption{Bố trí không gian bên trong thân hộp (Bottom Case)}
+        \label{fig:3d_inside_bottom}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/design/hinh_3d_4_ben_trong_mat_duoi_nap.png}
+        \caption{Bố trí ngàm bắt linh kiện mặt dưới nắp (Top Cover)}
+        \label{fig:3d_inside_top}
+    \end{subfigure}
+    \vspace{0.4cm}
+    \caption{Không gian bố trí linh kiện bên trong thân hộp và mặt dưới nắp}
+    \label{fig:3d_interior}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/design/hinh_3d_5_tach_nap.png}
+        \caption{Bản vẽ bóc tách nắp và thân (Exploded View)}
+        \label{fig:3d_exploded}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/design/hinh_3d_6_ban_ve_kich_thuoc.png}
+        \caption{Bản vẽ kỹ thuật 2D kích thước chi tiết}
+        \label{fig:3d_dimension}
+    \end{subfigure}
+    \vspace{0.4cm}
+    \caption{Bản vẽ bóc tách lắp ráp và kích thước hình học chi tiết}
+    \label{fig:3d_cad}
+\end{figure}
+
+\newpage
+\subsection{Hình ảnh wireframe cho website quản lý sản phẩm}
+
+Giao diện trang web quản trị của Trạm học tập Pomodoro được thiết kế hiện đại trên nền tảng \textbf{Node-RED Dashboard}, hỗ trợ hiển thị tối ưu trên cả máy tính để bàn (Desktop) và điện thoại thông minh (Mobile). Toàn bộ các widget, đồ thị và trường nhập liệu trên giao diện đều được ánh xạ chặt chẽ với các chức năng đã đăng ký.
+
+\subsubsection{Ánh xạ các vùng giao diện Website với ID chức năng}
+Bảng \ref{tab:map_wireframe_chuc_nang} chỉ rõ từng vùng tương tác trên giao diện tương ứng với ID chức năng cụ thể:
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|p{4.0cm}|p{6.0cm}|c|}
+\hline
+\textbf{STT} & \textbf{Vùng giao diện trên Web} & \textbf{Thành phần hiển thị \& Tác vụ tương tác} & \textbf{ID Chức năng} \\ \hline
+1 & Gauge đo nhiệt độ và độ ẩm & Đồng hồ đo Gauge kim chỉ số đo DHT22 thời gian thực & \textbf{ID 1} \\ \hline
+2 & Đồng hồ đo cường độ sáng & Widget mức sáng phân loại: Đủ sáng / Hơi tối / Quá tối & \textbf{ID 4} \\ \hline
+3 & Bảng điều khiển Pomodoro & Nút bấm hẹn giờ 25 phút, thanh trượt chỉnh phút, nút Dừng & \textbf{ID 3} \\ \hline
+4 & Vùng gửi tin nhắn LCD & Ô văn bản nhập chuỗi ký tự và nút nhấn gửi xuống màn hình & \textbf{ID 5} \\ \hline
+5 & Bảng nhật ký quẹt thẻ RFID & Danh sách thời gian thực các sự kiện quẹt thẻ mở/kết thúc phiên & \textbf{ID 2} \\ \hline
+6 & Biểu tượng trạng thái tập trung & Biểu tượng bóng đèn / huy hiệu đỏ sáng khi người học bật nút & \textbf{ID 6} \\ \hline
+7 & Đồ thị chuỗi thời gian & Biểu đồ đường (Line Chart) biến thiên nhiệt/ẩm/sáng từ Supabase & \textbf{ID 7, ID 8} \\ \hline
+8 & Cấu hình cảnh báo thông minh & Ô cài đặt ngưỡng thời gian gửi cảnh báo Telegram và Email tuần & \textbf{ID 9, ID 10} \\ \hline
+9 & Màn hình Đăng nhập \& Đăng ký & Form nhập tên tài khoản, mật khẩu băm bcrypt và liên kết UID & \textbf{ID 11} \\ \hline
+10 & Thẻ khuyến nghị học tập & Khung hiển thị gợi ý điều kiện học tập tối ưu từ mô hình phân tích & \textbf{ID 13} \\ \hline
+\end{tabular}
+\caption{Bảng ánh xạ các vùng thiết kế Website với ID chức năng tương ứng}
+\label{tab:map_wireframe_chuc_nang}
+\end{table}
+
+\subsubsection{Hình ảnh các màn hình Wireframe Website chi tiết}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/wireframes/01-sign-in-desktop.png}
+        \caption{Màn hình Đăng nhập / Đăng ký Desktop (ID 11)}
+        \label{fig:wf_signin}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/wireframes/02-workspace-desktop.png}
+        \caption{Bàn làm việc thời gian thực Workspace (ID 1, 3, 4, 5, 6)}
+        \label{fig:wf_workspace}
+    \end{subfigure}
+    \vspace{0.3cm}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/wireframes/03-history-desktop.png}
+        \caption{Lịch sử phiên học và đồ thị chuỗi thời gian (ID 2, 7, 8)}
+        \label{fig:wf_history}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/wireframes/04-settings-desktop.png}
+        \caption{Trang cài đặt hệ thống và cấu hình thông báo (ID 9, 10, 13)}
+        \label{fig:wf_settings}
+    \end{subfigure}
+    \vspace{0.4cm}
+    \caption{Thiết kế Wireframe giao diện trang quản trị trên máy tính (Desktop)}
+    \label{fig:wireframe_desktop}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.23\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/wireframes/05-sign-in-mobile.png}
+        \caption{Đăng nhập (ID 11)}
+        \label{fig:wf_mob_signin}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.23\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/wireframes/06-workspace-mobile-timer.png}
+        \caption{Hẹn giờ (ID 3)}
+        \label{fig:wf_mob_timer}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.23\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/wireframes/07-workspace-mobile-lcd.png}
+        \caption{Gửi LCD (ID 5)}
+        \label{fig:wf_mob_lcd}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.23\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/wireframes/08-workspace-mobile-room.png}
+        \caption{Vi khí hậu (ID 1, 4)}
+        \label{fig:wf_mob_room}
+    \end{subfigure}
+    \vspace{0.4cm}
+    \caption{Thiết kế Wireframe giao diện tương tác trên thiết bị di động (Mobile)}
+    \label{fig:wireframe_mobile}
+\end{figure}
+
+\newpage
+\subsection{Sơ đồ truyền và nhận dữ liệu giữa các thành phần trong hệ thống}
+
+Nhằm thể hiện bức tranh toàn cảnh về cách thức vận hành của toàn bộ 13 chức năng, nhóm đã xây dựng \textbf{một sơ đồ tổng hợp duy nhất} mô tả chính xác luồng truyền nhận dữ liệu giữa 4 tầng thành phần chính:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item \textbf{Thiết bị phần cứng (ESP32 Box):} Nơi kết nối cảm biến DHT22, quang trở LM393, đầu đọc RFID RC522, nút nhấn, màn hình LCD 1602, còi Active Buzzer và đèn LED đỏ.
+    \item \textbf{Hạ tầng trung chuyển (Mosquitto MQTT Broker):} Máy chủ điều phối bản tin MQTT đóng vai trò trung gian phân phát gói tin thời gian thực.
+    \item \textbf{Máy chủ điều phối trung tâm (Node-RED Flow Engine \& Dashboard):} Nơi đón nhận thông điệp, giải mã JSON, hiển thị giao diện người dùng, điều hành các luồng tự động và kích hoạt cảnh báo ngoại vi.
+    \item \textbf{Cơ sở dữ liệu đám mây \& Dịch vụ bên ngoài (Supabase, Telegram, Gmail):} Nơi lưu trữ vĩnh viễn dữ liệu chuỗi thời gian và gửi thông điệp cảnh báo đến người học.
+\end{enumerate}
+
+Để dễ dàng theo dõi, các luồng xử lý trên sơ đồ được mã hóa bằng các màu sắc và kiểu mũi tên riêng biệt:
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Màu xanh lá đậm (Mũi tên nét liền):} \textit{Luồng thu thập dữ liệu cảm biến (Input):} DHT22 $\rightarrow$ \texttt{study/dht}, Quang trở $\rightarrow$ \texttt{study/light} (ID 1, ID 4).
+    \item \textbf{Màu xanh dương đậm (Mũi tên nét đôi):} \textit{Luồng định danh và mở phiên học bằng RFID:} Thẻ RFID $\rightarrow$ \texttt{study/rfid} $\rightarrow$ Đối soát dữ liệu (ID 2).
+    \item \textbf{Màu cam đậm (Mũi tên nét đứt gạch):} \textit{Luồng điều khiển từ Web xuống phần cứng (Output):} Lệnh hẹn giờ $\rightarrow$ \texttt{study/timer}, Tin nhắn văn bản $\rightarrow$ \texttt{study/lcd} (ID 3, ID 5).
+    \item \textbf{Màu đỏ đậm (Mũi tên nét liền dày):} \textit{Luồng cảnh báo thông minh và báo cáo định kỳ:} Node-RED kích hoạt Telegram Bot API và gửi Email SMTP (ID 9, ID 10).
+    \item \textbf{Màu tím đậm (Mũi tên chấm chấm):} \textit{Luồng lưu trữ đám mây \& phân tích dữ liệu:} Đồng bộ SQL chuỗi thời gian và cấp khuyến nghị tối ưu (ID 7, ID 8, ID 13).
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node distance=1.4cm and 1.8cm,
+    font=\sffamily\footnotesize,
+    box/.style={draw=blue!80!black, fill=blue!5, thick, rounded corners=4pt, text width=3.2cm, align=center, inner sep=6pt, minimum height=1.3cm},
+    hw/.style={draw=teal!80!black, fill=teal!10, thick, rounded corners=4pt, text width=3.4cm, align=center, inner sep=6pt, minimum height=1.3cm},
+    serv/.style={draw=red!80!black, fill=red!10, thick, rounded corners=4pt, text width=3.4cm, align=center, inner sep=6pt, minimum height=1.5cm},
+    cloud/.style={draw=purple!80!black, fill=purple!10, thick, rounded corners=4pt, text width=3.2cm, align=center, inner sep=6pt, minimum height=1.3cm},
+    ext/.style={draw=orange!80!black, fill=orange!10, thick, rounded corners=4pt, text width=3.0cm, align=center, inner sep=5pt, minimum height=1.1cm}
+]
+
+    % Cột 1: Phần cứng tại chỗ
+    \node[hw] (esp) {\textbf{Trạm ESP32 Box}\\(DHT22, Quang trở, RFID,\\LCD1602, Buzzer, LED, Nút)};
+    
+    % Cột 2: Broker trung gian
+    \node[box, right=of esp] (broker) {\textbf{MQTT Broker}\\(Mosquitto Server)\\Port: 1883 / 8883};
+    
+    % Cột 3: Node-RED Server
+    \node[serv, right=of broker] (nodered) {\textbf{Node-RED Engine}\\(Flows Core +\\Web Dashboard)};
+    
+    % Cột 4: Cloud Database
+    \node[cloud, right=of nodered] (supabase) {\textbf{Supabase Cloud}\\(PostgreSQL DB\\Bảng \texttt{sensor\_data},\\bảng \texttt{study\_sessions})};
+    
+    % Dịch vụ cảnh báo bên ngoài (dưới Node-RED)
+    \node[ext, below=1.2cm of nodered] (telegram) {\textbf{Telegram Bot API}\\(Cảnh báo ngồi quá lâu)};
+    \node[ext, right=0.8cm of telegram] (gmail) {\textbf{Gmail SMTP Server}\\(Báo cáo tuần 20h CN)};
+    
+    % Thiết bị di động của người dùng (dưới ESP32)
+    \node[box, below=1.2cm of esp] (user_phone) {\textbf{Người học / Điện thoại}\\(Xem Web, nhận tin nhắn)};
+
+    % 1. LUỒNG CẢM BIẾN (Xanh lá - Nét liền)
+    \draw[-{Latex[length=3mm]}, color=green!60!black, very thick] 
+        ($(esp.north east)!0.3!(esp.south east)$) -- 
+        node[above, font=\scriptsize\bfseries, color=green!50!black] {study/dht, light}
+        node[below, font=\tiny, color=black] {\{temp, hum, lux\}} 
+        ($(broker.north west)!0.3!(broker.south west)$);
+        
+    \draw[-{Latex[length=3mm]}, color=green!60!black, very thick] 
+        ($(broker.north east)!0.3!(broker.south east)$) -- 
+        node[above, font=\scriptsize\bfseries, color=green!50!black] {Forward gói tin}
+        ($(nodered.north west)!0.3!(nodered.south west)$);
+
+    % 2. LUỒNG RFID (Xanh dương - Nét đôi)
+    \draw[-{Latex[length=3mm]}, color=blue!70!black, double, thick] 
+        ($(esp.north east)!0.7!(esp.south east)$) -- 
+        node[above, font=\scriptsize\bfseries, color=blue!70!black] {study/rfid}
+        node[below, font=\tiny, color=black] {\{uid: A1B2C3D4\}} 
+        ($(broker.north west)!0.7!(broker.south west)$);
+        
+    \draw[-{Latex[length=3mm]}, color=blue!70!black, double, thick] 
+        ($(broker.north east)!0.7!(broker.south east)$) -- 
+        node[above, font=\scriptsize\bfseries, color=blue!70!black] {Xác thực phiên}
+        ($(nodered.north west)!0.7!(nodered.south west)$);
+
+    % 3. LUỒNG ĐIỀU KHIỂN XUỐNG PHẦN CỨNG (Cam - Nét đứt)
+    \draw[{Latex[length=3mm]}-, color=orange!80!black, dashed, very thick] 
+        (broker.north) to[bend left=30] 
+        node[above, font=\scriptsize\bfseries, color=orange!70!black] {Lệnh: study/timer, study/lcd}
+        node[below, font=\tiny, color=black] {\{minutes: 25\}, \{text: "..."\}} 
+        (esp.north);
+        
+    \draw[{Latex[length=3mm]}-, color=orange!80!black, dashed, very thick] 
+        (nodered.north) to[bend left=30] 
+        node[above, font=\scriptsize\bfseries, color=orange!70!black] {Publish lệnh điều khiển} 
+        (broker.north);
+
+    % 4. LUỒNG SUPABASE (Tím - Nét chấm)
+    \draw[{Latex[length=3mm]}-{Latex[length=3mm]}, color=purple!80!black, loosely dotted, line width=1.5pt] 
+        (nodered) -- 
+        node[above, font=\scriptsize\bfseries, color=purple!80!black] {SQL / HTTPS API}
+        node[below, font=\tiny, color=black] {Ghi chuỗi thời gian \& Lấy lịch sử} 
+        (supabase);
+
+    % 5. LUỒNG CẢNH BÁO TELEGRAM & EMAIL (Đỏ - Nét liền đậm)
+    \draw[-{Latex[length=3mm]}, color=red!70!black, very thick] 
+        ($(nodered.south)!0.3!(nodered.south west)$) -- 
+        node[left, font=\tiny\bfseries, color=red!70!black] {Học $>60$p} 
+        (telegram.north);
+        
+    \draw[-{Latex[length=3mm]}, color=red!70!black, very thick] 
+        ($(nodered.south)!0.3!(nodered.south east)$) -- 
+        node[right, font=\tiny\bfseries, color=red!70!black] {Báo cáo 20h CN} 
+        (gmail.north);
+
+    \draw[-{Latex[length=2.5mm]}, color=red!60!black, dashed] 
+        (telegram.west) -- 
+        node[above, font=\tiny] {Tin nhắn Bot} 
+        (user_phone.east);
+
+    % 6. TƯƠNG TÁC NGƯỜI DÙNG VỚI WEB DASHBOARD
+    \draw[{Latex[length=2.5mm]}-{Latex[length=2.5mm]}, color=gray!70!black] 
+        (user_phone.north) -- 
+        node[left, font=\tiny] {Thao tác Web / Nút bấm} 
+        (esp.south);
+        
+    \draw[{Latex[length=2.5mm]}-{Latex[length=2.5mm]}, color=blue!70!black, bend right=25] 
+        (user_phone.south) to 
+        node[below, font=\tiny] {Truy cập Dashboard qua HTTPS} 
+        (nodered.south);
+
+\end{tikzpicture}
+\caption{Sơ đồ gộp duy nhất mô tả toàn bộ các luồng truyền nhận dữ liệu trong hệ thống}
+\label{fig:so_do_truyen_nhan}
+\end{figure}
