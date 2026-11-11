@@ -106,7 +106,15 @@ Dưới đây là các hình ảnh dựng hình 3D thực tế chi tiết từ p
 \newpage
 \subsection{Hình ảnh wireframe cho website quản lý sản phẩm}
 
-Giao diện trang web quản trị của Trạm học tập Pomodoro được thiết kế hiện đại trên nền tảng \textbf{Node-RED Dashboard}, hỗ trợ hiển thị tối ưu trên cả máy tính để bàn (Desktop) và điện thoại thông minh (Mobile). Toàn bộ các widget, đồ thị và trường nhập liệu trên giao diện đều được ánh xạ chặt chẽ với các chức năng đã đăng ký.
+Giao diện trang web quản trị của Trạm học tập Pomodoro được thiết kế hiện đại trên nền tảng \textbf{Node-RED Dashboard}, hỗ trợ hiển thị đáp ứng (responsive layout) tối ưu trên cả máy tính để bàn (Desktop), máy tính bảng (Tablet) và điện thoại thông minh (Mobile). Toàn bộ các widget, khối điều khiển, biểu đồ và trường nhập liệu trên giao diện đều được ánh xạ chặt chẽ với các chức năng kỹ thuật đã đăng ký.
+
+\subsubsection{Quy tắc bố cục giao diện đáp ứng (Responsive Layout)}
+Giao diện được thiết kế theo tư duy mô-đun hóa cao, tự động thích ứng linh hoạt theo kích thước màn hình của người dùng:
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Màn hình Desktop ($> 1180\text{ px}$):} Bố cục cửa sổ mô-đun nổi (Floating Windows). Người dùng có thể kéo thả, thu nhỏ (minimize) hoặc đóng/mở từng cửa sổ chức năng thông qua thanh công cụ Dock đặt ở cạnh phải. Nút "Arrange" hỗ trợ tự động hoàn nguyên vị trí chuẩn của tất cả các cửa sổ.
+    \item \textbf{Màn hình Tablet ($761 - 1180\text{ px}$):} Hệ thống chuyển sang bố cục lưới 2 cột cố định, thanh công cụ Dock chuyển vị trí lên đỉnh màn hình nhằm tối ưu hóa diện tích hiển thị cảm ứng.
+    \item \textbf{Màn hình Mobile ($\le 760\text{ px}$):} Toàn bộ ứng dụng thu về bố cục 1 cột cuộn mượt mà. Người dùng điều hướng giữa các không gian chức năng thông qua thanh điều hướng đáy (Bottom Navigation Bar) cố định ở cạnh dưới, tối ưu cho thao tác chạm bằng một ngón tay cái.
+\end{itemize}
 
 \subsubsection{Ánh xạ các vùng giao diện Website với ID chức năng}
 Bảng \ref{tab:map_wireframe_chuc_nang} chỉ rõ từng vùng tương tác trên giao diện tương ứng với ID chức năng cụ thể:
@@ -116,20 +124,88 @@ Bảng \ref{tab:map_wireframe_chuc_nang} chỉ rõ từng vùng tương tác tr�
 \begin{tabular}{|c|p{4.0cm}|p{6.0cm}|c|}
 \hline
 \textbf{STT} & \textbf{Vùng giao diện trên Web} & \textbf{Thành phần hiển thị \& Tác vụ tương tác} & \textbf{ID Chức năng} \\ \hline
-1 & Gauge đo nhiệt độ và độ ẩm & Đồng hồ đo Gauge kim chỉ số đo DHT22 thời gian thực & \textbf{ID 1} \\ \hline
-2 & Đồng hồ đo cường độ sáng & Widget mức sáng phân loại: Đủ sáng / Hơi tối / Quá tối & \textbf{ID 4} \\ \hline
-3 & Bảng điều khiển Pomodoro & Nút bấm hẹn giờ 25 phút, thanh trượt chỉnh phút, nút Dừng & \textbf{ID 3} \\ \hline
-4 & Vùng gửi tin nhắn LCD & Ô văn bản nhập chuỗi ký tự và nút nhấn gửi xuống màn hình & \textbf{ID 5} \\ \hline
-5 & Bảng nhật ký quẹt thẻ RFID & Danh sách thời gian thực các sự kiện quẹt thẻ mở/kết thúc phiên & \textbf{ID 2} \\ \hline
-6 & Biểu tượng trạng thái tập trung & Biểu tượng bóng đèn / huy hiệu đỏ sáng khi người học bật nút & \textbf{ID 6} \\ \hline
-7 & Đồ thị chuỗi thời gian & Biểu đồ đường (Line Chart) biến thiên nhiệt/ẩm/sáng từ Supabase & \textbf{ID 7, ID 8} \\ \hline
-8 & Cấu hình cảnh báo thông minh & Ô cài đặt ngưỡng thời gian gửi cảnh báo Telegram và Email tuần & \textbf{ID 9, ID 10} \\ \hline
-9 & Màn hình Đăng nhập \& Đăng ký & Form nhập tên tài khoản, mật khẩu băm bcrypt và liên kết UID & \textbf{ID 11} \\ \hline
-10 & Thẻ khuyến nghị học tập & Khung hiển thị gợi ý điều kiện học tập tối ưu từ mô hình phân tích & \textbf{ID 13} \\ \hline
+1 & Gauge đo nhiệt độ và độ ẩm & Đồng hồ đo kim chỉ số DHT22 và biểu đồ Sparkline 1 giờ & \textbf{ID 1} \\ \hline
+2 & Đồng hồ đo cường độ sáng & Thước đo mức sáng phân loại: Đủ sáng / Thiếu sáng kèm vạch ngưỡng & \textbf{ID 4} \\ \hline
+3 & Bảng điều khiển Pomodoro & Đồng hồ đếm ngược, nút Gửi xuống hộp, nút Dừng, chọn thời lượng & \textbf{ID 3} \\ \hline
+4 & Vùng gửi tin nhắn LCD & Khung giả lập LCD $2\times 16$ ô, ô nhập khử dấu tiếng Việt, phím tắt & \textbf{ID 5} \\ \hline
+5 & Bảng nhật ký quẹt thẻ RFID & Bộ đếm thời gian phiên học, mã thẻ UID, nút mô phỏng quẹt thẻ & \textbf{ID 2} \\ \hline
+6 & Biểu tượng trạng thái tập trung & Đèn báo trạng thái và nhãn Active khi phiên học đang chạy & \textbf{ID 6} \\ \hline
+7 & Đồ thị chuỗi thời gian & Biểu đồ đường kép (Line Chart) nhiệt/ẩm 24 giờ lưu từ Supabase & \textbf{ID 7, ID 8} \\ \hline
+8 & Cấu hình cảnh báo thông minh & Công tắc bật/tắt và ô cài ngưỡng gửi Telegram, Email tuần & \textbf{ID 9, ID 10} \\ \hline
+9 & Màn hình Đăng nhập \& Đăng ký & Biểu mẫu nhập email, mật khẩu mã hóa bcrypt, đo độ mạnh mật khẩu & \textbf{ID 11} \\ \hline
+10 & Thẻ khuyến nghị học tập & Khung hiển thị gợi ý khung giờ, nhiệt ẩm tối ưu từ mô hình phân tích & \textbf{ID 13} \\ \hline
 \end{tabular}
 \caption{Bảng ánh xạ các vùng thiết kế Website với ID chức năng tương ứng}
 \label{tab:map_wireframe_chuc_nang}
 \end{table}
+
+\subsubsection{Chi tiết các nhóm (Groups) và thành phần (Components) ở từng trang Wireframe}
+
+Nhằm đảm bảo tính tường minh trong triển khai phần mềm, cấu trúc giao diện tại mỗi màn hình wireframe được bóc tách chi tiết thành các nhóm (Groups) và thành phần điều khiển (Components) chuyên biệt:
+
+\begin{enumerate}[leftmargin=1.5cm]
+    \item \textbf{Màn hình Đăng nhập \& Tạo tài khoản (Sign in / Register Screen -- ID 11):}
+    \begin{itemize}
+        \item \textit{Nhóm Top Bar thương hiệu:} Chứa logo nhận diện \texttt{Study Station} kèm biểu tượng đồng hồ và đường dẫn chuyển đổi ngữ cảnh nhanh giữa \textit{"Sign in"} và \textit{"Create account"}.
+        \item \textit{Nhóm Hero \& Trực quan hóa chu kỳ Pomodoro:} Khối tiêu đề truyền cảm hứng (\textit{"Your desk, in focus mode"}), đồng hồ hiển thị chu kỳ lớn \texttt{25:00} cùng thanh biểu diễn dải chu kỳ Pomodoro trực quan (\textit{Cycle Strip}: 4 vòng tập trung 25 phút xen kẽ 3 lần nghỉ ngắn 5 phút và 1 lần nghỉ dài 15 phút). Khối quy trình 3 bước hướng dẫn sử dụng nhanh (\textit{Auth Steps}).
+        \item \textit{Nhóm Tóm tắt trạng thái kết nối hộp (Box Status Card):} Thẻ hiển thị trực tiếp dữ liệu cảm biến thời gian thực tại trạm: nhiệt độ/độ ẩm DHT22, giá trị ADC quang trở LDR, trạng thái sẵn sàng của đầu đọc RC522, còi Buzzer và thông điệp chào mừng trên LCD 1602.
+        \item \textit{Nhóm Biểu mẫu Đăng nhập (Sign-in Form):} Trường nhập \texttt{Email} (kiểm tra định dạng sinh viên kèm bắt lỗi inline), trường nhập \texttt{Password} (tối thiểu 8 ký tự, hỗ trợ nút ẩn/hiện mật khẩu), checkbox \textit{"Remember me"}, liên kết \textit{"Forgot password?"} và nút bấm hành động chính \textit{"Sign in"} (gửi dữ liệu xác thực mã băm bcrypt tại Node-RED).
+        \item \textit{Nhóm Biểu mẫu Tạo tài khoản (Register Form):} Trường \texttt{Name}, trường \texttt{Email}, trường \texttt{Password} tích hợp thanh đo độ mạnh mật khẩu 4 mức (\textit{Password Strength Meter}) và trường xác nhận \texttt{Confirm Password}.
+    \end{itemize}
+
+    \item \textbf{Màn hình Bàn làm việc thời gian thực (Workspace / Tổng quan -- ID 1, 3, 4, 5, 6):}
+    \begin{itemize}
+        \item \textit{Thanh Header ứng dụng (App Shell Top Bar):} Hiển thị thương hiệu, breadcrumb điều hướng, tuổi gói tin MQTT cuối (\textit{MQTT age}), đồng hồ thời gian thực, huy hiệu báo trạm trực tuyến (\textit{Box Online}) và nút Đăng xuất (\textit{Sign out}).
+        \item \textit{Thanh Dock công cụ điều khiển cửa sổ (Window Dock):} Thanh nút bấm bật/tắt hiển thị từng cửa sổ mô-đun (Timer, LCD, Climate, Light, Session, Log) kèm nút \textit{"Arrange"} tự động sắp xếp lại cửa sổ và phím tắt mở trang Cài đặt.
+        \item \textit{Cửa sổ Hẹn giờ Pomodoro \& Còi báo (Timer · Buzzer Window -- ID 3):}
+        \begin{itemize}
+            \item Nhãn phân loại chế độ đang chạy: \textit{Focus} (Tập trung), \textit{Short break} (Nghỉ ngắn) hoặc \textit{Long break} (Nghỉ dài).
+            \item Đồng hồ đếm ngược kỹ thuật số khổ lớn (\textit{Digital Countdown}: ví dụ \texttt{18:42} trên tổng \texttt{25:00}).
+            \item Thanh tiến độ trực quan (\textit{Progress Bar}) biểu thị phần trăm thời gian hoàn thành của vòng hiện tại.
+            \item Bộ chỉ báo vòng Pomodoro (\textit{Round Indicator}: ví dụ \textit{"Vòng 3 trên 4"}).
+            \item Cụm nút thao tác: Nút \textit{"Send to box"} (Publish MQTT topic \texttt{study/timer} kích hoạt bộ đếm ESP32) và nút \textit{"Stop"} (dừng đếm).
+            \item Cụm số liệu thống kê nhanh trong ngày (\textit{Stats Trio}): Số vòng hoàn thành hôm nay (\textit{Today}), chuỗi ngày học liên tục (\textit{Streak}) và tổng số vòng trong tuần (\textit{Week}).
+            \item Khối cấu hình mốc thời gian (\textit{Presets Fieldset}): Các nút chọn nhanh thời lượng cố định (25p, 5p, 15p) cùng ô tùy chỉnh thời gian tự do (\textit{Custom Stepper} từ 1 đến 120 phút).
+        \end{itemize}
+        \item \textit{Cửa sổ Giám sát Vi khí hậu (Climate · DHT22 Window -- ID 1):} Chỉ số hiển thị số đo nhiệt độ ($^\circ\text{C}$) và độ ẩm ($\%$ RH) cập nhật tự động từ topic \texttt{study/dht}, tích hợp đồ thị đường mini (\textit{Sparkline}) phản ánh biến thiên trong 1 giờ qua kèm nhãn đánh giá tiện nghi phòng (\textit{Comfort Indicator}).
+        \item \textit{Cửa sổ Giám sát Ánh sáng (Light · LDR Window -- ID 4):} Hiển thị giá trị số nguyên thô ADC (0 -- 4095) từ chân GPIO34, huy hiệu trạng thái thị lực (\textit{"Enough light"} / \textit{"Too dim"}) và thước đo phân đoạn trực quan (\textit{Segmented Bar}) kèm vạch đánh dấu ngưỡng an toàn.
+        \item \textit{Cửa sổ Quản lý Phiên học RFID (Session · RC522 Window -- ID 2, ID 6, ID 9):} Đồng hồ đếm thời lượng phiên học thực tế (\textit{Session Elapsed}), huy hiệu trạng thái \textit{"Active"}, danh sách cặp khóa-giá trị hiển thị mã thẻ từ UID (ví dụ \texttt{A1B2C3D4}) và thời điểm quẹt thẻ. Khối cảnh báo giải lao (\textit{Break Alert Banner} -- ID 9) tự động xuất hiện khi người học ngồi liên tục vượt quá 50--60 phút, ghi rõ thời điểm Telegram Bot đã gửi tin nhắc nhở. Nút bấm mô phỏng quẹt thẻ (\textit{"Simulate card tap"}) hỗ trợ kiểm thử tiện lợi.
+        \item \textit{Cửa sổ Lời nhắc Màn hình LCD (LCD 16x2 Window -- ID 5):} Khung hiển thị mô phỏng giao diện màn hình LCD 1602 thực tế ($2\text{ dòng} \times 16\text{ ký tự}$ ma trận điểm), ô nhập thông điệp tích hợp bộ đếm ký tự và cơ chế tự động chuyển đổi chữ tiếng Việt có dấu thành không dấu để phù hợp bảng mã ASCII của LCD. Tập nút chọn nhanh các câu nhắc phổ biến (\textit{Quick Message Chips}: \textit{"Ready to study"}, \textit{"Do not disturb"}, \textit{"Break time"}, \textit{"Back in 5 min"}, \textit{"On tap chuong 3"}) và nút gửi lệnh Publish MQTT topic \texttt{study/lcd}.
+        \item \textit{Cửa sổ Nhật ký Phiên \& Lệnh (Session Log / Command Feed Window):} Bộ chọn dải thời gian (Tuần/Tháng/Năm), biểu đồ cột số vòng hoàn thành mỗi ngày (\textit{Daily Bar Chart}) và danh sách nhật ký các sự kiện lệnh MQTT vừa phát sinh.
+    \end{itemize}
+
+    \item \textbf{Màn hình Lịch sử phiên học \& Phân tích chuỗi thời gian (History Page -- ID 2, 7, 8, 13):}
+    \begin{itemize}
+        \item \textit{Nhóm Header \& Tác vụ xuất dữ liệu:} Bộ lọc dải thời gian phân tích (7 ngày, 30 ngày, 90 ngày) và nút tác vụ \textit{"Export CSV"} cho phép trích xuất toàn bộ lịch sử phục vụ đối soát, đánh giá độc lập.
+        \item \textit{Nhóm Lưới thẻ chỉ số hiệu suất (KPI Stat Grid):} 4 thẻ thống kê then chốt gồm: Tổng số vòng Pomodoro hoàn thành (\textit{Rounds}), Tổng thời gian tập trung tích lũy (\textit{Focus time}: ví dụ 40h50p), Số vòng bị dừng sớm giữa chừng (\textit{Stopped early}) và Số lượt tin nhắn nhắc nhở đã phát qua Telegram (\textit{Reminders sent}).
+        \item \textit{Nhóm Bản đồ nhiệt chuyên cần (Study Heatmap / 30-day Calendar):} Ma trận phân bố số vòng học theo từng khung giờ trong ngày (từ 6h đến 23h) và các ngày trong tuần với thang sắc độ 5 mức, giúp trực quan hóa thói quen học tập và xác định khung giờ làm việc tập trung nhất.
+        \item \textit{Nhóm Biểu đồ đường chuỗi thời gian 24 giờ (Line Chart -- ID 7, ID 8):} Đồ thị trục kép biểu diễn diễn biến nhiệt độ ($^\circ\text{C}$) và độ ẩm ($\%$ RH) trong 24 giờ liên tục được truy vấn trực tiếp từ bảng cơ sở dữ liệu \texttt{sensor\_data} trên Supabase PostgreSQL.
+        \item \textit{Nhóm Thẻ khuyến nghị Mô hình Phân tích Tối ưu (Model · Best Conditions Card -- ID 13):} Bảng tổng hợp các tham số môi trường lý tưởng nhất do mô hình phân tích học tập đề xuất: Khung giờ vàng (19:00 -- 22:00), Khoảng nhiệt độ tối ưu ($26^\circ\text{C} - 28^\circ\text{C}$), Độ ẩm tối ưu ($60\% - 70\%$), Ánh sáng đạt chuẩn và Tỷ lệ hoàn thành phiên dự đoán.
+        \item \textit{Nhóm Bảng chi tiết các phiên học (Sessions Data Table):} Bảng dữ liệu dạng bảng biểu gồm các cột: Ngày học, Khoảng thời gian bắt đầu $\rightarrow$ kết thúc, Số vòng hoàn thành, Mã thẻ UID, Nhiệt độ trung bình và Đánh giá ánh sáng.
+    \end{itemize}
+
+    \item \textbf{Màn hình Cài đặt hệ thống \& Cấu hình thiết bị (Settings Page -- ID 9, 10, 11, 12):}
+    \begin{itemize}
+        \item \textit{Nhóm Điều hướng phân hệ cài đặt (Settings Tabs):} Thanh chuyển tab giữa 4 nhóm cấu hình chính: Tài khoản (Account), Pomodoro, Cảnh báo (Notifications/Alerts) và Thiết bị \& Thẻ (Device \& Cards).
+        \item \textit{Phân hệ Cài đặt Tài khoản (Account Group -- ID 11):} Trường hiển thị Họ và tên, Email sinh viên, liên kết cập nhật đổi mật khẩu băm bcrypt và nút bấm Đăng xuất an toàn.
+        \item \textit{Phân hệ Cấu hình Chu kỳ Pomodoro (Pomodoro Group -- ID 3):} Hệ thống các thanh trượt/trường số cấu hình thời lượng mặc định gửi xuống bo mạch: Tập trung (Focus 1 -- 120 phút), Nghỉ ngắn (Short break 1 -- 30 phút), Nghỉ dài (Long break 5 -- 60 phút), Tần suất kích hoạt nghỉ dài (sau mỗi 4 vòng) và Mục tiêu số vòng học mỗi ngày (\textit{Daily Goal}).
+        \item \textit{Phân hệ Cấu hình Thông báo \& Cảnh báo (Notifications Group -- ID 9, ID 10):} Công tắc bật/tắt thông báo Telegram, ô nhập \texttt{Telegram Chat ID}, thanh trượt cài đặt ngưỡng thời gian học liên tục cần cảnh báo (50 -- 60 phút), công tắc bật/tắt Email tổng kết tuần tự động qua Gmail SMTP, cùng các thanh trượt cài ngưỡng cảnh báo nhiệt độ phòng quá nóng và ngưỡng thiếu sáng.
+        \item \textit{Phân hệ Quản lý Thiết bị \& Thẻ từ (Device \& Cards Group -- ID 2, ID 12):} Bảng thông số phần cứng trạm (Bo mạch ESP32 DevKit V1, trạng thái MQTT kết nối, thời gian phản hồi bản tin cuối), danh sách các mã thẻ RFID hợp lệ được phép mở phiên (\textit{RFID Whitelist}) kèm nút bấm \textit{"Thêm thẻ mới bằng cách quẹt lên hộp"} và thông tin hướng dẫn kết nối cổng SoftAP Captive Portal (\texttt{PomodoroBox\_Config}, IP \texttt{192.168.4.1}).
+    \end{itemize}
+
+    \item \textbf{Giao diện tối ưu hóa cho thiết bị di động (Mobile Web App Layout -- $\le 760\text{ px}$):}
+    \begin{itemize}
+        \item \textit{Thanh App Bar di động:} Cố định ở cạnh trên màn hình, hiển thị logo trạm, tiêu đề trang hiện tại và chấm xanh thông báo trạng thái kết nối phần cứng thời gian thực.
+        \item \textit{Thanh Bottom Navigation Bar:} Cố định cạnh đáy màn hình với 5 tab chạm tiện lợi:
+        \begin{itemize}
+            \item \textbf{Tab Timer (Hẹn giờ):} Tập trung hiển thị đồng hồ đếm ngược kỹ thuật số cỡ lớn, thanh tiến độ vòng và nút bấm \textit{"Gửi xuống hộp"} một chạm cực kỳ thuận tiện khi học tập.
+            \item \textbf{Tab LCD (Màn hình):} Tối ưu hóa cho tác vụ soạn thảo lời nhắc với khung giả lập 2 dòng và hàng phím tắt tin nhắn nhanh.
+            \item \textbf{Tab Room (Góc học):} Gom toàn bộ thông số vi khí hậu (DHT22), mức sáng (LDR) và trạng thái phiên học quẹt thẻ RFID vào các thẻ hiển thị trực quan theo chiều dọc.
+            \item \textbf{Tab Log (Nhật ký):} Hiển thị biểu đồ cột mini và danh sách rút gọn các phiên học dưới dạng thẻ cuộn dọc (thay cho bảng dữ liệu ngang trên máy tính).
+            \item \textbf{Tab Settings (Cài đặt):} Các nhóm cấu hình tài khoản, thời lượng Pomodoro và thông báo được tổ chức dạng danh sách cuộn dọc liền mạch, tích hợp nút \textit{"Lưu thay đổi"} và \textit{"Đăng xuất"} khổ lớn ở chân trang.
+        \end{itemize}
+    \end{itemize}
+\end{enumerate}
 
 \subsubsection{Hình ảnh các màn hình Wireframe Website chi tiết}
 
@@ -193,12 +269,39 @@ Bảng \ref{tab:map_wireframe_chuc_nang} chỉ rõ từng vùng tương tác tr�
     \begin{subfigure}[b]{0.23\textwidth}
         \centering
         \includegraphics[width=\textwidth]{assets/wireframes/08-workspace-mobile-room.png}
-        \caption{Vi khí hậu (ID 1, 4)}
+        \caption{Góc học (ID 1, 4)}
         \label{fig:wf_mob_room}
     \end{subfigure}
-    \vspace{0.4cm}
-    \caption{Thiết kế Wireframe giao diện tương tác trên thiết bị di động (Mobile)}
-    \label{fig:wireframe_mobile}
+    \vspace{0.3cm}
+    \caption{Thiết kế Wireframe di động: Không gian làm việc và điều khiển trạm (Mobile $\le 760\text{ px}$)}
+    \label{fig:wireframe_mobile_1}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.28\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/wireframes/09-workspace-mobile-log.png}
+        \caption{Nhật ký lệnh (ID 7)}
+        \label{fig:wf_mob_log}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.28\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/wireframes/10-history-mobile.png}
+        \caption{Lịch sử (ID 8, 13)}
+        \label{fig:wf_mob_history}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.28\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/wireframes/11-settings-mobile.png}
+        \caption{Cài đặt (ID 9, 10, 12)}
+        \label{fig:wf_mob_settings}
+    \end{subfigure}
+    \vspace{0.3cm}
+    \caption{Thiết kế Wireframe di động: Nhật ký, Lịch sử và Cài đặt (Mobile $\le 760\text{ px}$)}
+    \label{fig:wireframe_mobile_2}
 \end{figure}
 
 \newpage

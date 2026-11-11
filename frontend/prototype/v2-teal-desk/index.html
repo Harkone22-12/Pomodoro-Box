@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Trạm học tập · Prototype v2</title>
+  <meta name="description" content="Prototype giao diện v2 (Teal Desk) của Trạm học tập Pomodoro. Chỉ dùng dữ liệu mẫu.">
+  <!--
+    Trạm học tập: UI prototype v2 "Teal Desk".
+    Static HTML/CSS/JS, sample data only. Not connected to MQTT or the backend
+    and not part of the React app in frontend/src. Open this file in a browser.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&family=VT323&display=swap&subset=vietnamese" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-screen="signin">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></symbol>
+    <symbol id="i-timer" viewBox="0 0 24 24"><path d="M10 2h4"/><path d="M12 14l3-3"/><circle cx="12" cy="14" r="8"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M8 17v-5"/><path d="M13 17V8"/><path d="M18 17v-3"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-thermo" viewBox="0 0 24 24"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 2.7s6 6.6 6 11.3a6 6 0 0 1-12 0c0-4.7 6-11.3 6-11.3Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14"/><path d="M7 10h5"/><path d="M7 14h3"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><path d="M12 20h.01"/></symbol>
+    <symbol id="i-lcd" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14"/><path d="M7 10h10"/><path d="M7 14h6"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
+    <symbol id="i-in" viewBox="0 0 24 24"><path d="M19 5 5 19"/><path d="M15 19H5V9"/></symbol>
+    <symbol id="i-out" viewBox="0 0 24 24"><path d="M5 19 19 5"/><path d="M9 5h10v10"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V16h8v-1.3A7 7 0 0 0 12 2Z"/></symbol>
+  </defs>
+</svg>
+
+<a class="skip-link" href="#main">Bỏ qua, tới nội dung chính</a>
+
+<!-- =====================================================
+     ĐĂNG NHẬP / ĐĂNG KÝ
+     ===================================================== -->
+<div class="auth" data-auth>
+  <header class="auth-top">
+    <a class="brand" href="#/signin"><span class="brand-mark" aria-hidden="true"><i></i></span><span>Trạm học tập</span></a>
+    <p class="auth-top-link">
+      <span data-show="signin"><span class="prefix">Chưa có tài khoản? </span><a href="#/register" class="link">Tạo tài khoản</a></span>
+      <span data-show="register"><span class="prefix">Đã có tài khoản? </span><a href="#/signin" class="link">Đăng nhập</a></span>
+    </p>
+  </header>
+
+  <div class="auth-body">
+  <section class="auth-hero" aria-labelledby="auth-title">
+    <p class="auth-kicker">Trạm học tập Pomodoro</p>
+    <p class="auth-clock" aria-hidden="true">25<span>:</span>00</p>
+    <h1 class="auth-title" id="auth-title">Học sâu, nghỉ đúng lúc.</h1>
+    <div class="cycle-strip" role="img" aria-label="Một chu kỳ Pomodoro: 4 vòng tập trung 25 phút, xen giữa 3 lần nghỉ ngắn 5 phút, cuối cùng nghỉ dài 15 phút">
+      <i class="f" style="--m:25"></i><i class="b" style="--m:5"></i>
+      <i class="f" style="--m:25"></i><i class="b" style="--m:5"></i>
+      <i class="f" style="--m:25"></i><i class="b" style="--m:5"></i>
+      <i class="f" style="--m:25"></i><i class="l" style="--m:15"></i>
+    </div>
+    <div class="cycle-legend" aria-hidden="true">
+      <span><i class="f"></i>Tập trung 25 phút</span>
+      <span><i class="b"></i>Nghỉ ngắn 5 phút</span>
+      <span><i class="l"></i>Nghỉ dài 15 phút</span>
+    </div>
+    <ol class="auth-steps">
+      <li><b>01</b><span>Đặt giờ trên web, hết giờ còi trên hộp sẽ kêu.</span></li>
+      <li><b>02</b><span>Quẹt thẻ lên hộp để bắt đầu và kết thúc phiên học.</span></li>
+      <li><b>03</b><span>Xem lại khi nào và trong điều kiện nào bạn học tốt nhất.</span></li>
+    </ol>
+  </section>
+
+  <div class="auth-panel">
+    <form id="form-signin" class="auth-form" data-form="signin" novalidate aria-labelledby="t-signin">
+      <h2 id="t-signin" class="h-display">Đăng nhập</h2>
+      <p class="muted">Chào mừng bạn quay lại bàn học.</p>
+      <div class="field">
+        <label for="si-email">Email</label>
+        <input id="si-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="ban@student.hcmus.edu.vn" aria-describedby="si-email-err">
+        <p class="field-error" id="si-email-err" role="alert"></p>
+      </div>
+      <div class="field">
+        <label for="si-pass">Mật khẩu</label>
+        <div class="input-wrap">
+          <input id="si-pass" name="password" type="password" autocomplete="current-password" placeholder="Ít nhất 8 ký tự" aria-describedby="si-pass-err">
+          <button type="button" class="input-icon" data-reveal="si-pass" aria-label="Hiện mật khẩu" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg></button>
+        </div>
+        <p class="field-error" id="si-pass-err" role="alert"></p>
+      </div>
+      <div class="row-between">
+        <label class="check"><input type="checkbox" checked><span>Ghi nhớ đăng nhập</span></label>
+        <a href="#/signin" class="link link-quiet" data-action="forgot">Quên mật khẩu?</a>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block btn-lg">Đăng nhập</button>
+      <p class="hint center">Bản mẫu: email bất kỳ và mật khẩu từ 8 ký tự đều vào được.</p>
+    </form>
+
+    <form id="form-register" class="auth-form" data-form="register" novalidate aria-labelledby="t-register" hidden>
+      <h2 id="t-register" class="h-display">Tạo tài khoản</h2>
+      <p class="muted">Một tài khoản lưu phiên học, lịch sử cảm biến và cài đặt nhắc nhở của bạn.</p>
+      <div class="field">
+        <label for="rg-name">Họ và tên</label>
+        <input id="rg-name" name="name" autocomplete="name" placeholder="Nguyễn Văn An" aria-describedby="rg-name-err">
+        <p class="field-error" id="rg-name-err" role="alert"></p>
+      </div>
+      <div class="field">
+        <label for="rg-email">Email</label>
+        <input id="rg-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="ban@student.hcmus.edu.vn" aria-describedby="rg-email-err">
+        <p class="field-error" id="rg-email-err" role="alert"></p>
+      </div>
+      <div class="field">
+        <label for="rg-pass">Mật khẩu</label>
+        <div class="input-wrap">
+          <input id="rg-pass" name="password" type="password" autocomplete="new-password" placeholder="Ít nhất 8 ký tự" aria-describedby="rg-pass-hint rg-pass-err">
+          <button type="button" class="input-icon" data-reveal="rg-pass" aria-label="Hiện mật khẩu" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg></button>
+        </div>
+        <div class="strength" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <p class="hint" id="rg-pass-hint" data-bind="strength">Dùng chữ hoa, chữ số và ký tự đặc biệt để mật khẩu mạnh hơn.</p>
+        <p class="field-error" id="rg-pass-err" role="alert"></p>
+      </div>
+      <div class="field">
+        <label for="rg-pass2">Nhập lại mật khẩu</label>
+        <input id="rg-pass2" name="password2" type="password" autocomplete="new-password" aria-describedby="rg-pass2-err">
+        <p class="field-error" id="rg-pass2-err" role="alert"></p>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block btn-lg">Tạo tài khoản</button>
+    </form>
+  </div>
+  </div>
+
+  <footer class="auth-foot">
+    <span class="dot" aria-hidden="true"></span>
+    <span>Hộp đang kết nối</span>
+    <span class="sep" aria-hidden="true">·</span>
+    <span><b data-bind="temp">29,5</b> °C</span>
+    <span class="sep" aria-hidden="true">·</span>
+    <span>độ ẩm <b data-bind="hum">70</b> %</span>
+    <span class="sep" aria-hidden="true">·</span>
+    <span data-bind="lightState">Đủ sáng</span>
+    <span class="auth-foot-note">Bản mẫu, dữ liệu minh họa</span>
+  </footer>
+</div>
+
+<!-- =====================================================
+     ỨNG DỤNG
+     ===================================================== -->
+<div class="app" hidden>
+  <aside class="sidebar" aria-label="Điều hướng">
+    <a class="brand brand-light" href="#/home"><span class="brand-mark" aria-hidden="true"><i></i></span><span class="brand-text">Trạm học tập</span></a>
+    <nav class="side-nav" aria-label="Chính">
+      <a href="#/home" data-nav="home"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg><span>Tổng quan</span></a>
+      <a href="#/session" data-nav="session"><svg class="ic" aria-hidden="true"><use href="#i-timer"/></svg><span>Phiên học</span></a>
+      <a href="#/history" data-nav="history"><svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg><span>Lịch sử</span></a>
+      <a href="#/settings" data-nav="settings"><svg class="ic" aria-hidden="true"><use href="#i-gear"/></svg><span>Cài đặt</span></a>
+    </nav>
+    <div class="side-status">
+      <p class="side-label"><span class="dot" aria-hidden="true"></span>Hộp đang kết nối</p>
+      <dl>
+        <div><dt>Nhiệt độ</dt><dd><span data-bind="temp">29,5</span> °C</dd></div>
+        <div><dt>Độ ẩm</dt><dd><span data-bind="hum">70</span> %</dd></div>
+        <div><dt>Ánh sáng</dt><dd data-bind="lightState">Đủ sáng</dd></div>
+        <div><dt>Thẻ</dt><dd data-bind="cardState">Đang học</dd></div>
+        <div><dt>MQTT</dt><dd><span data-bind="age">2 giây</span> trước</dd></div>
+      </dl>
+    </div>
+    <div class="side-user">
+      <span class="avatar" aria-hidden="true">H</span>
+      <span class="side-user-name">La Anh Hào</span>
+      <a href="#/signin" class="icon-btn icon-btn-light" aria-label="Đăng xuất"><svg class="ic" aria-hidden="true"><use href="#i-logout"/></svg></a>
+    </div>
+  </aside>
+
+  <header class="appbar">
+    <span class="brand-mark" aria-hidden="true"><i></i></span>
+    <span class="appbar-title" data-bind="pageTitle">Tổng quan</span>
+    <span class="appbar-status"><span class="dot" aria-hidden="true"></span>Đã kết nối</span>
+  </header>
+
+  <main id="main" class="main">
+
+    <!-- ============ TỔNG QUAN ============ -->
+    <section class="screen" data-screen-id="home" aria-labelledby="h-home" hidden>
+      <div class="page-head">
+        <div>
+          <p class="eyebrow" data-bind="dateLong">Thứ Hai, 09/11/2026</p>
+          <h1 id="h-home" class="h-display"><span data-bind="greeting">Chào buổi tối</span>, Hào</h1>
+        </div>
+        <p class="conn"><span class="dot" aria-hidden="true"></span>Hộp đang kết nối · tin nhắn cuối <span data-bind="age">2 giây</span> trước</p>
+      </div>
+
+      <div class="grid">
+        <article class="tile span-7 tile-timer" aria-labelledby="h-timer-home">
+          <header class="tile-head">
+            <h2 id="h-timer-home"><svg class="ic" aria-hidden="true"><use href="#i-timer"/></svg>Hẹn giờ</h2>
+            <span class="tag tag-orange" data-bind="modeLabel">Tập trung</span>
+          </header>
+          <div class="sq" data-sq>
+            <svg class="sq-svg" aria-hidden="true"><path class="sq-track"/><path class="sq-bar"/></svg>
+            <div class="sq-inner">
+              <div class="count" role="timer" data-bind="count">18:42</div>
+              <p class="count-sub" data-bind="countSub">còn lại trong 25:00</p>
+            </div>
+          </div>
+          <div class="cycle-row">
+            <div class="cycle" data-cycle aria-label="Vòng 3 trên 4"></div>
+            <span class="muted small" data-bind="roundText">Vòng 3/4 · sau vòng 4 nghỉ dài</span>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" data-action="timer-send"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>Gửi xuống hộp</button>
+            <button class="btn btn-outline" data-action="timer-stop"><svg class="ic" aria-hidden="true"><use href="#i-stop"/></svg>Dừng</button>
+            <a class="link link-arrow" href="#/session">Chỉnh phiên học<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+        </article>
+
+        <article class="tile span-5 tile-room" aria-labelledby="h-room">
+          <header class="tile-head">
+            <h2 id="h-room"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg>Góc học lúc này</h2>
+            <span class="muted small">DHT22 · Quang trở</span>
+          </header>
+          <div class="metric">
+            <div class="metric-row"><span class="metric-name"><svg class="ic" aria-hidden="true"><use href="#i-thermo"/></svg>Nhiệt độ</span><span class="state" data-state="temp">Hơi ấm</span></div>
+            <div class="metric-row"><span class="metric-val"><span data-bind="temp">29,5</span><small>°C</small></span><svg class="spark spark-temp" viewBox="0 0 160 40" preserveAspectRatio="none" aria-hidden="true"><polyline/></svg></div>
+          </div>
+          <div class="metric">
+            <div class="metric-row"><span class="metric-name"><svg class="ic" aria-hidden="true"><use href="#i-drop"/></svg>Độ ẩm</span><span class="state state-ok" data-state="hum">Bình thường</span></div>
+            <div class="metric-row"><span class="metric-val"><span data-bind="hum">70</span><small>%</small></span><svg class="spark spark-hum" viewBox="0 0 160 40" preserveAspectRatio="none" aria-hidden="true"><polyline/></svg></div>
+          </div>
+          <div class="metric">
+            <div class="metric-row"><span class="metric-name"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg>Ánh sáng</span><span class="state state-ok" data-state="light">Đủ sáng</span></div>
+            <div class="metric-row metric-row-bar">
+              <span class="metric-val metric-val-sm"><span data-bind="raw">2100</span><small>/ 4095</small></span>
+              <div class="meter" aria-hidden="true"><span class="meter-fill"></span><span class="meter-mark" title="Ngưỡng thiếu sáng"></span></div>
+            </div>
+          </div>
+          <p class="tip"><svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg><span data-bind="tip">Phòng đang hơi ấm. Bạn hoàn thành nhiều vòng nhất ở 26–28 °C, thử bật quạt nhé.</span></p>
+        </article>
+
+        <article class="tile span-4 tile-card" aria-labelledby="h-card">
+          <header class="tile-head">
+            <h2 id="h-card"><svg class="ic" aria-hidden="true"><use href="#i-card"/></svg>Phiên quẹt thẻ</h2>
+            <span class="tag tag-teal" data-bind="sessionTag">Đang học</span>
+          </header>
+          <p class="big-time" data-bind="sessionElapsed">0:56:18</p>
+          <dl class="kv">
+            <div><dt>Thẻ</dt><dd data-bind="uid">A1B2C3D4</dd></div>
+            <div><dt>Bắt đầu</dt><dd data-bind="sessionStart">20:19</dd></div>
+          </dl>
+          <p class="warn-band" data-bind="breakWarn"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>Đã <b data-bind="breakMin">50</b> phút chưa nghỉ. Đã nhắc qua Telegram lúc <span data-bind="breakAt">21:09</span>.</span></p>
+          <button class="btn btn-ghost btn-block" data-action="tap"><svg class="ic" aria-hidden="true"><use href="#i-wave"/></svg><span data-bind="tapLabel">Mô phỏng quẹt thẻ để kết thúc</span></button>
+        </article>
+
+        <article class="tile span-4 tile-lcd" aria-labelledby="h-lcd-home">
+          <header class="tile-head">
+            <h2 id="h-lcd-home"><svg class="ic" aria-hidden="true"><use href="#i-lcd"/></svg>Màn hình trên hộp</h2>
+            <span class="muted small">LCD 16×2</span>
+          </header>
+          <div class="lcd" data-lcd="shown" role="img" aria-label="Màn hình LCD"><div class="lcd-row"></div><div class="lcd-row"></div></div>
+          <p class="muted small">Gửi lúc <span data-bind="lcdSentAt">20:21</span> · từ “<span data-bind="lcdSentRaw">Ôn tập chương 3</span>”</p>
+          <a class="link link-arrow" href="#/session">Đổi lời nhắc<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </article>
+
+        <article class="tile span-4 tile-today" aria-labelledby="h-today">
+          <header class="tile-head">
+            <h2 id="h-today"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Hôm nay</h2>
+            <span class="muted small">Mục tiêu 8 vòng</span>
+          </header>
+          <div class="goal" data-goal aria-label="Đã xong 2 trên 8 vòng"></div>
+          <dl class="trio">
+            <div><dt>Vòng xong</dt><dd data-bind="today">2</dd></div>
+            <div><dt>Phút tập trung</dt><dd data-bind="todayMin">50</dd></div>
+            <div><dt>Chuỗi ngày</dt><dd>7</dd></div>
+          </dl>
+        </article>
+
+        <article class="tile span-12 tile-week" aria-labelledby="h-week">
+          <header class="tile-head">
+            <h2 id="h-week"><svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg>7 ngày qua</h2>
+            <a class="link link-arrow" href="#/history">Xem lịch sử<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </header>
+          <div class="weekbars" data-weekbars role="img" aria-label="Số vòng hoàn thành 7 ngày qua"></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ PHIÊN HỌC ============ -->
+    <section class="screen" data-screen-id="session" aria-labelledby="h-session" hidden>
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">Hẹn giờ · Còi · Màn hình LCD</p>
+          <h1 id="h-session" class="h-display">Phiên học</h1>
+        </div>
+      </div>
+
+      <div class="grid">
+        <article class="tile span-7" aria-labelledby="h-timer">
+          <header class="tile-head">
+            <h2 id="h-timer"><svg class="ic" aria-hidden="true"><use href="#i-timer"/></svg>Hẹn giờ Pomodoro</h2>
+            <span class="tag tag-orange" data-bind="modeLabel">Tập trung</span>
+          </header>
+          <div class="seg" role="radiogroup" aria-label="Chọn chế độ">
+            <button role="radio" aria-checked="true" data-preset="focus"><span>Tập trung</span><small><b data-bind="pFocus">25</b> phút</small></button>
+            <button role="radio" aria-checked="false" data-preset="short"><span>Nghỉ ngắn</span><small><b data-bind="pShort">5</b> phút</small></button>
+            <button role="radio" aria-checked="false" data-preset="long"><span>Nghỉ dài</span><small><b data-bind="pLong">15</b> phút</small></button>
+            <button role="radio" aria-checked="false" data-preset="custom"><span>Tùy chỉnh</span><small>1–120 phút</small></button>
+          </div>
+          <div class="stepper" data-stepper hidden>
+            <label for="custom-min">Số phút</label>
+            <div class="stepper-ctrl">
+              <button type="button" class="btn btn-outline btn-square" data-step="-5" aria-label="Bớt 5 phút"><svg class="ic" aria-hidden="true"><use href="#i-minus"/></svg></button>
+              <input id="custom-min" type="number" inputmode="numeric" min="1" max="120" value="45" aria-describedby="custom-err">
+              <button type="button" class="btn btn-outline btn-square" data-step="5" aria-label="Thêm 5 phút"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></button>
+            </div>
+            <p class="field-error" id="custom-err" role="alert"></p>
+          </div>
+          <div class="sq sq-lg" data-sq>
+            <svg class="sq-svg" aria-hidden="true"><path class="sq-track"/><path class="sq-bar"/></svg>
+            <div class="sq-inner">
+              <div class="count count-lg" role="timer" data-bind="count">18:42</div>
+              <p class="count-sub" data-bind="countSub">còn lại trong 25:00</p>
+            </div>
+          </div>
+          <div class="cycle-row">
+            <div class="cycle" data-cycle aria-label="Vòng 3 trên 4"></div>
+            <span class="muted small" data-bind="roundText">Vòng 3/4 · sau vòng 4 nghỉ dài</span>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary btn-lg grow" data-action="timer-send"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>Gửi xuống hộp</button>
+            <button class="btn btn-outline btn-lg" data-action="timer-stop"><svg class="ic" aria-hidden="true"><use href="#i-stop"/></svg>Dừng</button>
+          </div>
+          <div class="payload">
+            <span class="payload-label">Lệnh MQTT sẽ gửi</span>
+            <code data-bind="timerPayload">study/timer ← {"minutes":25}</code>
+          </div>
+          <p class="note">Hộp tự đếm giờ. Nếu mất WiFi giữa chừng, còi vẫn kêu đúng lúc hết phiên.</p>
+        </article>
+
+        <article class="tile span-5" aria-labelledby="h-lcd">
+          <header class="tile-head">
+            <h2 id="h-lcd"><svg class="ic" aria-hidden="true"><use href="#i-lcd"/></svg>Màn hình LCD 16×2</h2>
+            <span class="muted small">Xem trước</span>
+          </header>
+          <div class="lcd" data-lcd="draft" role="img" aria-label="Xem trước màn hình LCD"><div class="lcd-row"></div><div class="lcd-row"></div></div>
+          <form id="form-lcd" class="stack" novalidate>
+            <div class="field">
+              <label for="lcd-text">Lời nhắc</label>
+              <input id="lcd-text" maxlength="40" autocomplete="off" value="Ôn tập chương 3" aria-describedby="lcd-meta lcd-conv">
+            </div>
+            <div class="lcd-meta" id="lcd-meta">
+              <span>Dòng 1: <b data-bind="line1">15</b>/16</span>
+              <span>Dòng 2: <b data-bind="line2">0</b>/16</span>
+              <span class="lcd-total"><b data-bind="lcdCount">15</b>/32</span>
+            </div>
+            <p class="conv" id="lcd-conv" data-bind="lcdConv">LCD không có dấu tiếng Việt. Hộp sẽ hiện: “On tap chuong 3”.</p>
+            <div class="chips" role="group" aria-label="Lời nhắc nhanh">
+              <button type="button" class="chip" data-quick="Đang tập trung">Đang tập trung</button>
+              <button type="button" class="chip" data-quick="Đừng làm phiền">Đừng làm phiền</button>
+              <button type="button" class="chip" data-quick="Giờ nghỉ 5 phút">Giờ nghỉ 5 phút</button>
+              <button type="button" class="chip" data-quick="Uống nước đi">Uống nước đi</button>
+              <button type="button" class="chip" data-quick="Ôn tập chương 3">Ôn tập chương 3</button>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>Gửi lên màn hình</button>
+            <div class="payload">
+              <span class="payload-label">Lệnh MQTT sẽ gửi</span>
+              <code data-bind="lcdPayload">study/lcd ← {"text":"On tap chuong 3"}</code>
+            </div>
+          </form>
+        </article>
+
+        <article class="tile span-12" aria-labelledby="h-feed">
+          <header class="tile-head">
+            <h2 id="h-feed"><svg class="ic" aria-hidden="true"><use href="#i-wave"/></svg>Nhật ký lệnh</h2>
+            <span class="muted small">Các lệnh và sự kiện trong phiên này</span>
+          </header>
+          <ol class="feed" data-feed aria-live="polite"></ol>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ LỊCH SỬ ============ -->
+    <section class="screen" data-screen-id="history" aria-labelledby="h-history" hidden>
+      <div class="page-head">
+        <div>
+          <p class="eyebrow" data-bind="rangeText">30 ngày gần nhất</p>
+          <h1 id="h-history" class="h-display">Lịch sử</h1>
+        </div>
+        <div class="head-actions">
+          <div class="seg seg-sm" role="radiogroup" aria-label="Khoảng thời gian">
+            <button role="radio" aria-checked="false" data-range="7">7 ngày</button>
+            <button role="radio" aria-checked="true" data-range="30">30 ngày</button>
+            <button role="radio" aria-checked="false" data-range="90">90 ngày</button>
+          </div>
+          <button class="btn btn-outline" data-action="export"><svg class="ic" aria-hidden="true"><use href="#i-download"/></svg>Xuất CSV</button>
+        </div>
+      </div>
+
+      <div class="kpis">
+        <div><dt>Vòng hoàn thành</dt><dd data-bind="kRounds">98</dd><p data-bind="kRoundsSub">trung bình 3,3 vòng/ngày</p></div>
+        <div><dt>Thời gian tập trung</dt><dd><span data-bind="kHours">40,8</span><small>giờ</small></dd><p data-bind="kHoursSub">98 vòng × 25 phút</p></div>
+        <div><dt>Dừng giữa chừng</dt><dd data-bind="kEarly">11</dd><p>vòng chưa hết giờ</p></div>
+        <div><dt>Nhắc nghỉ</dt><dd data-bind="kRem">9</dd><p>tin nhắn Telegram</p></div>
+      </div>
+
+      <div class="grid">
+        <article class="tile span-5" aria-labelledby="h-cal">
+          <header class="tile-head"><h2 id="h-cal">Lịch học 30 ngày</h2>
+            <span class="legend" aria-hidden="true">ít <i class="l0"></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i> nhiều</span></header>
+          <div class="cal" data-cal role="img" aria-label="Lịch 30 ngày, mỗi ô là một ngày, màu đậm là nhiều vòng"></div>
+        </article>
+        <article class="tile span-7" aria-labelledby="h-hours">
+          <header class="tile-head"><h2 id="h-hours">Vòng hoàn thành theo giờ trong ngày</h2>
+            <span class="muted small">6 giờ → 23 giờ</span></header>
+          <div class="hourbars" data-hourbars role="img" aria-label="Phần lớn vòng hoàn thành trong khung 19 đến 22 giờ"></div>
+        </article>
+        <article class="tile span-7" aria-labelledby="h-env">
+          <header class="tile-head"><h2 id="h-env">Nhiệt độ và độ ẩm, 24 giờ</h2>
+            <span class="legend" aria-hidden="true"><span class="lg lg-temp"></span>°C <span class="lg lg-hum"></span>% độ ẩm</span></header>
+          <svg class="linechart" data-linechart viewBox="0 0 640 240" role="img" aria-label="Nhiệt độ cao nhất khoảng 31 °C lúc 14 giờ, độ ẩm thấp nhất khoảng 58 %."></svg>
+        </article>
+        <article class="tile span-5 tile-model" aria-labelledby="h-model">
+          <header class="tile-head"><h2 id="h-model"><svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg>Mô hình phân tích</h2>
+            <span class="tag tag-teal">Mẫu</span></header>
+          <p class="model-lead">Bạn hoàn thành nhiều vòng nhất khi:</p>
+          <ul class="model-list">
+            <li><span>Khung giờ</span><b>19:00–22:00</b></li>
+            <li><span>Nhiệt độ</span><b>26–28 °C</b></li>
+            <li><span>Độ ẩm</span><b>60–70 %</b></li>
+            <li><span>Ánh sáng</span><b>Đủ sáng</b></li>
+            <li><span>Tỉ lệ hoàn thành</span><b class="placeholder">[KẾT QUẢ MÔ HÌNH]</b></li>
+          </ul>
+          <p class="hint">Số liệu minh họa. Kết quả thật lấy từ mô hình phân tích của nhóm.</p>
+        </article>
+        <article class="tile span-12" aria-labelledby="h-sessions">
+          <header class="tile-head"><h2 id="h-sessions">Các phiên học</h2></header>
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th scope="col">Ngày</th><th scope="col">Bắt đầu → kết thúc</th><th scope="col">Vòng</th><th scope="col">Thẻ</th><th scope="col">Nhiệt độ TB</th><th scope="col">Ánh sáng</th></tr></thead>
+              <tbody data-rows></tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ CÀI ĐẶT ============ -->
+    <section class="screen" data-screen-id="settings" aria-labelledby="h-settings" hidden>
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">Tài khoản và thiết bị</p>
+          <h1 id="h-settings" class="h-display">Cài đặt</h1>
+        </div>
+      </div>
+      <div class="settings">
+        <div class="set-nav" role="tablist" aria-label="Mục cài đặt">
+          <button role="tab" id="tab-account" aria-controls="panel-account" aria-selected="true" data-tab="account">Tài khoản</button>
+          <button role="tab" id="tab-pomodoro" aria-controls="panel-pomodoro" aria-selected="false" data-tab="pomodoro">Pomodoro</button>
+          <button role="tab" id="tab-alerts" aria-controls="panel-alerts" aria-selected="false" data-tab="alerts">Cảnh báo</button>
+          <button role="tab" id="tab-device" aria-controls="panel-device" aria-selected="false" data-tab="device">Thiết bị và thẻ</button>
+        </div>
+
+        <form class="set-panel tile" id="panel-account" role="tabpanel" aria-labelledby="tab-account" data-panel="account" novalidate>
+          <h2 class="panel-title">Tài khoản</h2>
+          <p class="muted">Lưu trong cơ sở dữ liệu, dùng để đăng nhập.</p>
+          <div class="field"><label for="st-name">Họ và tên</label><input id="st-name" value="La Anh Hào" autocomplete="name" aria-describedby="st-name-err"><p class="field-error" id="st-name-err" role="alert"></p></div>
+          <div class="field"><label for="st-email">Email</label><input id="st-email" type="email" value="ban@student.hcmus.edu.vn" autocomplete="email" aria-describedby="st-email-err"><p class="field-error" id="st-email-err" role="alert"></p></div>
+          <div class="panel-actions">
+            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+            <button type="button" class="btn btn-outline" data-action="forgot">Đổi mật khẩu</button>
+          </div>
+          <a href="#/signin" class="btn btn-danger-ghost signout"><svg class="ic" aria-hidden="true"><use href="#i-logout"/></svg>Đăng xuất</a>
+        </form>
+
+        <form class="set-panel tile" id="panel-pomodoro" role="tabpanel" aria-labelledby="tab-pomodoro" data-panel="pomodoro" novalidate hidden>
+          <h2 class="panel-title">Pomodoro</h2>
+          <p class="muted">Độ dài mặc định gửi xuống hộp.</p>
+          <div class="range-field"><label for="rg-focus">Tập trung</label><output for="rg-focus" data-out="rg-focus">25 phút</output><input type="range" id="rg-focus" min="5" max="120" step="5" value="25" data-unit="phút"></div>
+          <div class="range-field"><label for="rg-short">Nghỉ ngắn</label><output for="rg-short" data-out="rg-short">5 phút</output><input type="range" id="rg-short" min="1" max="30" value="5" data-unit="phút"></div>
+          <div class="range-field"><label for="rg-long">Nghỉ dài</label><output for="rg-long" data-out="rg-long">15 phút</output><input type="range" id="rg-long" min="5" max="60" step="5" value="15" data-unit="phút"></div>
+          <div class="range-field"><label for="rg-every">Nghỉ dài sau</label><output for="rg-every" data-out="rg-every">4 vòng</output><input type="range" id="rg-every" min="2" max="8" value="4" data-unit="vòng"></div>
+          <div class="range-field"><label for="rg-goal">Mục tiêu mỗi ngày</label><output for="rg-goal" data-out="rg-goal">8 vòng</output><input type="range" id="rg-goal" min="1" max="16" value="8" data-unit="vòng"></div>
+          <div class="panel-actions"><button type="submit" class="btn btn-primary">Lưu thay đổi</button></div>
+        </form>
+
+        <form class="set-panel tile" id="panel-alerts" role="tabpanel" aria-labelledby="tab-alerts" data-panel="alerts" novalidate hidden>
+          <h2 class="panel-title">Cảnh báo</h2>
+          <p class="muted">Nhắc nghỉ qua Telegram và email tổng kết mỗi tuần.</p>
+          <label class="switch-row"><span><b>Nhắc nghỉ qua Telegram</b><small>Khi học liên tục quá lâu mà chưa nghỉ</small></span><input type="checkbox" class="switch" role="switch" checked></label>
+          <div class="field"><label for="st-chat">Telegram Chat ID</label><input id="st-chat" inputmode="numeric" placeholder="Ví dụ: 123456789"></div>
+          <div class="range-field"><label for="rg-remind">Nhắc sau</label><output for="rg-remind" data-out="rg-remind">50 phút</output><input type="range" id="rg-remind" min="20" max="120" step="5" value="50" data-unit="phút"></div>
+          <label class="switch-row"><span><b>Email tổng kết hằng tuần</b><small>Gửi tối Chủ Nhật</small></span><input type="checkbox" class="switch" role="switch" checked></label>
+          <div class="range-field"><label for="rg-hot">Báo phòng nóng từ</label><output for="rg-hot" data-out="rg-hot">30 °C</output><input type="range" id="rg-hot" min="25" max="35" value="30" data-unit="°C"></div>
+          <div class="range-field"><label for="rg-dark">Ngưỡng thiếu sáng</label><output for="rg-dark" data-out="rg-dark">1200</output><input type="range" id="rg-dark" min="300" max="3000" step="100" value="1200" data-unit=""></div>
+          <div class="panel-actions"><button type="submit" class="btn btn-primary">Lưu thay đổi</button></div>
+        </form>
+
+        <div class="set-panel tile" id="panel-device" role="tabpanel" aria-labelledby="tab-device" data-panel="device" hidden>
+          <h2 class="panel-title">Thiết bị và thẻ</h2>
+          <p class="muted">Hộp ESP32 và các thẻ RFID được phép bắt đầu phiên học.</p>
+          <dl class="kv kv-box">
+            <div><dt>Bo mạch</dt><dd>ESP32 DevKit V1</dd></div>
+            <div><dt>MQTT</dt><dd class="ok">Đã kết nối</dd></div>
+            <div><dt>Tin nhắn cuối</dt><dd><span data-bind="age">2 giây</span> trước</dd></div>
+          </dl>
+          <h3 class="sub-title">Thẻ RFID</h3>
+          <ul class="cards" data-cards></ul>
+          <button type="button" class="btn btn-dashed btn-block" data-action="add-card"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg>Thêm thẻ: quẹt thẻ lên hộp</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottomnav" aria-label="Điều hướng chính">
+    <a href="#/home" data-nav="home"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg><span>Tổng quan</span></a>
+    <a href="#/session" data-nav="session"><svg class="ic" aria-hidden="true"><use href="#i-timer"/></svg><span>Phiên học</span></a>
+    <a href="#/history" data-nav="history"><svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg><span>Lịch sử</span></a>
+    <a href="#/settings" data-nav="settings"><svg class="ic" aria-hidden="true"><use href="#i-gear"/></svg><span>Cài đặt</span></a>
+  </nav>
+</div>
+
+<div class="toasts" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

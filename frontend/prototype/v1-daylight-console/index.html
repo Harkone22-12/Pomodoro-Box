@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Study Station · Prototype</title>
+  <meta name="description" content="Clickable UI prototype of the Study Station web app (design D, Daylight Console). Sample data only.">
+  <!--
+    Study Station: static UI prototype (design D, "Daylight Console").
+    Sample data only. Not connected to MQTT or the backend, and not part of the
+    React app in frontend/src. Open this file directly in a browser.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-screen="signin" data-mtab="timer">
+
+<!-- Icon sprite (stroke icons, 24×24) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-timer" viewBox="0 0 24 24"><path d="M10 2h4"/><path d="M12 14l3-3"/><circle cx="12" cy="14" r="8"/></symbol>
+    <symbol id="i-lcd" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14"/><path d="M7 10h10"/><path d="M7 14h6"/></symbol>
+    <symbol id="i-thermo" viewBox="0 0 24 24"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14"/><path d="M7 10h5"/><path d="M7 14h3"/><circle cx="16" cy="12" r="1.5"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M8 17v-5"/><path d="M13 17V8"/><path d="M18 17v-3"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-room" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18Z" fill="currentColor"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M6 12h12"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 6v12"/><path d="M6 12h12"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M17 7 7 17"/><path d="m7 7 10 10"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-tap" viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><path d="M12 20h.01"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  </defs>
+</svg>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============================================================
+     AUTH SCREENS
+     ============================================================ -->
+<main id="main">
+
+<section class="screen screen-auth" data-screen-id="signin" aria-labelledby="signin-title">
+  <div class="auth-wrap">
+    <div class="auth-intro">
+      <div class="brand"><span class="brand-mark" aria-hidden="true"><span></span></span><span class="brand-name">Study Station</span></div>
+      <h1 class="auth-hero">Your desk,<br>in focus mode.</h1>
+      <p class="auth-lead">One box with a timer, a focus light and four sensors. One page to run it.</p>
+      <dl class="kv-card" aria-label="Box status (sample)">
+        <div><dt>DHT22</dt><dd><span data-bind="temp">29.5</span> °C · <span data-bind="hum">70</span> %</dd></div>
+        <div><dt>LDR</dt><dd>raw <span data-bind="raw">2100</span></dd></div>
+        <div><dt>RC522</dt><dd class="ok">ready</dd></div>
+        <div><dt>Buzzer</dt><dd>idle</dd></div>
+        <div><dt>LCD1602</dt><dd>"Ready to study"</dd></div>
+      </dl>
+    </div>
+
+    <div class="auth-card">
+      <h2 id="signin-title">Sign in</h2>
+      <p class="auth-switch">No account yet? <a href="#/register">Create one</a></p>
+      <form id="form-signin" novalidate>
+        <div class="field">
+          <label for="si-email">Email</label>
+          <input id="si-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@student.edu.vn" required aria-describedby="si-email-err">
+          <p class="field-error" id="si-email-err" role="alert"></p>
+        </div>
+        <div class="field">
+          <label for="si-pass">Password</label>
+          <input id="si-pass" name="password" type="password" autocomplete="current-password" placeholder="At least 8 characters" required minlength="8" aria-describedby="si-pass-err">
+          <p class="field-error" id="si-pass-err" role="alert"></p>
+        </div>
+        <div class="row-between">
+          <label class="check"><input type="checkbox" checked><span>Remember me</span></label>
+          <a href="#/signin" data-action="forgot">Forgot password?</a>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+        <p class="hint center">Prototype: any email and an 8-character password will work.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="screen screen-auth" data-screen-id="register" aria-labelledby="register-title" hidden>
+  <div class="auth-wrap">
+    <div class="auth-intro">
+      <div class="brand"><span class="brand-mark" aria-hidden="true"><span></span></span><span class="brand-name">Study Station</span></div>
+      <h1 class="auth-hero">One account,<br>one box.</h1>
+      <p class="auth-lead">Your account keeps your sessions, sensor history and notification settings in the database.</p>
+      <ul class="feature-list">
+        <li><svg class="ic" aria-hidden="true"><use href="#i-timer"/></svg>Set Pomodoro rounds from the web, the buzzer rings on the box</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-card"/></svg>Tap your card to start and stop a session</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg>See when and where you focus best</li>
+      </ul>
+    </div>
+    <div class="auth-card">
+      <h2 id="register-title">Create account</h2>
+      <p class="auth-switch">Already have one? <a href="#/signin">Sign in</a></p>
+      <form id="form-register" novalidate>
+        <div class="field">
+          <label for="rg-name">Name</label>
+          <input id="rg-name" name="name" autocomplete="name" placeholder="Your name" required aria-describedby="rg-name-err">
+          <p class="field-error" id="rg-name-err" role="alert"></p>
+        </div>
+        <div class="field">
+          <label for="rg-email">Email</label>
+          <input id="rg-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@student.edu.vn" required aria-describedby="rg-email-err">
+          <p class="field-error" id="rg-email-err" role="alert"></p>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="rg-pass">Password</label>
+            <input id="rg-pass" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" required minlength="8" aria-describedby="rg-pass-err">
+            <p class="field-error" id="rg-pass-err" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="rg-pass2">Confirm password</label>
+            <input id="rg-pass2" name="password2" type="password" autocomplete="new-password" required aria-describedby="rg-pass2-err">
+            <p class="field-error" id="rg-pass2-err" role="alert"></p>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Create account</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     APP SHELL (workspace / history / settings)
+     ============================================================ -->
+<div class="app" hidden>
+  <header class="topbar">
+    <a class="brand" href="#/workspace" aria-label="Study Station, workspace"><span class="brand-mark" aria-hidden="true"><span></span></span><span class="brand-name">Study Station</span></a>
+    <span class="mobile-title" aria-hidden="true">Timer</span>
+    <nav class="topnav" aria-label="Main">
+      <a href="#/workspace" data-nav="workspace">Workspace</a>
+      <a href="#/history" data-nav="history">History</a>
+      <a href="#/settings" data-nav="settings">Settings</a>
+    </nav>
+    <div class="topbar-right">
+      <span class="pill pill-ok"><span class="dot" aria-hidden="true"></span><span class="pill-long">Box online</span><span class="pill-short">Online</span></span>
+      <span class="meta mono" title="Time since the last MQTT message">MQTT <span data-bind="mqttAge">2 s</span></span>
+      <span class="meta mono clock" data-bind="clock">20:01</span>
+      <a href="#/signin" class="link-plain signout">Sign out</a>
+    </div>
+  </header>
+
+  <!-- ---------------- WORKSPACE ---------------- -->
+  <section class="screen" data-screen-id="workspace" aria-label="Workspace" hidden>
+    <!-- Tablet: toggle bar on top. Desktop: dock on the right. -->
+    <nav class="dock" aria-label="Windows">
+      <button class="dock-btn" data-toggle="timer" aria-pressed="true"><svg class="ic" aria-hidden="true"><use href="#i-timer"/></svg><span>Timer</span></button>
+      <button class="dock-btn" data-toggle="lcd" aria-pressed="true"><svg class="ic" aria-hidden="true"><use href="#i-lcd"/></svg><span>LCD</span></button>
+      <button class="dock-btn" data-toggle="climate" aria-pressed="true"><svg class="ic" aria-hidden="true"><use href="#i-thermo"/></svg><span>Climate</span></button>
+      <button class="dock-btn" data-toggle="light" aria-pressed="true"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg><span>Light</span></button>
+      <button class="dock-btn" data-toggle="session" aria-pressed="true"><svg class="ic" aria-hidden="true"><use href="#i-card"/></svg><span>Session</span></button>
+      <button class="dock-btn" data-toggle="log" aria-pressed="true"><svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg><span>Log</span></button>
+      <span class="dock-sep" aria-hidden="true"></span>
+      <button class="dock-btn dock-plain" data-action="arrange" title="Put every window back in place"><svg class="ic" aria-hidden="true"><use href="#i-reset"/></svg><span>Arrange</span></button>
+      <a class="dock-btn dock-plain" href="#/settings"><svg class="ic" aria-hidden="true"><use href="#i-gear"/></svg><span>Settings</span></a>
+    </nav>
+
+    <div class="canvas">
+
+      <!-- TIMER · BUZZER · study/timer -->
+      <article class="win win-timer" data-win="timer" data-tab="timer" aria-labelledby="w-timer">
+        <header class="win-head">
+          <h2 id="w-timer">Timer · Buzzer</h2>
+          <div class="win-ctrl">
+            <button class="icon-btn" data-win-action="min" aria-label="Minimize Timer" aria-expanded="true"><svg class="ic" aria-hidden="true"><use href="#i-minus"/></svg></button>
+            <button class="icon-btn icon-btn-close" data-win-action="close" aria-label="Close Timer"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+          </div>
+        </header>
+        <div class="win-body">
+          <div class="timer-card">
+            <div class="row-between">
+              <span class="timer-mode" data-bind="timerMode">Focus</span>
+              <span class="rounds" aria-label="Round 3 of 4" data-bind="roundsAria"></span>
+            </div>
+            <div class="countdown mono" role="timer" aria-live="off" data-bind="countdown">18:42</div>
+            <p class="countdown-sub" data-bind="countdownSub">left of 25:00 · round 3 of 4</p>
+            <div class="progress" role="progressbar" aria-label="Round progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25"><span></span></div>
+            <div class="btn-row">
+              <button class="btn btn-primary btn-lg grow" data-action="timer-send">Send to box</button>
+              <button class="btn btn-outline btn-lg" data-action="timer-stop">Stop</button>
+            </div>
+            <div class="stats3">
+              <div><span class="label">Today</span><span class="mono" data-bind="today">2</span></div>
+              <div><span class="label">Streak</span><span class="mono">7d</span></div>
+              <div><span class="label">Week</span><span class="mono" data-bind="week">26</span></div>
+            </div>
+          </div>
+          <fieldset class="presets">
+            <legend>Timer settings</legend>
+            <label class="radio"><input type="radio" name="preset" value="focus" checked><span>Focus · <b data-bind="pFocus">25</b> min</span></label>
+            <label class="radio"><input type="radio" name="preset" value="short"><span>Short break · <b data-bind="pShort">5</b> min</span></label>
+            <label class="radio"><input type="radio" name="preset" value="long"><span>Long break · <b data-bind="pLong">15</b> min</span></label>
+            <div class="radio radio-custom">
+              <input type="radio" name="preset" value="custom" id="preset-custom" aria-label="Custom length">
+              <label for="preset-custom">Custom</label>
+              <input class="input input-sm mono" id="custom-min" type="number" inputmode="numeric" min="1" max="120" value="25" aria-label="Custom minutes" aria-describedby="custom-err">
+              <span class="muted">min</span>
+            </div>
+            <p class="field-error" id="custom-err" role="alert"></p>
+          </fieldset>
+        </div>
+      </article>
+
+      <!-- LCD 16×2 · study/lcd -->
+      <article class="win win-lcd" data-win="lcd" data-tab="lcd" aria-labelledby="w-lcd">
+        <header class="win-head">
+          <h2 id="w-lcd">LCD 16×2</h2>
+          <div class="win-ctrl">
+            <button class="icon-btn" data-win-action="min" aria-label="Minimize LCD" aria-expanded="true"><svg class="ic" aria-hidden="true"><use href="#i-minus"/></svg></button>
+            <button class="icon-btn icon-btn-close" data-win-action="close" aria-label="Close LCD"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+          </div>
+        </header>
+        <div class="win-body">
+          <div class="lcd" role="img" aria-label="LCD preview" data-bind="lcdAria">
+            <div class="lcd-row"></div>
+            <div class="lcd-row"></div>
+          </div>
+          <form id="form-lcd" class="lcd-form" novalidate>
+            <label for="lcd-text" class="lcd-label">Message · no Vietnamese accents · <span class="mono" data-bind="lcdCount">14/32</span></label>
+            <div class="input-row">
+              <input id="lcd-text" class="input mono" maxlength="32" autocomplete="off" spellcheck="false" value="Read chapter 3" aria-describedby="lcd-hint">
+              <button class="btn btn-dark" type="submit"><span>Send</span></button>
+            </div>
+            <p class="hint" id="lcd-hint" data-bind="lcdHint">Text wraps at 16 characters per line.</p>
+          </form>
+          <div class="chips" role="group" aria-label="Quick messages">
+            <button class="chip" data-quick="Ready to study">Ready to study</button>
+            <button class="chip" data-quick="Do not disturb">Do not disturb</button>
+            <button class="chip" data-quick="Break time">Break time</button>
+            <button class="chip" data-quick="Back in 5 min">Back in 5 min</button>
+            <button class="chip" data-quick="Học xong chương 3">Học xong chương 3</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- CLIMATE · DHT22 · study/dht -->
+      <article class="win" data-win="climate" data-tab="room" aria-labelledby="w-climate">
+        <header class="win-head">
+          <h2 id="w-climate">Climate · DHT22</h2>
+          <div class="win-ctrl">
+            <button class="icon-btn" data-win-action="min" aria-label="Minimize Climate" aria-expanded="true"><svg class="ic" aria-hidden="true"><use href="#i-minus"/></svg></button>
+            <button class="icon-btn icon-btn-close" data-win-action="close" aria-label="Close Climate"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+          </div>
+        </header>
+        <div class="win-body">
+          <div class="readings">
+            <div><span class="label">Temp</span><span class="big mono"><span data-bind="temp">29.5</span>°C</span></div>
+            <div><span class="label">Humidity</span><span class="big mono"><span data-bind="hum">70</span>%</span></div>
+          </div>
+          <svg class="spark" viewBox="0 0 300 56" preserveAspectRatio="none" role="img" aria-label="Temperature and humidity over the last hour">
+            <polyline class="spark-hum" points=""/>
+            <polyline class="spark-temp" points=""/>
+          </svg>
+          <p class="caption">Last hour · solid °C, dashed % RH · <span data-bind="comfort">warm</span></p>
+        </div>
+      </article>
+
+      <!-- LIGHT · LDR · study/light -->
+      <article class="win" data-win="light" data-tab="room" aria-labelledby="w-light">
+        <header class="win-head">
+          <h2 id="w-light">Light · LDR</h2>
+          <div class="win-ctrl">
+            <button class="icon-btn" data-win-action="min" aria-label="Minimize Light" aria-expanded="true"><svg class="ic" aria-hidden="true"><use href="#i-minus"/></svg></button>
+            <button class="icon-btn icon-btn-close" data-win-action="close" aria-label="Close Light"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+          </div>
+        </header>
+        <div class="win-body">
+          <div class="row-between">
+            <span class="big mono" data-bind="raw">2100</span>
+            <span class="badge badge-ok" data-bind="lightLabel">Enough light</span>
+          </div>
+          <div class="segbar" aria-hidden="true"></div>
+          <div class="row-between caption mono"><span>dark 0</span><span>4095 bright</span></div>
+        </div>
+      </article>
+
+      <!-- SESSION · RC522 · study/rfid -->
+      <article class="win" data-win="session" data-tab="room" aria-labelledby="w-session">
+        <header class="win-head">
+          <h2 id="w-session">Session · RC522</h2>
+          <div class="win-ctrl">
+            <button class="icon-btn" data-win-action="min" aria-label="Minimize Session" aria-expanded="true"><svg class="ic" aria-hidden="true"><use href="#i-minus"/></svg></button>
+            <button class="icon-btn icon-btn-close" data-win-action="close" aria-label="Close Session"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+          </div>
+        </header>
+        <div class="win-body">
+          <div class="row-between">
+            <span class="big mono" data-bind="sessionElapsed">0:56:18</span>
+            <span class="badge badge-ok" data-bind="sessionBadge">Active</span>
+          </div>
+          <dl class="kv">
+            <div><dt>card</dt><dd class="mono" data-bind="uid">A1B2C3D4</dd></div>
+            <div><dt>started</dt><dd class="mono" data-bind="sessionStart">19:05:03</dd></div>
+          </dl>
+          <div class="alert" data-bind="breakAlert" role="status">
+            <svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg>
+            <span><span data-bind="breakMin">50</span> min without a break. Telegram reminder sent at <span data-bind="breakAt">19:55</span>.</span>
+          </div>
+          <button class="btn btn-ghost btn-sm" data-action="tap"><svg class="ic" aria-hidden="true"><use href="#i-tap"/></svg><span data-bind="tapLabel">Simulate card tap (stop)</span></button>
+        </div>
+      </article>
+
+      <!-- SESSION LOG -->
+      <article class="win win-log" data-win="log" data-tab="log" aria-labelledby="w-log">
+        <header class="win-head">
+          <h2 id="w-log">Session log</h2>
+          <div class="win-ctrl">
+            <button class="icon-btn" data-win-action="min" aria-label="Minimize Session log" aria-expanded="true"><svg class="ic" aria-hidden="true"><use href="#i-minus"/></svg></button>
+            <button class="icon-btn icon-btn-close" data-win-action="close" aria-label="Close Session log"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+          </div>
+        </header>
+        <div class="win-body">
+          <div class="seg" role="tablist" aria-label="Range">
+            <button role="tab" aria-selected="true" data-range="week">Week</button>
+            <button role="tab" aria-selected="false" data-range="month">Month</button>
+            <button role="tab" aria-selected="false" data-range="year">Year</button>
+          </div>
+          <div class="bars" role="img" aria-label="Rounds finished per day"></div>
+          <ul class="log-list" data-bind="logList"></ul>
+          <a class="link" href="#/history">Open full history</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ---------------- HISTORY ---------------- -->
+  <section class="screen page" data-screen-id="history" aria-labelledby="history-title" hidden>
+    <div class="page-head">
+      <div>
+        <h1 id="history-title">History</h1>
+        <p class="muted" data-bind="rangeLabel">Last 30 days</p>
+      </div>
+      <div class="page-actions">
+        <label class="sr-only" for="range">Range</label>
+        <select id="range" class="input select">
+          <option value="7">Last 7 days</option>
+          <option value="30" selected>Last 30 days</option>
+          <option value="90">Last 90 days</option>
+        </select>
+        <button class="btn btn-outline" data-action="export"><svg class="ic" aria-hidden="true"><use href="#i-download"/></svg>Export CSV</button>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="card stat"><span class="label">Rounds</span><span class="stat-num mono" data-bind="hRounds">98</span><span class="muted" data-bind="hRoundsSub">finished in 30 days</span></div>
+      <div class="card stat"><span class="label">Focus time</span><span class="stat-num mono" data-bind="hFocus">40h50</span><span class="muted" data-bind="hFocusSub">98 × 25 min</span></div>
+      <div class="card stat"><span class="label">Stopped early</span><span class="stat-num mono" data-bind="hEarly">11</span><span class="muted">rounds</span></div>
+      <div class="card stat"><span class="label">Reminders</span><span class="stat-num mono" data-bind="hRem">9</span><span class="muted">sent to Telegram</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h2 class="card-title">When you finish rounds</h2>
+        <div class="legend" aria-hidden="true">fewer <i class="h0"></i><i class="h1"></i><i class="h2"></i><i class="h3"></i><i class="h4"></i> more</div>
+      </div>
+      <div class="heatmap-scroll">
+        <div class="heatmap" role="img" aria-label="Heatmap of finished rounds by weekday and hour. Most rounds finish on weekday evenings between 19:00 and 22:00."></div>
+      </div>
+    </div>
+
+    <div class="split">
+      <div class="card">
+        <div class="card-head">
+          <h2 class="card-title">Temperature &amp; humidity, 24 h</h2>
+          <div class="legend" aria-hidden="true"><span class="lg-temp"></span>°C <span class="lg-hum"></span>% RH</div>
+        </div>
+        <svg class="linechart" viewBox="0 0 660 230" role="img" aria-label="Temperature peaks around 14:00 at about 31 °C while humidity drops to about 58 %."></svg>
+      </div>
+      <div class="card card-model">
+        <h2 class="card-title">Model · best conditions</h2>
+        <dl class="kv kv-model">
+          <div><dt>hour</dt><dd>19:00–22:00</dd></div>
+          <div><dt>temp</dt><dd>26–28 °C</dd></div>
+          <div><dt>light</dt><dd>enough</dd></div>
+          <div><dt>finish rate</dt><dd class="ok">[MODEL OUTPUT]</dd></div>
+        </dl>
+        <p class="caption">Sample values. Real numbers come from the analysis model.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">Sessions</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th scope="col">Date</th><th scope="col">Start → end</th><th scope="col">Rounds</th><th scope="col">Card</th><th scope="col">Avg °C</th><th scope="col">Light</th></tr></thead>
+          <tbody data-bind="sessionRows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------- SETTINGS ---------------- -->
+  <section class="screen page page-narrow" data-screen-id="settings" aria-labelledby="settings-title" hidden>
+    <form id="form-settings" novalidate>
+      <div class="page-head">
+        <h1 id="settings-title">Settings</h1>
+        <button class="btn btn-primary" type="submit">Save</button>
+      </div>
+
+      <div class="set-group">
+        <div class="set-desc"><h2>Account</h2><p>Stored in the database. Used to sign in.</p></div>
+        <div class="set-fields">
+          <div class="field"><label for="st-name">Name</label><input id="st-name" class="input" value="La Anh Hào" autocomplete="name"></div>
+          <div class="field"><label for="st-email">Email</label><input id="st-email" class="input" type="email" value="you@student.edu.vn" autocomplete="email"></div>
+          <a class="link" href="#/settings" data-action="change-pass">Change password</a>
+        </div>
+      </div>
+
+      <div class="set-group">
+        <div class="set-desc"><h2>Pomodoro</h2><p>Preset lengths sent to the box (1–120 min).</p></div>
+        <div class="set-fields grid2">
+          <div class="field"><label for="st-focus">Focus (min)</label><input id="st-focus" class="input mono" type="number" inputmode="numeric" min="1" max="120" value="25" aria-describedby="st-focus-err"><p class="field-error" id="st-focus-err" role="alert"></p></div>
+          <div class="field"><label for="st-short">Short break (min)</label><input id="st-short" class="input mono" type="number" inputmode="numeric" min="1" max="120" value="5" aria-describedby="st-short-err"><p class="field-error" id="st-short-err" role="alert"></p></div>
+          <div class="field"><label for="st-long">Long break (min)</label><input id="st-long" class="input mono" type="number" inputmode="numeric" min="1" max="120" value="15" aria-describedby="st-long-err"><p class="field-error" id="st-long-err" role="alert"></p></div>
+          <div class="field"><label for="st-every">Long break after (rounds)</label><input id="st-every" class="input mono" type="number" inputmode="numeric" min="1" max="12" value="4"></div>
+        </div>
+      </div>
+
+      <div class="set-group">
+        <div class="set-desc"><h2>Notifications</h2><p>Telegram when you skip breaks. Email every week.</p></div>
+        <div class="set-fields">
+          <label class="toggle-row"><span>Telegram break reminder</span><input type="checkbox" class="switch" id="st-tg" checked></label>
+          <div class="grid2">
+            <div class="field"><label for="st-chat">Chat ID</label><input id="st-chat" class="input mono" placeholder="[CHAT ID]" inputmode="numeric"></div>
+            <div class="field"><label for="st-remind">Remind after (min)</label><input id="st-remind" class="input mono" type="number" inputmode="numeric" min="10" max="240" value="50"></div>
+          </div>
+          <label class="toggle-row"><span>Weekly email summary</span><input type="checkbox" class="switch" id="st-mail" checked></label>
+        </div>
+      </div>
+
+      <div class="set-group">
+        <div class="set-desc"><h2>Device &amp; cards</h2><p>The box and the RFID cards that can start a session.</p></div>
+        <div class="set-fields">
+          <dl class="kv kv-box">
+            <div><dt>board</dt><dd>ESP32 DevKit V1</dd></div>
+            <div><dt>mqtt</dt><dd class="ok">connected</dd></div>
+            <div><dt>last message</dt><dd><span data-bind="mqttAge">2 s</span> ago</dd></div>
+          </dl>
+          <ul class="cards-list" data-bind="cardList"></ul>
+          <button type="button" class="btn btn-dashed" data-action="add-card"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg><span>Add card · tap it on the box</span></button>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-block mobile-only settings-save" type="submit">Save changes</button>
+      <a href="#/signin" class="btn btn-outline btn-block mobile-only signout-block"><svg class="ic" aria-hidden="true"><use href="#i-logout"/></svg>Sign out</a>
+    </form>
+  </section>
+
+  <!-- Mobile bottom tab bar (≤ 760 px) -->
+  <nav class="tabbar" aria-label="Tabs">
+    <a href="#/workspace/timer" data-tabnav="timer"><svg class="ic" aria-hidden="true"><use href="#i-timer"/></svg><span>Timer</span></a>
+    <a href="#/workspace/lcd" data-tabnav="lcd"><svg class="ic" aria-hidden="true"><use href="#i-lcd"/></svg><span>LCD</span></a>
+    <a href="#/workspace/room" data-tabnav="room"><svg class="ic" aria-hidden="true"><use href="#i-room"/></svg><span>Room</span></a>
+    <a href="#/workspace/log" data-tabnav="log"><svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg><span>Log</span></a>
+    <a href="#/settings" data-tabnav="settings"><svg class="ic" aria-hidden="true"><use href="#i-gear"/></svg><span>Settings</span></a>
+  </nav>
+</div>
+</main>
+
+<div class="toasts" aria-live="polite" aria-atomic="false"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
