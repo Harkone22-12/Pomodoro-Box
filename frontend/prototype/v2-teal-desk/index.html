@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Trạm học tập · Prototype v2</title>
-  <meta name="description" content="Prototype giao diện v2 (Teal Desk) của Trạm học tập Pomodoro. Chỉ dùng dữ liệu mẫu.">
+  <meta name="description" content="Prototype giao diện v2 (theme Cà chua) của Trạm học tập Pomodoro. Chỉ dùng dữ liệu mẫu.">
   <!--
-    Trạm học tập: UI prototype v2 "Teal Desk".
+    Trạm học tập: UI prototype v2, "Cà chua" (tomato) theme on every screen.
     Static HTML/CSS/JS, sample data only. Not connected to MQTT or the backend
     and not part of the React app in frontend/src. Open this file in a browser.
   -->
@@ -159,7 +159,7 @@
      ===================================================== -->
 <div class="app" hidden>
   <aside class="sidebar" aria-label="Điều hướng">
-    <a class="brand brand-light" href="#/home"><span class="brand-mark" aria-hidden="true"><i></i></span><span class="brand-text">Trạm học tập</span></a>
+    <a class="brand" href="#/home"><span class="brand-mark" aria-hidden="true"><i></i></span><span class="brand-text">Trạm học tập</span></a>
     <nav class="side-nav" aria-label="Chính">
       <a href="#/home" data-nav="home"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg><span>Tổng quan</span></a>
       <a href="#/session" data-nav="session"><svg class="ic" aria-hidden="true"><use href="#i-timer"/></svg><span>Phiên học</span></a>
@@ -179,7 +179,7 @@
     <div class="side-user">
       <span class="avatar" aria-hidden="true">H</span>
       <span class="side-user-name">La Anh Hào</span>
-      <a href="#/signin" class="icon-btn icon-btn-light" aria-label="Đăng xuất"><svg class="ic" aria-hidden="true"><use href="#i-logout"/></svg></a>
+      <a href="#/signin" class="icon-btn" aria-label="Đăng xuất"><svg class="ic" aria-hidden="true"><use href="#i-logout"/></svg></a>
     </div>
   </aside>
 
@@ -202,7 +202,7 @@
       </div>
 
       <div class="grid">
-        <article class="tile span-7 tile-timer" aria-labelledby="h-timer-home">
+        <article class="tile tile-hero span-7 tile-timer" aria-labelledby="h-timer-home">
           <header class="tile-head">
             <h2 id="h-timer-home"><svg class="ic" aria-hidden="true"><use href="#i-timer"/></svg>Hẹn giờ</h2>
             <span class="tag tag-orange" data-bind="modeLabel">Tập trung</span>
@@ -305,7 +305,7 @@
       </div>
 
       <div class="grid">
-        <article class="tile span-7" aria-labelledby="h-timer">
+        <article class="tile tile-hero span-7" aria-labelledby="h-timer">
           <header class="tile-head">
             <h2 id="h-timer"><svg class="ic" aria-hidden="true"><use href="#i-timer"/></svg>Hẹn giờ Pomodoro</h2>
             <span class="tag tag-orange" data-bind="modeLabel">Tập trung</span>

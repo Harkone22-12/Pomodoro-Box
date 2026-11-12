@@ -1,11 +1,13 @@
-# Prototype v2 screenshots: "Teal Desk"
+# Prototype v2 screenshots: "Cà chua" (tomato)
 
 Screenshots of [`frontend/prototype/v2-teal-desk/`](../../../frontend/prototype/v2-teal-desk/README.md).
 This is a new design, separate from the one in the proposal (v1). The UI is in Vietnamese, uses the
-Nunito font and has square corners. All numbers are sample data.
+Nunito font and has square corners. Every screen uses the same "Cà chua" theme: cream paper, brown
+ink, tomato accents, 2 px ink rules and a solid tomato offset shadow on the main panel. All numbers
+are sample data.
 
-Captured with headless Microsoft Edge: desktop at 1440 px, tablet at 1024 px and phone at 390 px
-(2× pixel density).
+Captured with headless Microsoft Edge: desktop at 1440 px and tablet at 1024 px (1×), phone at
+390 px (2× pixel density, through DevTools device emulation). App screens are full-page captures.
 
 ## Desktop (1440 px)
 

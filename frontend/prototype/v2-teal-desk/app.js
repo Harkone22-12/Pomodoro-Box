@@ -273,6 +273,7 @@
     const pct = T.total ? ((T.total - l) / T.total) * 100 : 0;
     $$('[data-sq]').forEach((sq) => {
       sq.classList.toggle('is-paused', !T.running);
+      sq.classList.toggle('is-break', !isFocus);
       $('.sq-bar', sq).setAttribute('stroke-dasharray', `${pct.toFixed(2)} 100`);
     });
     $$('[data-action="timer-stop"]').forEach((b) => { b.disabled = !T.running; });

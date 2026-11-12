@@ -1,4 +1,6 @@
-# Prototype v2: "Teal Desk"
+# Prototype v2: "Cà chua" (tomato)
+
+The folder is still called `v2-teal-desk` (the first version used a teal app shell), so links keep working.
 
 A second, completely different UI prototype for Trạm học tập (Study Station). It is not
 the design in the proposal; that one is [`../v1-daylight-console/`](../v1-daylight-console/README.md).
@@ -13,31 +15,43 @@ Open `index.html` in a browser.
 
 ## Design choices
 
-| | v1 Daylight Console (proposal) | v2 Teal Desk |
+| | v1 Daylight Console (proposal) | v2 Cà chua |
 |---|---|---|
-| Layout | Top bar, floating windows, icon dock on the right | Dark teal sidebar on the left, square tile grid |
-| Style | Grid background, shadows, amber | Flat: 1 px lines, no shadows, teal + orange |
+| Layout | Top bar, floating windows, icon dock on the right | Cream sidebar on the left closed by a 2 px ink rule, square tile grid |
+| Style | Grid background, shadows, amber | Flat tiles with warm 1 px lines; 2 px ink rules; one panel per screen with a solid tomato offset shadow |
 | Font | Space Grotesk + JetBrains Mono | **Nunito** (200–700) + VT323 for the LCD only |
-| Timer | Progress bar | A square frame that fills around the countdown |
+| Timer | Progress bar | Thin tomato numerals in a square frame that fills around the countdown (teal during a break) |
 | LCD | Blue backlight | Yellow-green backlight, dot-matrix font |
 | Phone | 5 tabs | 4 tabs: Tổng quan, Phiên học, Lịch sử, Cài đặt |
-| Sign in | Grid background, card | Its own "Cà chua" (tomato) theme, see below |
+| Sign in | Grid background, card | Same theme as the rest of the app |
 
-**Sign-in and register screens:** these use a separate warm theme, because *pomodoro* means
-tomato. The page has a cream background `#fbf5ee`, brown text `#2b1a12` and tomato accents
-(`#ea580c` for graphics, `#c2410c` for the button and links, 5.2:1 with white). There is a
-header bar with a 2 px rule, and the hero is a large thin "25:00" with a blinking colon. A strip
-shows one Pomodoro cycle, with each segment as wide as its minutes. The form sits in a card with a
-2 px border and a solid tomato offset shadow, and the box status is in the footer.
+**One theme on every screen: "Cà chua" (tomato),** because *pomodoro* means tomato. The pages
+have a cream background `#fbf5ee`, brown ink `#2b1a12` and tomato accents (`#ea580c` for
+graphics and very large numbers, `#c2410c` for buttons, links and small text, 5.2:1 with white).
 Corners are still square.
+
+- **Sign in / register:** a header bar with a 2 px ink rule, a large thin "25:00" with a blinking
+  colon, a strip showing one Pomodoro cycle (each segment as wide as its minutes), and the form
+  in a card with a 2 px ink border and a solid tomato offset shadow. The box status is in the footer.
+- **App screens use the same pieces:** the sidebar (and the phone app bar and bottom bar) is
+  closed by a 2 px ink rule like the sign-in header; each page title sits on a 2 px ink rule; the
+  main panel of a screen (the timer on Tổng quan and Phiên học, the form in Cài đặt) is the
+  sign-in card with its tomato shadow; the countdown uses the same thin tomato numerals as "25:00".
+  Primary and outline buttons have a 2 px ink border and lift onto an ink shadow on hover, like
+  the sign-in button. The selected item (sidebar, mode switch, settings tab) is an ink block.
+- **Color meaning:** tomato = focus time, brand and the main action. Teal (`#2a9d8f`, `#0f766e`)
+  = breaks and "ok" states, the same teal as the break segments in the cycle strip. Amber =
+  warning, red = error. The model panel in Lịch sử is the one dark tile, in brand ink.
 
 **Why Nunito:** its strokes have rounded ends (less sharp than geometric grotesques), it has
 light weights (200 for the big numbers, 300 for headings), and it ships the `vietnamese`
 subset, so stacked diacritics such as *ậ, ẩ, ữ, ở* render cleanly. Body text stays at 400 for
 contrast. Labels use sentence case, because all-caps Vietnamese looks cramped.
 
-Colors: primary `#0f766e` (5.5:1 with white), accent `#ea580c` (graphics only; orange text
-uses `#c2410c`), background `#f3f6f5`, sidebar `#0b3b37`.
+Colors (tokens at the top of `styles.css`): background `#fbf5ee`, tiles `#ffffff`, ink `#2b1a12`
+(15:1 on cream), muted text `#6f5a4d` (6.0:1 on cream), lines `#e6d8ca` / `#d6c5b5`, tomato
+`#ea580c` (graphics only) / `#c2410c` (text and buttons) / `#9a3412` (hover), break teal
+`#2a9d8f` / `#0f766e`.
 
 ## Screens (URL hash)
 
