@@ -10,6 +10,7 @@ node_modules/
 dist/
 *.tsbuildinfo
 npm-debug.log*
+graphify-out/
 
 # Env files (keep the examples)
 .env
