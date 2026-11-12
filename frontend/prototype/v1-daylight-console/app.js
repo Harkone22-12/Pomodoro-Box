@@ -233,9 +233,24 @@
       first.end = hm(new Date());
     }
     renderSession();
+    $('[data-bind="rate"]').hidden = sess.active;   // one-tap rating appears when a session ends
+    if (sess.active) sessions[0].rate = 0;
     renderLogList();
     toast(`Card ${action === 'start' ? 'tapped, session started' : 'tapped, session stopped'} ${mqtt('study/rfid', { uid: 'A1B2C3D4', action }, '→')}`, { icon: 'i-card' });
   });
+
+  // ---------- one-tap session rating ----------
+  // Kept in the browser only: the real app needs a place to store it (nothing in docs/topics.md yet).
+  const RATES = { 1: 'Distracted', 2: 'Okay', 3: 'Focused' };
+  $$('[data-rate]').forEach((b) => b.addEventListener('click', () => {
+    const box = $('[data-bind="rate"]');
+    const v = Number(b.dataset.rate);
+    box.hidden = true;
+    if (!v) return;
+    sessions[0].rate = v;
+    if (historyDrawn) renderSessionRows();
+    toast(`Rating saved: ${RATES[v].toLowerCase()}.`, { action: { label: 'Undo', fn: () => { sessions[0].rate = 0; box.hidden = false; if (historyDrawn) renderSessionRows(); } }, ms: 6000 });
+  }));
 
   // ---------- Timer (study/timer) ----------
   const T = {
@@ -388,11 +403,11 @@
   const daysAgo = (n) => { const d = new Date(today); d.setDate(d.getDate() - n); return d; };
   const sessions = [
     { d: daysAgo(0), start: hm(new Date(sess.start)), end: 'now', rounds: '2+1', card: 'A1B2C3D4', t: '29.5', light: 'enough' },
-    { d: daysAgo(1), start: '09:10', end: '09:40', rounds: '1', card: 'A1B2C3D4', t: '28.1', light: 'enough' },
-    { d: daysAgo(2), start: '20:00', end: '21:00', rounds: '2', card: 'A1B2C3D4', t: '27.4', light: 'dim' },
-    { d: daysAgo(3), start: '18:30', end: '22:10', rounds: '7', card: 'A1B2C3D4', t: '27.0', light: 'enough' },
-    { d: daysAgo(4), start: '14:00', end: '15:30', rounds: '3', card: 'A1B2C3D4', t: '31.2', light: 'bright' },
-    { d: daysAgo(5), start: '19:20', end: '21:45', rounds: '5', card: 'A1B2C3D4', t: '28.6', light: 'enough' },
+    { d: daysAgo(1), start: '09:10', end: '09:40', rounds: '1', card: 'A1B2C3D4', t: '28.1', light: 'enough', rate: 3 },
+    { d: daysAgo(2), start: '20:00', end: '21:00', rounds: '2', card: 'A1B2C3D4', t: '27.4', light: 'dim', rate: 2 },
+    { d: daysAgo(3), start: '18:30', end: '22:10', rounds: '7', card: 'A1B2C3D4', t: '27.0', light: 'enough', rate: 3 },
+    { d: daysAgo(4), start: '14:00', end: '15:30', rounds: '3', card: 'A1B2C3D4', t: '31.2', light: 'bright', rate: 1 },
+    { d: daysAgo(5), start: '19:20', end: '21:45', rounds: '5', card: 'A1B2C3D4', t: '28.6', light: 'enough', rate: 3 },
   ];
   function renderLogList() {
     $('[data-bind="logList"]').innerHTML = sessions.slice(0, 3).map((s) =>
@@ -495,7 +510,7 @@
   }
   function renderSessionRows() {
     $('[data-bind="sessionRows"]').innerHTML = sessions.map((s) =>
-      `<tr><td>${dayLabel(s.d)}</td><td>${s.start} → ${s.end}</td><td class="r">${s.rounds}</td><td>${s.card}</td><td>${s.t}</td><td>${s.light}</td></tr>`).join('');
+      `<tr><td>${dayLabel(s.d)}</td><td>${s.start} → ${s.end}</td><td class="r">${s.rounds}</td><td>${s.card}</td><td>${s.t}</td><td>${s.light}</td><td>${RATES[s.rate] || '—'}</td></tr>`).join('');
   }
   function drawHistory() {
     renderStats();
@@ -506,8 +521,8 @@
     renderSessionRows();
   }
   $('[data-action="export"]').addEventListener('click', () => {
-    const rows = [['date', 'start', 'end', 'rounds', 'card', 'avg_temp_c', 'light']]
-      .concat(sessions.map((s) => [s.d.toISOString().slice(0, 10), s.start, s.end, s.rounds, s.card, s.t, s.light]));
+    const rows = [['date', 'start', 'end', 'rounds', 'card', 'avg_temp_c', 'light', 'rating']]
+      .concat(sessions.map((s) => [s.d.toISOString().slice(0, 10), s.start, s.end, s.rounds, s.card, s.t, s.light, s.rate || '']));
     const blob = new Blob([rows.map((r) => r.join(',')).join('\n')], { type: 'text/csv' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
@@ -693,4 +708,5 @@
   setInterval(tickClock, 1000);
   setInterval(stepDht, 5000);
   setInterval(stepLight, 3000);
+  if (new URLSearchParams(location.search).get('demo') === 'rate') $('[data-action="tap"]').click();
 })();

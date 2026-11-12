@@ -35,3 +35,12 @@ Captured with headless Microsoft Edge: desktop at 1440 px and tablet at 1024 px 
 | `10-phien-hoc-mobile.png` | Phiên học |
 | `11-lich-su-mobile.png` | Lịch sử, with the sessions table as a list |
 | `12-cai-dat-mobile.png` | Cài đặt, Cảnh báo tab |
+
+## One-tap session rating
+
+Added after the first capture. When a card tap ends a session, the "Phiên quẹt thẻ" tile asks "Phiên vừa rồi thế nào?" with three buttons (Mất tập trung, Tạm ổn, Tập trung tốt). One tap saves it; a toast offers "Hoàn tác" for 6 seconds, and "Bỏ qua" dismisses the question. Lịch sử shows the rating in a new "Đánh giá" column, so `05-lich-su-desktop.png` was captured again.
+
+| File | Screen |
+|---|---|
+| `13-danh-gia-desktop.png` | Tổng quan right after the session ends, rating question in the card tile |
+| `14-danh-gia-mobile.png` | The same state on a phone |

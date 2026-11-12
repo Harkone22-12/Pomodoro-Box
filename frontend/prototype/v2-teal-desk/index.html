@@ -21,6 +21,9 @@
   <defs>
     <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></symbol>
     <symbol id="i-timer" viewBox="0 0 24 24"><path d="M10 2h4"/><path d="M12 14l3-3"/><circle cx="12" cy="14" r="8"/></symbol>
+    <symbol id="i-face-low" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 16s1.5-2 4-2 4 2 4 2"/><path d="M9 9.5h.01M15 9.5h.01"/></symbol>
+    <symbol id="i-face-mid" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 15h8"/><path d="M9 9.5h.01M15 9.5h.01"/></symbol>
+    <symbol id="i-face-high" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9.5h.01M15 9.5h.01"/></symbol>
     <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M8 17v-5"/><path d="M13 17V8"/><path d="M18 17v-3"/></symbol>
     <symbol id="i-gear" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></symbol>
     <symbol id="i-thermo" viewBox="0 0 24 24"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></symbol>
@@ -260,6 +263,15 @@
           </dl>
           <p class="warn-band" data-bind="breakWarn"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>Đã <b data-bind="breakMin">50</b> phút chưa nghỉ. Đã nhắc qua Telegram lúc <span data-bind="breakAt">21:09</span>.</span></p>
           <button class="btn btn-ghost btn-block" data-action="tap"><svg class="ic" aria-hidden="true"><use href="#i-wave"/></svg><span data-bind="tapLabel">Mô phỏng quẹt thẻ để kết thúc</span></button>
+          <div class="rate" data-bind="rate" role="group" aria-labelledby="rate-q" hidden>
+            <p class="rate-q" id="rate-q">Phiên vừa rồi thế nào?</p>
+            <div class="rate-opts">
+              <button type="button" class="rate-btn" data-rate="1"><svg class="ic" aria-hidden="true"><use href="#i-face-low"/></svg>Mất tập trung</button>
+              <button type="button" class="rate-btn" data-rate="2"><svg class="ic" aria-hidden="true"><use href="#i-face-mid"/></svg>Tạm ổn</button>
+              <button type="button" class="rate-btn" data-rate="3"><svg class="ic" aria-hidden="true"><use href="#i-face-high"/></svg>Tập trung tốt</button>
+            </div>
+            <button type="button" class="rate-skip" data-rate="0">Bỏ qua</button>
+          </div>
         </article>
 
         <article class="tile span-4 tile-lcd" aria-labelledby="h-lcd-home">
@@ -446,7 +458,7 @@
           <header class="tile-head"><h2 id="h-sessions">Các phiên học</h2></header>
           <div class="table-wrap">
             <table class="table">
-              <thead><tr><th scope="col">Ngày</th><th scope="col">Bắt đầu → kết thúc</th><th scope="col">Vòng</th><th scope="col">Thẻ</th><th scope="col">Nhiệt độ TB</th><th scope="col">Ánh sáng</th></tr></thead>
+              <thead><tr><th scope="col">Ngày</th><th scope="col">Bắt đầu → kết thúc</th><th scope="col">Vòng</th><th scope="col">Thẻ</th><th scope="col">Nhiệt độ TB</th><th scope="col">Ánh sáng</th><th scope="col">Đánh giá</th></tr></thead>
               <tbody data-rows></tbody>
             </table>
           </div>

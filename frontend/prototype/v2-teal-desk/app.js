@@ -230,9 +230,24 @@
     if (sess.active) sess.start = Date.now(); else sessions[0].end = hm(new Date());
     log('in', payload('study/rfid', { uid: 'A1B2C3D4', action }).replace('←', '→'));
     renderSession();
+    $('[data-bind="rate"]').hidden = sess.active;   // one-tap rating appears when a session ends
+    if (sess.active) sessions[0].rate = 0;
     if (historyDrawn) renderRows();
     toast(sess.active ? 'Đã quẹt thẻ: bắt đầu phiên học.' : 'Đã quẹt thẻ: kết thúc phiên học.', { icon: 'i-card' });
   });
+
+  // ---------- one-tap session rating ----------
+  // Kept in the browser only: the real app needs a place to store it (nothing in docs/topics.md yet).
+  const RATES = { 1: 'Mất tập trung', 2: 'Tạm ổn', 3: 'Tập trung tốt' };
+  $$('[data-rate]').forEach((b) => b.addEventListener('click', () => {
+    const box = $('[data-bind="rate"]');
+    const v = Number(b.dataset.rate);
+    box.hidden = true;
+    if (!v) return;
+    sessions[0].rate = v;
+    if (historyDrawn) renderRows();
+    toast(`Đã lưu đánh giá: ${RATES[v].toLowerCase()}.`, { action: { label: 'Hoàn tác', fn: () => { sessions[0].rate = 0; box.hidden = false; if (historyDrawn) renderRows(); } }, ms: 6000 });
+  }));
 
   // ---------- timer ----------
   const MODE = { focus: 'Tập trung', short: 'Nghỉ ngắn', long: 'Nghỉ dài', custom: 'Tùy chỉnh' };
@@ -402,11 +417,11 @@
   const daysAgo = (n) => { const d = new Date(today); d.setDate(d.getDate() - n); return d; };
   const sessions = [
     { d: daysAgo(0), start: hm(new Date(sess.start)), end: 'đang học', rounds: '2+1', card: 'A1B2C3D4', t: 29.5, light: 'Đủ sáng' },
-    { d: daysAgo(1), start: '09:10', end: '09:40', rounds: '1', card: 'A1B2C3D4', t: 28.1, light: 'Đủ sáng' },
-    { d: daysAgo(2), start: '20:00', end: '21:00', rounds: '2', card: 'A1B2C3D4', t: 27.4, light: 'Thiếu sáng' },
-    { d: daysAgo(3), start: '18:30', end: '22:10', rounds: '7', card: 'A1B2C3D4', t: 27.0, light: 'Đủ sáng' },
-    { d: daysAgo(4), start: '14:00', end: '15:30', rounds: '3', card: 'A1B2C3D4', t: 31.2, light: 'Đủ sáng' },
-    { d: daysAgo(5), start: '19:20', end: '21:45', rounds: '5', card: 'A1B2C3D4', t: 28.6, light: 'Đủ sáng' },
+    { d: daysAgo(1), start: '09:10', end: '09:40', rounds: '1', card: 'A1B2C3D4', t: 28.1, light: 'Đủ sáng', rate: 3 },
+    { d: daysAgo(2), start: '20:00', end: '21:00', rounds: '2', card: 'A1B2C3D4', t: 27.4, light: 'Thiếu sáng', rate: 2 },
+    { d: daysAgo(3), start: '18:30', end: '22:10', rounds: '7', card: 'A1B2C3D4', t: 27.0, light: 'Đủ sáng', rate: 3 },
+    { d: daysAgo(4), start: '14:00', end: '15:30', rounds: '3', card: 'A1B2C3D4', t: 31.2, light: 'Đủ sáng', rate: 1 },
+    { d: daysAgo(5), start: '19:20', end: '21:45', rounds: '5', card: 'A1B2C3D4', t: 28.6, light: 'Đủ sáng', rate: 3 },
   ];
   function renderWeek() {
     const vals = [4, 6, 3, 7, 2, 1, T.today];
@@ -504,7 +519,7 @@
   }
   function renderRows() {
     $('[data-rows]').innerHTML = sessions.map((s) =>
-      `<tr><td>${dateShort(s.d)}</td><td>${s.start} → ${s.end}</td><td class="r">${s.rounds}</td><td>${s.card}</td><td>${vn1(s.t)} °C</td><td>${s.light}</td></tr>`).join('');
+      `<tr><td>${dateShort(s.d)}</td><td>${s.start} → ${s.end}</td><td class="r">${s.rounds}</td><td>${s.card}</td><td>${vn1(s.t)} °C</td><td>${s.light}</td><td>${RATES[s.rate] || '—'}</td></tr>`).join('');
   }
   function drawHistory() {
     renderKpis();
@@ -513,8 +528,8 @@
     drawCalendar(); drawHours(); drawLine(); renderRows();
   }
   $('[data-action="export"]').addEventListener('click', () => {
-    const rows = [['ngay', 'bat_dau', 'ket_thuc', 'vong', 'the', 'nhiet_do_tb', 'anh_sang']]
-      .concat(sessions.map((s) => [s.d.toISOString().slice(0, 10), s.start, s.end, s.rounds, s.card, s.t, s.light]));
+    const rows = [['ngay', 'bat_dau', 'ket_thuc', 'vong', 'the', 'nhiet_do_tb', 'anh_sang', 'danh_gia']]
+      .concat(sessions.map((s) => [s.d.toISOString().slice(0, 10), s.start, s.end, s.rounds, s.card, s.t, s.light, s.rate || '']));
     const blob = new Blob(['﻿' + rows.map((r) => r.join(',')).join('\n')], { type: 'text/csv;charset=utf-8' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob); a.download = 'phien-hoc.csv'; a.click();
@@ -635,4 +650,5 @@
   setInterval(() => { renderTimer(); renderSession(); }, 250);
   setInterval(tickClock, 1000);
   setInterval(stepEnv, 4000);
+  if (new URLSearchParams(location.search).get('demo') === 'rate') $('[data-action="tap"]').click();
 })();

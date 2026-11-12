@@ -77,3 +77,9 @@ Colors (tokens at the top of `styles.css`): background `#fbf5ee`, tiles `#ffffff
 2. **LCD text:** the prototype removes accents and cuts the text to 32 characters in the web app, then
    wraps it at a word boundary.
 3. **Light `level` labels:** the prototype uses `du_sang` / `thieu_sang` from the proposal.
+
+## One-tap session rating
+
+Ending a session with the simulated card tap shows a three-button rating in the session card. One tap saves it (with Undo in the toast) and it appears in the History table and the CSV export. Open `index.html?demo=rate` to load the page in that state.
+
+The rating lives only in the browser. The real app needs somewhere to send and store it, and `docs/topics.md` has no event or field for that yet, so it needs a contract PR first.

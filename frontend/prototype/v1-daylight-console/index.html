@@ -21,6 +21,9 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="i-timer" viewBox="0 0 24 24"><path d="M10 2h4"/><path d="M12 14l3-3"/><circle cx="12" cy="14" r="8"/></symbol>
+    <symbol id="i-face-low" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 16s1.5-2 4-2 4 2 4 2"/><path d="M9 9.5h.01M15 9.5h.01"/></symbol>
+    <symbol id="i-face-mid" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 15h8"/><path d="M9 9.5h.01M15 9.5h.01"/></symbol>
+    <symbol id="i-face-high" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9.5h.01M15 9.5h.01"/></symbol>
     <symbol id="i-lcd" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14"/><path d="M7 10h10"/><path d="M7 14h6"/></symbol>
     <symbol id="i-thermo" viewBox="0 0 24 24"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></symbol>
     <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
@@ -309,6 +312,15 @@
             <span><span data-bind="breakMin">50</span> min without a break. Telegram reminder sent at <span data-bind="breakAt">19:55</span>.</span>
           </div>
           <button class="btn btn-ghost btn-sm" data-action="tap"><svg class="ic" aria-hidden="true"><use href="#i-tap"/></svg><span data-bind="tapLabel">Simulate card tap (stop)</span></button>
+          <div class="rate" data-bind="rate" role="group" aria-labelledby="rate-q" hidden>
+            <p class="rate-q" id="rate-q">How was that session?</p>
+            <div class="rate-opts">
+              <button type="button" class="rate-btn" data-rate="1"><svg class="ic" aria-hidden="true"><use href="#i-face-low"/></svg>Distracted</button>
+              <button type="button" class="rate-btn" data-rate="2"><svg class="ic" aria-hidden="true"><use href="#i-face-mid"/></svg>Okay</button>
+              <button type="button" class="rate-btn" data-rate="3"><svg class="ic" aria-hidden="true"><use href="#i-face-high"/></svg>Focused</button>
+            </div>
+            <button type="button" class="rate-skip" data-rate="0">Skip</button>
+          </div>
         </div>
       </article>
 
@@ -395,7 +407,7 @@
       <h2 class="card-title">Sessions</h2>
       <div class="table-wrap">
         <table class="table">
-          <thead><tr><th scope="col">Date</th><th scope="col">Start → end</th><th scope="col">Rounds</th><th scope="col">Card</th><th scope="col">Avg °C</th><th scope="col">Light</th></tr></thead>
+          <thead><tr><th scope="col">Date</th><th scope="col">Start → end</th><th scope="col">Rounds</th><th scope="col">Card</th><th scope="col">Avg °C</th><th scope="col">Light</th><th scope="col">Focus</th></tr></thead>
           <tbody data-bind="sessionRows"></tbody>
         </table>
       </div>

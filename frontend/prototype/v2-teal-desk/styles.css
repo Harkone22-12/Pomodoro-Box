@@ -630,3 +630,21 @@ body[data-screen="register"] [data-show="signin"] { display: none; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
   .btn-primary:not([disabled]):hover, .btn-outline:not([disabled]):hover { transform: none; }
 }
+
+/* ---------- one-tap session rating ---------- */
+.rate { display: grid; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.rate[hidden] { display: none; }
+.rate-q { font-weight: 800; }
+.rate-opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.rate-btn {
+  display: grid; justify-items: center; gap: 6px; min-height: 72px; padding: 10px 4px;
+  border: 2px solid var(--ink); background: var(--surface); color: var(--ink);
+  font: inherit; font-size: 14px; font-weight: 700; line-height: 1.2; cursor: pointer;
+  transition: background-color .15s ease, color .15s ease;
+}
+.rate-btn:hover { background: var(--bg); color: var(--tomato-deep); }
+.rate-btn .ic { width: 26px; height: 26px; }
+.rate-skip {
+  justify-self: start; min-height: 44px; padding: 0; border: 0; background: none;
+  font: inherit; font-size: 14px; color: var(--muted); text-decoration: underline; cursor: pointer;
+}

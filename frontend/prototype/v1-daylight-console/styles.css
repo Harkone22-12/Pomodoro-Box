@@ -647,3 +647,21 @@ a { color: var(--amber-ink); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }
+
+/* ---------- one-tap session rating ---------- */
+.rate { display: grid; gap: 10px; padding-top: 12px; border-top: 1px solid var(--border-soft); }
+.rate[hidden] { display: none; }
+.rate-q { font-weight: 600; }
+.rate-opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.rate-btn {
+  display: grid; justify-items: center; gap: 6px; min-height: 68px; padding: 10px 4px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text);
+  font: inherit; font-size: 14px; font-weight: 600; line-height: 1.2; cursor: pointer;
+  transition: background-color .15s var(--ease), border-color .15s var(--ease);
+}
+.rate-btn:hover { background: var(--amber-tint); border-color: var(--amber); }
+.rate-btn .ic { width: 24px; height: 24px; }
+.rate-skip {
+  justify-self: start; min-height: 44px; padding: 0; border: 0; background: none;
+  font: inherit; font-size: 14px; color: var(--muted); text-decoration: underline; cursor: pointer;
+}

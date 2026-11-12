@@ -33,3 +33,12 @@ phone at 390 px (2× pixel density).
 | `11-workspace-mobile-log.png` | Log tab |
 | `12-history-mobile.png` | History, with the sessions table as a list |
 | `13-settings-mobile.png` | Settings as grouped lists, with Save and Sign out at the bottom |
+
+## One-tap session rating
+
+Added after the first capture. When a card tap ends a session, the Session window asks "How was that session?" with three buttons (Distracted, Okay, Focused). One tap saves it; a toast offers Undo for 6 seconds, and Skip dismisses the question. History shows the rating in a new Focus column, so `04-history-desktop.png` was captured again.
+
+| File | Screen |
+|---|---|
+| `14-rating-desktop.png` | Workspace right after the session ends, rating question in the Session window |
+| `15-rating-mobile.png` | Room tab on a phone, same state |

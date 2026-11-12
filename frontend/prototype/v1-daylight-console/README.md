@@ -53,3 +53,9 @@ These belong in `docs/topics.md` (via a PR) before the real flows are written:
    accents. The `text` field notes say this is still undecided.
 3. **Light `level` labels.** The prototype uses `du_sang` / `thieu_sang` from the proposal.
    The field notes say the labels are still to be chosen.
+
+## One-tap session rating
+
+Ending a session with the simulated card tap shows a three-button rating in the session card. One tap saves it (with Undo in the toast) and it appears in the History table and the CSV export. Open `index.html?demo=rate` to load the page in that state.
+
+The rating lives only in the browser. The real app needs somewhere to send and store it, and `docs/topics.md` has no event or field for that yet, so it needs a contract PR first.
