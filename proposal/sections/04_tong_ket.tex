@@ -1,108 +1,81 @@
 \section{Tổng kết}
 
-Dựa trên bảng danh mục 13 chức năng đã xác định ở Mục 1, kế hoạch phân công công việc chi tiết ở Mục 3.2 và tài liệu \textit{``Quy định đồ án cuối kỳ''} môn học \textit{Vật lý cho Công nghệ Thông tin (HK1/2026--2027)}, nhóm tiến hành đối chiếu và lập bảng tổng kết điểm số dự kiến cho từng thành viên.
-
-Theo quy chế chính thức của môn học, kết quả đánh giá đồ án cuối kỳ ($\text{Điểm CK}$) được xác định theo công thức:
-\begin{equation}
+Dựa trên danh mục 13 chức năng và kế hoạch phân công ở Mục 3.2, nhóm tiến hành đối chiếu với \textit{``Quy định đồ án cuối kỳ''} môn học \textit{Vật lý cho Công nghệ Thông tin}:
+\begin{equation*}
 \text{Điểm CK} = (\text{Điểm YCCB} + \text{Điểm YCNC} + \text{Điểm BC}) \times K
-\end{equation}
-Trong đó các thành phần điểm số được cấu thành nghiêm ngặt theo Barem môn học như sau:
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Điểm Yêu cầu căn bản ($\text{Điểm YCCB}$ -- Tối đa 5.0 điểm):}
-    \begin{itemize}
-        \item \textit{Điểm chức năng (tối đa 4.0 điểm):} Mỗi sinh viên phụ trách 01 luồng xử lý căn bản riêng biệt (Input $\rightarrow$ ESP32 $\rightarrow$ MQTT $\rightarrow$ Web hoặc Web $\rightarrow$ MQTT $\rightarrow$ ESP32 $\rightarrow$ Output), hiểu rõ nguyên lý và giải thích được toàn bộ luồng xử lý dữ liệu khi vấn đáp (+4.0 điểm).
-        \item \textit{Điểm làm việc nhóm (tối đa 1.0 điểm):} Toàn bộ mã nguồn, tài nguyên của các thành viên được tích hợp hoàn chỉnh trong cùng một dự án chung (+1.0 điểm).
-    \end{itemize}
-    \item \textbf{Điểm Yêu cầu nâng cao ($\text{Điểm YCNC}$ -- Tối đa 4.0 điểm):} Sinh viên lựa chọn và đăng ký các chức năng nâng cao từ danh mục 12 nhóm yêu cầu trong Barem. Quy định bắt buộc: mỗi yêu cầu chỉ do duy nhất một sinh viên phụ trách, tất cả thiết bị phần cứng giữa các yêu cầu phải \textbf{đôi một khác nhau}. Mức điểm ghi nhận tối đa cho phần này là 4.0 điểm (ngay cả khi tổng điểm các yêu cầu đăng ký vượt 4.0 điểm).
-    \item \textbf{Điểm Báo cáo cuối kỳ ($\text{Điểm BC}$ -- Tối đa 1.0 điểm):} Thực hiện theo nhóm, nộp báo cáo đầy đủ và đúng hạn quy định trên hệ thống Moodle (+1.0 điểm).
-    \item \textbf{Hệ số $K$ ($0\% \le K \le 100\%$):} Thể hiện mức độ thấu hiểu và tính trung thực của từng cá nhân qua quá trình vấn đáp trực tiếp với giảng viên.
-    \item \textbf{Điểm cộng sản phẩm thật (Tối đa +1.0 điểm):} Nhóm hoàn thành và đóng gói $100\%$ sản phẩm phần cứng thực tế hoạt động ổn định trong hộp đựng in 3D theo đúng thiết kế, được giảng viên xem xét cộng tối đa +1.0 điểm vào điểm tổng kết môn học.
-\end{itemize}
+\end{equation*}
+Trong đó: Điểm YCCB tối đa 5.0đ (4.0đ luồng căn bản + 1.0đ tích hợp); Điểm YCNC tối đa 4.0đ (đăng ký các yêu cầu với phần cứng đôi một khác nhau); Điểm BC tối đa 1.0đ; Hệ số $K \in [0\%, 100\%]$ qua vấn đáp; Điểm cộng sản phẩm thật tối đa +1.0đ khi đóng gói hộp in 3D vận hành ổn định.
 
 \subsection{Bảng tổng kết điểm số dự kiến của các thành viên}
 
-Bảng \ref{tab:tong_ket_diem} tổng hợp mức điểm dự kiến của 3 thành viên trong nhóm 07 theo đúng các cột chuẩn của Barem môn học:
-
-\begin{table}[htbp]
-\centering
+\begin{center}
 \small
+\renewcommand{\arraystretch}{1.02}
 \begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
 \hline
-\textbf{STT} & \textbf{Họ và tên thành viên} & \textbf{\parbox{2.5cm}{\centering Điểm căn bản\\(Tối đa 5.0đ)*}} & \textbf{\parbox{2.5cm}{\centering Điểm nâng cao\\(Tối đa 4.0đ)**}} & \textbf{\parbox{2.3cm}{\centering Điểm báo cáo\\(Tối đa 1.0đ)***}} & \textbf{\parbox{2.2cm}{\centering Tổng điểm\\dự kiến}} \\ \hline
+\textbf{STT} & \textbf{Họ và tên thành viên} & \textbf{\parbox{2.2cm}{\centering Điểm căn bản\\(Tối đa 5.0đ)*}} & \textbf{\parbox{2.2cm}{\centering Điểm nâng cao\\(Tối đa 4.0đ)**}} & \textbf{\parbox{2.1cm}{\centering Điểm báo cáo\\(Tối đa 1.0đ)***}} & \textbf{\parbox{1.8cm}{\centering Tổng điểm\\dự kiến}} \\ \hline
 1 & \textbf{Trần Nguyễn Tuấn Minh} \newline \footnotesize MSSV: 24127084 & 5.0 / 5.0 & 4.0 / 4.0 & 1.0 / 1.0 & \textbf{10.0} / 10.0 \\ \hline
 2 & \textbf{Nguyễn Quốc Dương} \newline \footnotesize MSSV: 24127349 & 5.0 / 5.0 & 4.0 / 4.0 & 1.0 / 1.0 & \textbf{10.0} / 10.0 \\ \hline
 3 & \textbf{La Anh Hào} \newline \footnotesize MSSV: 24127361 & 5.0 / 5.0 & 4.0 / 4.0 & 1.0 / 1.0 & \textbf{10.0} / 10.0 \\ \hline
 \end{tabularx}
-\caption{Bảng tổng kết điểm số dự kiến của từng thành viên theo đúng Barem quy định}
+\captionof{table}{Bảng tổng kết điểm số dự kiến của từng thành viên theo Barem quy định}
 \label{tab:tong_ket_diem}
-\end{table}
-
-\noindent \textit{\footnotesize (*) Điểm căn bản (5.0đ): gồm 4.0đ chức năng luồng căn bản khi sinh viên hiểu và giải thích được luồng dữ liệu + 1.0đ làm việc nhóm khi toàn bộ mã nguồn tích hợp chung vào một dự án.} \newline
-\noindent \textit{\footnotesize (**) Điểm nâng cao (4.0đ): mỗi thành viên đăng ký các hạng mục nâng cao từ danh mục Barem (tổng điểm đăng ký đạt 5.0đ/người), ghi nhận mức điểm tối đa đạt trần là 4.0 điểm.} \newline
-\noindent \textit{\footnotesize (***) Điểm báo cáo (1.0đ): nộp báo cáo đồ án đầy đủ, đúng hạn quy định trên Moodle.} \newline
-\noindent \textit{\footnotesize (****) Điểm cộng sản phẩm thật: Nhóm cam kết đóng gói 100\% sản phẩm thật trong hộp in 3D vận hành ổn định, hướng tới mức cộng điểm tối đa (+1.0 điểm) vào điểm tổng kết.}
+\end{center}
 
 \subsection{Chi tiết phân bổ tiêu chí Barem môn học cho từng thành viên}
 
-Bảng \ref{tab:chi_tiet_barem} trình bày chi tiết việc đối chiếu 13 chức năng của hệ thống với các mã yêu cầu trong Barem chính thức của môn học, chứng minh tính đầy đủ, không trùng lặp thiết bị và đảm bảo điểm số cho từng thành viên:
-
-\begin{table}[htbp]
-\centering
+\begin{center}
 \scriptsize
-\begin{tabularx}{\textwidth}{|p{2.6cm}|c|X|c|c|}
+\renewcommand{\arraystretch}{0.92}
+\begin{tabularx}{\textwidth}{|p{2.5cm}|c|X|c|c|}
 \hline
-\textbf{Thành viên} & \textbf{Mã Barem} & \textbf{Nội dung triển khai thực tế trong hệ thống} & \textbf{Khung điểm} & \textbf{Điểm đăng ký} \\ \hline
-\multirow{5}{=}{\textbf{Trần Nguyễn Tuấn Minh} \newline \tiny MSSV: 24127084} 
- & YCCB & Luồng Input $\rightarrow$ ESP32 $\rightarrow$ MQTT $\rightarrow$ Web (DHT22) + Tích hợp nhóm & 4.0 + 1.0 & 5.0 / 5.0 \\ \cline{2-5}
- & YC4 & Lưu trữ dữ liệu cảm biến/lịch sử theo thời gian lên Supabase PostgreSQL & 1.0 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
- & YC5 & Lấy dữ liệu Cloud về hiển thị lên Web dạng Gauge và Chart (Node-RED) & 0.5 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
- & YC11 & Tự xây dựng mô hình AI/DS phân tích điều kiện học tập tối ưu & 1.0 -- 2.0 & 2.0 / 2.0 \\ \cline{2-5}
- & \multicolumn{3}{r|}{\textit{Tổng điểm nâng cao đăng ký: 5.0đ $\rightarrow$ Ghi nhận tối đa theo trần Barem:}} & \textbf{4.0 / 4.0} \\ \hline
+\textbf{Thành viên} & \textbf{Mã Barem} & \textbf{Nội dung triển khai thực tế trong hệ thống} & \textbf{Khung điểm} & \textbf{Đăng ký} \\ \hline
+\multirow{4}{=}{\textbf{Trần Nguyễn Tuấn Minh} \newline \tiny MSSV: 24127084} 
+ & YCCB & Luồng Input $\rightarrow$ ESP32 $\rightarrow$ MQTT $\rightarrow$ Web (DHT22) + Tích hợp & 4.0 + 1.0 & 5.0 / 5.0 \\ \cline{2-5}
+ & YC4 & Lưu dữ liệu cảm biến/lịch sử theo thời gian lên Supabase PostgreSQL & 1.0 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
+ & YC5 & Lấy dữ liệu Cloud hiển thị Web dạng Gauge và Chart (Node-RED) & 0.5 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
+ & YC11 & Tự xây dựng mô hình AI phân tích điều kiện học tập tối ưu & 1.0 -- 2.0 & 2.0 / 2.0 \\ \hline
 
-\multirow{6}{=}{\textbf{Nguyễn Quốc Dương} \newline \tiny MSSV: 24127349}
- & YCCB & Luồng Input $\rightarrow$ ESP32 $\rightarrow$ MQTT $\rightarrow$ Web (RFID RC522) + Tích hợp nhóm & 4.0 + 1.0 & 5.0 / 5.0 \\ \cline{2-5}
- & YC1 & Luồng Input $\rightarrow$ ESP32 $\rightarrow$ Output (Nút nhấn 6$\times$6mm $\rightarrow$ LED đỏ 5mm) & 0.5 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
+\multirow{5}{=}{\textbf{Nguyễn Quốc Dương} \newline \tiny MSSV: 24127349}
+ & YCCB & Luồng Input $\rightarrow$ ESP32 $\rightarrow$ MQTT $\rightarrow$ Web (RFID RC522) + Tích hợp & 4.0 + 1.0 & 5.0 / 5.0 \\ \cline{2-5}
+ & YC1 & Luồng Input $\rightarrow$ ESP32 $\rightarrow$ Output (Nút nhấn $\rightarrow$ LED đỏ 5mm) & 0.5 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
  & YC2 & Luồng Input $\rightarrow$ Web (Quang trở LM393 $\rightarrow$ ESP32 $\rightarrow$ MQTT $\rightarrow$ Web) & 1.0 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
- & YC6 & Thông báo nhanh về điện thoại khi học quá giờ bằng Telegram Bot API & 1.0 & 1.0 / 1.0 \\ \cline{2-5}
- & YC7 & Thông báo cho người dùng bằng Email tổng kết tuần qua Gmail SMTP & 1.0 & 1.0 / 1.0 \\ \cline{2-5}
- & \multicolumn{3}{r|}{\textit{Tổng điểm nâng cao đăng ký: 5.0đ $\rightarrow$ Ghi nhận tối đa theo trần Barem:}} & \textbf{4.0 / 4.0} \\ \hline
+ & YC6 & Thông báo về điện thoại khi học quá giờ bằng Telegram Bot API & 1.0 & 1.0 / 1.0 \\ \cline{2-5}
+ & YC7 & Thông báo cho người dùng bằng Email tổng kết tuần qua Gmail SMTP & 1.0 & 1.0 / 1.0 \\ \hline
 
-\multirow{5}{=}{\textbf{La Anh Hào} \newline \tiny MSSV: 24127361}
- & YCCB & Luồng Web $\rightarrow$ MQTT $\rightarrow$ ESP32 $\rightarrow$ Output (Active Buzzer 5V) + Tích hợp nhóm & 4.0 + 1.0 & 5.0 / 5.0 \\ \cline{2-5}
- & YC3 & Luồng Web $\rightarrow$ ESP32 $\rightarrow$ Output (Web $\rightarrow$ ESP32 $\rightarrow$ Màn hình LCD 1602 I2C) & 1.0 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
+\multirow{4}{=}{\textbf{La Anh Hào} \newline \tiny MSSV: 24127361}
+ & YCCB & Luồng Web $\rightarrow$ MQTT $\rightarrow$ ESP32 $\rightarrow$ Output (Active Buzzer 5V) + Tích hợp & 4.0 + 1.0 & 5.0 / 5.0 \\ \cline{2-5}
+ & YC3 & Luồng Web $\rightarrow$ ESP32 $\rightarrow$ Output (Web $\rightarrow$ ESP32 $\rightarrow$ Màn hình LCD 1602) & 1.0 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
  & YC9 & Bảo mật hệ thống: Đăng ký \& đăng nhập lưu tài khoản trong database & 1.0 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
- & YC12 & [Sản phẩm thật] Cấu hình Wi-Fi mới qua Web Server SoftAP trên ESP32 & 1.0 -- 2.0 & 2.0 / 2.0 \\ \cline{2-5}
- & \multicolumn{3}{r|}{\textit{Tổng điểm nâng cao đăng ký: 5.0đ $\rightarrow$ Ghi nhận tối đa theo trần Barem:}} & \textbf{4.0 / 4.0} \\ \hline
+ & YC12 & [Sản phẩm thật] Cấu hình Wi-Fi mới qua Web Server SoftAP trên ESP32 & 1.0 -- 2.0 & 2.0 / 2.0 \\ \hline
 
-\multicolumn{4}{|l|}{\textbf{Điểm Báo cáo cuối kỳ (Nộp đúng hạn quy định trên Moodle cho cả 3 thành viên):}} & \textbf{1.0 / 1.0} \\ \hline
+\multicolumn{4}{|l|}{\textbf{Điểm Báo cáo cuối kỳ (Nộp đầy đủ, đúng hạn quy định trên Moodle):}} & \textbf{1.0 / 1.0} \\ \hline
 \end{tabularx}
-\caption{Bảng chi tiết đối chiếu các tiêu chí Barem môn học cho từng thành viên}
+\captionof{table}{Bảng chi tiết đối chiếu các tiêu chí Barem môn học cho từng thành viên}
 \label{tab:chi_tiet_barem}
-\end{table}
+\end{center}
 
-\textbf{Minh chứng tính hợp lệ của phân công thiết bị và chức năng:}
-\begin{enumerate}[leftmargin=1.5cm]
-    \item \textbf{Tính đôi một khác nhau của thiết bị phần cứng:} Toàn bộ các thiết bị ngoại vi được sử dụng trong hệ thống bao gồm: DHT22 (Cảm biến nhiệt/ẩm), RFID RC522 (Đầu đọc thẻ từ), Active Buzzer (Còi báo âm thanh), LM393 (Cảm biến quang trở), Nút nhấn cơ học, LED đỏ 5mm, Màn hình LCD 1602 I2C. Bảy thiết bị này là \textbf{hoàn toàn độc lập và đôi một khác nhau}, thỏa mãn triệt để quy định tại Mục C.1 và C.2 của Barem.
-    \item \textbf{Tính độc lập của từng yêu cầu nâng cao:} Mỗi yêu cầu trong 12 nhóm yêu cầu nâng cao chỉ do duy nhất một thành viên phụ trách (Minh: YC4, YC5, YC11; Dương: YC1, YC2, YC6, YC7; Hào: YC3, YC9, YC12). Không có bất kỳ sự trùng lặp yêu cầu nào giữa các thành viên.
-    \item \textbf{Tính tách biệt giữa dịch vụ thông báo nhanh và email:} Hệ thống sử dụng Telegram Bot API cho thông báo nhanh tức thì (YC6) và sử dụng độc lập giao thức Gmail SMTP cho thư báo cáo tổng kết tuần (YC7), tuân thủ đúng yêu cầu không dùng chung một dịch vụ.
+\clearpage
+\subsection{Minh chứng tính hợp lệ và tuân thủ Barem môn học}
+\begin{enumerate}[leftmargin=1.0cm, noitemsep, topsep=1pt]
+    \item \textbf{Tính đôi một khác nhau của thiết bị phần cứng:} 7 thiết bị ngoại vi sử dụng trong hệ thống gồm: DHT22, RFID RC522, Active Buzzer, LM393, Nút nhấn cơ học, LED đỏ 5mm, LCD 1602 I2C là \textbf{hoàn toàn độc lập và đôi một khác nhau}, thỏa mãn triệt để quy định tại Mục C.1 và C.2 của Barem.
+    \item \textbf{Tính độc lập của từng yêu cầu nâng cao:} Mỗi yêu cầu trong Barem chỉ do duy nhất 1 thành viên phụ trách (Minh: YC4, YC5, YC11; Dương: YC1, YC2, YC6, YC7; Hào: YC3, YC9, YC12). Không có bất kỳ sự trùng lặp nào.
+    \item \textbf{Tính tách biệt giữa dịch vụ thông báo nhanh và email:} Sử dụng Telegram Bot API cho thông báo nhanh tức thì (YC6) và sử dụng độc lập giao thức Gmail SMTP cho thư báo cáo tuần (YC7).
 \end{enumerate}
 
 \subsection{Cam kết thực hiện đồ án và liêm chính học thuật}
 
 Nhóm thực hiện đề tài \textbf{Trạm học tập Pomodoro (Nhóm 07, Lớp 25C07)} xin cam kết:
-\begin{enumerate}[leftmargin=1.5cm]
-    \item \textbf{Cam kết về sản phẩm thật:} Nhóm sẽ chế tạo và hoàn thiện $100\%$ sản phẩm phần cứng thực tế đóng gói hoàn chỉnh trong vỏ hộp in 3D, kết nối ổn định với hệ thống máy chủ và cơ sở dữ liệu đám mây theo đúng các mốc thời gian đã lập trong bản thuyết minh.
-    \item \textbf{Cam kết về tính ổn định chức năng:} Toàn bộ 13 chức năng đã trình bày trong thuyết minh sẽ được hiện thực hóa đầy đủ làm căn cứ đánh giá cuối kỳ; nhóm cam kết không thay đổi quá 1 chức năng theo đúng quy chế môn học.
-    \item \textbf{Liêm chính học thuật:} Toàn bộ sơ đồ, mã nguồn, bản vẽ kỹ thuật và văn bản thuyết minh đều do các thành viên trong nhóm tự nghiên cứu, thiết kế và phát triển. Mọi hình thức sao chép, không trung thực nếu bị phát hiện nhóm xin hoàn toàn chịu mức xử lý kỷ luật điểm F toàn môn học theo đúng quy định của nhà trường.
+\begin{enumerate}[leftmargin=1.0cm, noitemsep, topsep=1pt]
+    \item \textbf{Sản phẩm thật 100\%:} Chế tạo và hoàn thiện phần cứng thực tế đóng gói hoàn chỉnh trong vỏ hộp in 3D, kết nối ổn định với máy chủ Node-RED và Supabase Cloud theo đúng các mốc tiến độ đã lập.
+    \item \textbf{Tính ổn định chức năng:} Hiện thực hóa đầy đủ 13 chức năng đã thuyết minh; cam kết không thay đổi quá 1 chức năng theo đúng quy chế môn học.
+    \item \textbf{Liêm chính học thuật:} Toàn bộ sơ đồ, mã nguồn, bản vẽ kỹ thuật và văn bản thuyết minh đều do các thành viên tự nghiên cứu, thiết kế và phát triển; tuân thủ nghiêm ngặt quy định về liêm chính học thuật.
 \end{enumerate}
 
-\begin{center}
-    \vspace{0.8cm}
-    \textbf{-- HẾT --}
-\end{center}
-
-\newpage
 \begin{thebibliography}{99}
+    \setlength{\itemsep}{0pt}
+    \setlength{\parskip}{0pt}
+    \small
     \bibitem{espressif2023} Espressif Systems, \textit{ESP32 Series Datasheet}, Version 4.1, 2023.
     \bibitem{mqttspec} OASIS Standard, \textit{MQTT Version 3.1.1 Specification}, 2014.
     \bibitem{nodered2024} OpenJS Foundation, \textit{Node-RED: Low-code programming for event-driven applications}, Official Documentation, 2026.

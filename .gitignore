@@ -21,3 +21,13 @@ graphify-out/
 .DS_Store
 Thumbs.db
 *.log
+
+# LaTeX build artifacts
+*.aux
+*.out
+*.toc
+*.synctex.gz
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk

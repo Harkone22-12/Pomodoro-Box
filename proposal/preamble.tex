@@ -16,6 +16,7 @@
 \usepackage{setspace}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{listings}
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, backgrounds, fit}
 
@@ -33,6 +34,7 @@
 \setlength{\parindent}{0pt}
 
 % Cấu hình Header và Footer theo mẫu Trường ĐH KHTN
+\setlength{\headheight}{14pt}
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\small Trường Đại học Khoa học Tự nhiên}
@@ -53,3 +55,16 @@
 
 % Macro cho các trường thông tin chưa có (Zero-Hallucination)
 \newcommand{\missinginfo}[1]{\textbf{\textcolor{red}{[Cần bổ sung: #1]}}}
+
+% Cấu hình định dạng mã nguồn (JSON / Code Block)
+\definecolor{codebg}{rgb}{0.96, 0.97, 0.98}
+\lstset{
+    backgroundcolor=\color{codebg},
+    basicstyle=\small\ttfamily,
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{gray!40},
+    numbers=none,
+    captionpos=b,
+    showstringspaces=false
+}
