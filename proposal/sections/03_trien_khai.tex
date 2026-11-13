@@ -4,12 +4,16 @@
 
 Bảng \ref{tab:danh_sach_linh_kien} thống kê danh mục linh kiện điện tử sử dụng trong sản phẩm, bao gồm tên linh kiện, số lượng, giá thành tham khảo, đường dẫn kiểm chứng giá và ID chức năng liên quan. Hình ảnh minh họa vị trí lắp đặt thực tế của từng linh kiện được thể hiện trong bản vẽ 3D tại Mục 2.1.
 
-\begin{center}
-\scriptsize
-\renewcommand{\arraystretch}{0.95}
-\begin{tabularx}{\textwidth}{|c|X|c|c|p{3.7cm}|c|}
+\begingroup
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{|>{\centering\arraybackslash}p{1.0cm}|>{\raggedright\arraybackslash}p{4.2cm}|>{\centering\arraybackslash}p{1.0cm}|>{\centering\arraybackslash}p{2.2cm}|>{\raggedright\arraybackslash}p{3.8cm}|>{\centering\arraybackslash}p{1.4cm}|}
 \hline
 \textbf{STT} & \textbf{Tên linh kiện} & \textbf{SL} & \textbf{Giá (VNĐ)} & \textbf{Link tham khảo giá**} & \textbf{ID CN} \\ \hline
+\endfirsthead
+\hline
+\textbf{STT} & \textbf{Tên linh kiện} & \textbf{SL} & \textbf{Giá (VNĐ)} & \textbf{Link tham khảo giá**} & \textbf{ID CN} \\ \hline
+\endhead
+\hline
 1 & Vi điều khiển ESP32 DevKit V1 (30 chân) & 1 & 84.114 & \href{https://shopee.vn/product/58532883/43882498412}{shopee.vn/esp32-devkit} & ID 11, 12 \\ \hline
 2 & Cảm biến nhiệt độ \& độ ẩm DHT22 & 1 & 45.144 & \href{https://shopee.vn/product/16504852/10244874574}{shopee.vn/dht22-am2302} & ID 1 \\ \hline
 3 & Module quang trở LM393 & 1 & 10.000 & \href{https://shopee.vn/product/484901669/46818176298}{shopee.vn/lm393-ldr} & ID 4 \\ \hline
@@ -20,15 +24,15 @@ Bảng \ref{tab:danh_sach_linh_kien} thống kê danh mục linh kiện điện 
 8 & Màn hình LCD 1602 kèm module I2C PCF8574 & 1 bộ & 25.000 & \href{https://shopee.vn/product/404478549/18549939018}{shopee.vn/lcd1602-i2c} & ID 5 \\ \hline
 9 & Module đọc thẻ RFID RC522 (13.56 MHz) & 1 bộ & 25.000 & \href{https://shopee.vn/product/337676632/11610099363}{shopee.vn/rfid-rc522} & ID 2 \\ \hline
 10 & Thẻ từ RFID Mifare Classic 1K S50 & Kèm bộ & Kèm bộ & \href{https://shopee.vn/product/337676632/11610099363}{Đi kèm module RC522} & ID 2 \\ \hline
-11 & Bo test cắm Breadboard MB-102 (830 lỗ) & 1 & 25.000 & \href{https://shopee.vn/product/58532883/55663851300}{shopee.vn/breadboard-mb102} & Kết nối \\ \hline
+11 & Bo test cắm Breadboard MB-102 (830 lỗ) & 1 & 25.000 & \href{https://shopee.vn/product/58532883/55663851300}{shopee.vn/breadboard} & Kết nối \\ \hline
 12 & Dây cắm đực - cái Dupont 20cm (40 sợi) & 1 tép & 15.000 & \href{https://shopee.vn/product/1071100439/47763941551}{shopee.vn/day-dupont-20cm} & Kết nối \\ \hline
 13 & Vỏ hộp in 3D nhựa ABS & 1 & 21.000 & \href{https://shopee.vn/search?keyword=hop\%20nhua\%20ky\%20thuat\%20abs}{shopee.vn/hop-nhua-abs} & Vỏ hộp \\ \hline
 14 & Cáp Micro USB và nguồn cấp 5V 1A & 1 & 25.000 & \href{https://shopee.vn/product/213519943/7319530329}{shopee.vn/adapter-5v-1a} & Nguồn điện \\ \hline
-\multicolumn{3}{|r|}{\textbf{Tổng chi phí dự kiến:}} & \multicolumn{3}{l|}{\textbf{308.758 VNĐ} (\textit{Ba trăm lẻ tám nghìn bảy trăm năm mươi tám đồng})} \\ \hline
-\end{tabularx}
-\captionof{table}{Danh mục linh kiện điện tử và dự trù kinh phí thực hiện sản phẩm}
+\multicolumn{3}{|r|}{\textbf{Tổng chi phí dự kiến:}} & \multicolumn{3}{>{\raggedright\arraybackslash}p{7.4cm}|}{\textbf{308.758 VNĐ} \newline (\textit{Ba trăm lẻ tám nghìn bảy trăm năm mươi tám đồng})} \\ \hline
+\caption{Danh mục linh kiện điện tử và dự trù kinh phí thực hiện sản phẩm}
 \label{tab:danh_sach_linh_kien}
-\end{center}
+\end{longtable}
+\endgroup
 
 \subsubsection{Cơ sở vật lý của các linh kiện điện tử trong hệ thống}
 
@@ -46,12 +50,16 @@ Nhằm liên kết với kiến thức học phần \textit{Vật lý cho Công 
 
 Dựa trên bảng chức năng đã lập ở Mục 1, kế hoạch thực hiện đồ án từ ngày 15/11 đến 05/12 với mốc thời gian và phân công cụ thể cho từng thành viên được thể hiện trong Bảng \ref{tab:ke_hoach_thuc_hien}.
 
-\begin{center}
-\scriptsize
-\renewcommand{\arraystretch}{1.0}
-\begin{tabularx}{\textwidth}{|c|X|p{2.6cm}|p{3.2cm}|}
+\begingroup
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{|>{\centering\arraybackslash}p{1.2cm}|>{\raggedright\arraybackslash}p{6.4cm}|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}p{3.2cm}|}
 \hline
 \textbf{ID} & \textbf{Chức năng / Nội dung công việc} & \textbf{Thời gian*} & \textbf{Phân công**} \\ \hline
+\endfirsthead
+\hline
+\textbf{ID} & \textbf{Chức năng / Nội dung công việc} & \textbf{Thời gian*} & \textbf{Phân công**} \\ \hline
+\endhead
+\hline
 \textbf{ID 1} & Lập trình đọc cảm biến DHT22, kiểm tra checksum và xuất bản dữ liệu lên topic \texttt{study/dht} & 15/11 -- 18/11 (15h) & Trần Nguyễn Tuấn Minh \\ \hline
 \textbf{ID 2} & Tích hợp đầu đọc RFID RC522 qua SPI, đọc mã UID và đối soát dữ liệu phiên học trên Supabase & 22/11 -- 25/11 (20h) & Nguyễn Quốc Dương \\ \hline
 \textbf{ID 3} & Lập trình điều khiển còi Active Buzzer 5V theo nhịp Pomodoro và tạo nút bấm hẹn giờ trên web & 15/11 -- 19/11 (15h) & La Anh Hào \\ \hline
@@ -66,10 +74,10 @@ Dựa trên bảng chức năng đã lập ở Mục 1, kế hoạch thực hi�
 \textbf{ID 12} & Lập trình Web Server SoftAP Captive Portal trên ESP32 cho phép cấu hình Wi-Fi linh hoạt & 29/11 -- 02/12 (20h) & La Anh Hào \\ \hline
 \textbf{ID 13} & Thu thập dữ liệu thử nghiệm và lập trình mô hình phân tích điều kiện học tập tối ưu trên Node-RED & 29/11 -- 03/12 (20h) & Trần Nguyễn Tuấn Minh \\ \hline
 \textbf{Tích hợp} & Lắp ráp vỏ hộp 3D, thử nghiệm liên thông phần cứng với Node-RED và Supabase, đóng gói sản phẩm & 03/12 -- 05/12 (16h) & Cả nhóm (Minh, Dương, Hào) \\ \hline
-\end{tabularx}
-\captionof{table}{Bảng kế hoạch thực hiện và phân công công việc cụ thể}
+\caption{Bảng kế hoạch thực hiện và phân công công việc cụ thể}
 \label{tab:ke_hoach_thuc_hien}
-\end{center}
+\end{longtable}
+\endgroup
 
 \noindent \textit{\footnotesize * Mốc thời gian thể hiện khoảng thời gian và tổng số giờ dự kiến cần thiết để hoàn thành.\\
 ** Mỗi chức năng chỉ được phân công cho một thành viên chịu trách nhiệm chính theo đúng quy định đồ án cuối kỳ.}

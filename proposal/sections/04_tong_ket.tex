@@ -3,8 +3,7 @@
 Dựa trên bảng chức năng ở Mục 1 và bảng phân công công việc ở Mục 3.2, bảng tổng kết điểm số dự kiến của mỗi thành viên theo các tiêu chí đánh giá đồ án môn học \textit{Vật lý cho Công nghệ Thông tin} được thể hiện trong Bảng \ref{tab:tong_ket_diem}.
 
 \begin{center}
-\small
-\renewcommand{\arraystretch}{1.1}
+\setlength{\tabcolsep}{6pt}
 \begin{tabularx}{\textwidth}{|c|X|c|c|c|}
 \hline
 \textbf{STT} & \textbf{Tên thành viên} & \textbf{Điểm cơ bản} & \textbf{Điểm nâng cao} & \textbf{Tổng*} \\ \hline
@@ -22,36 +21,40 @@ Dựa trên bảng chức năng ở Mục 1 và bảng phân công công việc 
 
 Bảng \ref{tab:chi_tiet_barem} đối chiếu chi tiết các yêu cầu trong Barem môn học với 13 chức năng thực hiện của từng thành viên:
 
-\begin{center}
-\scriptsize
-\renewcommand{\arraystretch}{0.92}
-\begin{tabularx}{\textwidth}{|p{2.5cm}|c|X|c|c|}
+\begingroup
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{3.0cm}|>{\centering\arraybackslash}p{1.8cm}|>{\raggedright\arraybackslash}p{5.8cm}|>{\centering\arraybackslash}p{1.6cm}|>{\centering\arraybackslash}p{1.6cm}|}
 \hline
 \textbf{Thành viên} & \textbf{Mã Barem} & \textbf{Nội dung triển khai thực tế trong hệ thống} & \textbf{Khung điểm} & \textbf{Đăng ký} \\ \hline
-\multirow{4}{=}{\textbf{Trần Nguyễn Tuấn Minh} \newline \tiny MSSV: 24127084} 
+\endfirsthead
+\hline
+\textbf{Thành viên} & \textbf{Mã Barem} & \textbf{Nội dung triển khai thực tế trong hệ thống} & \textbf{Khung điểm} & \textbf{Đăng ký} \\ \hline
+\endhead
+\hline
+\multirow{4}{=}{\textbf{Trần Nguyễn Tuấn Minh} \newline \footnotesize MSSV: 24127084} 
  & YCCB & Luồng cảm biến DHT22 $\rightarrow$ ESP32 $\rightarrow$ MQTT $\rightarrow$ Web + Tích hợp & 4.0 + 1.0 & 5.0 / 5.0 \\ \cline{2-5}
  & YC4 & Lưu dữ liệu cảm biến và nhật ký phiên theo chuỗi thời gian lên Supabase PostgreSQL & 1.0 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
  & YC5 & Truy vấn dữ liệu đám mây hiển thị Web dạng Gauge và biểu đồ chuỗi thời gian 24h & 0.5 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
  & YC11 & Tự xây dựng mô hình phân tích điều kiện học tập tối ưu trên Node-RED & 1.0 -- 2.0 & 2.0 / 2.0 \\ \hline
 
-\multirow{5}{=}{\textbf{Nguyễn Quốc Dương} \newline \tiny MSSV: 24127349}
+\multirow{5}{=}{\textbf{Nguyễn Quốc Dương} \newline \footnotesize MSSV: 24127349}
  & YCCB & Luồng RFID RC522 $\rightarrow$ ESP32 $\rightarrow$ MQTT $\rightarrow$ Web + Tích hợp & 4.0 + 1.0 & 5.0 / 5.0 \\ \cline{2-5}
  & YC1 & Luồng phần cứng tại chỗ: Nút nhấn GPIO27 $\rightarrow$ ESP32 $\rightarrow$ Đèn LED đỏ GPIO26 & 0.5 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
  & YC2 & Luồng cảm biến ánh sáng: Quang trở LM393 $\rightarrow$ ESP32 (ADC1) $\rightarrow$ MQTT $\rightarrow$ Web & 1.0 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
  & YC6 & Dịch vụ gửi thông báo tức thời qua Telegram Bot API khi phiên học quá 60 phút & 1.0 & 1.0 / 1.0 \\ \cline{2-5}
  & YC7 & Dịch vụ gửi email định kỳ tổng kết tuần qua giao thức Gmail SMTP & 1.0 & 1.0 / 1.0 \\ \hline
 
-\multirow{4}{=}{\textbf{La Anh Hào} \newline \tiny MSSV: 24127361}
+\multirow{4}{=}{\textbf{La Anh Hào} \newline \footnotesize MSSV: 24127361}
  & YCCB & Luồng điều khiển: Web $\rightarrow$ MQTT $\rightarrow$ ESP32 $\rightarrow$ Còi Active Buzzer 5V + Tích hợp & 4.0 + 1.0 & 5.0 / 5.0 \\ \cline{2-5}
  & YC3 & Luồng hiển thị thông tin: Web $\rightarrow$ MQTT $\rightarrow$ ESP32 $\rightarrow$ Màn hình LCD 1602 (I2C) & 1.0 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
  & YC9 & Bảo mật tài khoản: Luồng đăng ký, đăng nhập lưu tài khoản và băm mật khẩu bcrypt & 1.0 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
  & YC12 & Cấu hình mạng Wi-Fi mới qua Web Server SoftAP độc lập trên vi điều khiển ESP32 & 1.0 -- 2.0 & 2.0 / 2.0 \\ \hline
 
 \multicolumn{4}{|l|}{\textbf{Điểm Báo cáo thuyết minh và đồ án cuối kỳ:}} & \textbf{1.0 / 1.0} \\ \hline
-\end{tabularx}
-\captionof{table}{Bảng chi tiết đối chiếu các tiêu chí Barem môn học cho từng thành viên}
+\caption{Bảng chi tiết đối chiếu các tiêu chí Barem môn học cho từng thành viên}
 \label{tab:chi_tiet_barem}
-\end{center}
+\end{longtable}
+\endgroup
 
 \subsection{Cam kết thực hiện đồ án}
 

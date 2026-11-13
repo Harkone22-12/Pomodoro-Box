@@ -5,11 +5,10 @@
 Vỏ hộp sản phẩm được thiết kế trên phần mềm Autodesk Fusion 360 và chế tạo bằng công nghệ in 3D nhựa ABS. Kích thước tổng thể của vỏ hộp là $150 \times 100 \times 47\text{ mm}$, độ dày vách $2.5\text{ mm}$ và nắp $3.0\text{ mm}$. Cấu trúc gồm hai phần: Thân hộp (Bottom Case) và Nắp hộp (Top Cover), liên kết bằng khớp ngàm cài và 4 vít M3. Bên trong hộp có vách ngăn tách biệt khoang vi điều khiển ESP32 và khoang cảm biến nhiệt ẩm DHT22 có khe thông gió riêng, nhằm hạn chế nhiệt lượng tỏa ra từ vi điều khiển làm ảnh hưởng đến độ chính xác của cảm biến.
 
 \begin{center}
-\scriptsize
-\renewcommand{\arraystretch}{0.92}
-\begin{tabular}{|c|p{4.2cm}|p{5.5cm}|c|}
+\setlength{\tabcolsep}{5pt}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash}p{4.6cm}|>{\raggedright\arraybackslash}X|c|}
 \hline
-\textbf{STT} & \textbf{Vị trí bố trí trên vỏ hộp 3D} & \textbf{Chi tiết khoét lỗ / Gia công cơ khí} & \textbf{ID Chức năng} \\ \hline
+\textbf{STT} & \textbf{Vị trí bố trí trên vỏ hộp 3D} & \textbf{Chi tiết khoét lỗ / Gia công cơ khí} & \textbf{ID CN} \\ \hline
 1 & Màn hình LCD 1602 mặt trên & Khoét cửa sổ chữ nhật $71.0 \times 24.0\text{ mm}$ & \textbf{ID 5} \\ \hline
 2 & Nút nhấn cơ học đổi trạng thái & Khoét lỗ tròn $\varnothing 7.0\text{ mm}$ cách mép phải $15\text{ mm}$ & \textbf{ID 6} \\ \hline
 3 & Đèn LED đỏ báo tập trung & Khoét lỗ xuyên $\varnothing 5.2\text{ mm}$ viền vát $45^\circ$ & \textbf{ID 6} \\ \hline
@@ -19,7 +18,7 @@ Vỏ hộp sản phẩm được thiết kế trên phần mềm Autodesk Fusion
 7 & Khe cảm biến nhiệt ẩm DHT22 & 4 khe thông khí $12.0 \times 2.0\text{ mm}$ vách hông & \textbf{ID 1} \\ \hline
 8 & Khoang vi điều khiển ESP32 & 4 trụ đỡ ốc vít M3 có ren đồng cấy nhiệt ở đáy & \textbf{ID 11, ID 12} \\ \hline
 9 & Cổng cấp nguồn Micro USB & Khoét lỗ vát bo tròn $12.0 \times 7.0\text{ mm}$ ở vách sau & Cấp nguồn \\ \hline
-\end{tabular}
+\end{tabularx}
 \captionof{table}{Bảng ánh xạ vị trí lắp đặt linh kiện trên vỏ hộp 3D với ID chức năng}
 \label{tab:map_3d_chuc_nang}
 \end{center}
@@ -64,23 +63,22 @@ Vỏ hộp sản phẩm được thiết kế trên phần mềm Autodesk Fusion
 Giao diện website quản lý sản phẩm được thiết kế trên nền tảng Node-RED Dashboard phục vụ việc theo dõi và điều khiển trạm học tập. Toàn bộ các vùng chức năng trên bản vẽ wireframe đều được ánh xạ trực tiếp với danh sách các chức năng đã đăng ký ở Mục 1, được tổng hợp chi tiết trong Bảng \ref{tab:map_wireframe_chuc_nang}.
 
 \begin{center}
-\scriptsize
-\renewcommand{\arraystretch}{0.94}
-\begin{tabular}{|c|p{3.8cm}|p{6.6cm}|c|}
+\setlength{\tabcolsep}{5pt}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash}p{4.2cm}|>{\raggedright\arraybackslash}X|c|}
 \hline
-\textbf{STT} & \textbf{Vùng giao diện trên Web} & \textbf{Thành phần hiển thị \& Tác vụ tương tác} & \textbf{ID Chức năng} \\ \hline
+\textbf{STT} & \textbf{Vùng giao diện trên Web} & \textbf{Thành phần hiển thị \& Tác vụ tương tác} & \textbf{ID CN} \\ \hline
 1 & Cửa sổ Khí hậu (Climate) & Chỉ số DHT22 ($^\circ\text{C}, \%$), Sparkline 1 giờ, nhãn tiện nghi & \textbf{ID 1} \\ \hline
 2 & Cửa sổ Ánh sáng (Light) & Số đo ADC quang trở ($0 - 4095$), nhãn Đủ/Thiếu sáng, thanh đo mức & \textbf{ID 4} \\ \hline
 3 & Cửa sổ Hẹn giờ (Timer · Buzzer) & Đồng hồ số đếm ngược, thanh tiến trình, nút Gửi lệnh / Dừng & \textbf{ID 3} \\ \hline
 4 & Cửa sổ Lời nhắc LCD 16×2 & Khung nhập văn bản, bộ đếm ký tự, gửi lời nhắc xuống màn hình & \textbf{ID 5} \\ \hline
-5 & Cửa sổ Phiên thẻ RFID \& Feedback & Bộ đếm thời gian, mã thẻ UID, cảnh báo Telegram ($>50$p), nút quẹt giả lập, khối phản hồi sau phiên & \textbf{ID 2, ID 6, ID 9, ID 13} \\ \hline
+5 & Cửa sổ Phiên thẻ RFID \& Feedback & Bộ đếm thời gian, mã thẻ UID, cảnh báo Telegram ($>50$p), nút quẹt giả lập, khối phản hồi sau phiên & \textbf{ID 2, 6, 9, 13} \\ \hline
 6 & Đèn báo trạng thái tập trung & Biểu tượng hiển thị trạng thái đồng bộ với đèn LED đỏ GPIO26 & \textbf{ID 6} \\ \hline
 7 & Cửa sổ Nhật ký & Danh sách sự kiện MQTT thời gian thực, bộ lọc tuần/tháng/năm & \textbf{ID 7} \\ \hline
 8 & Đồ thị chuỗi thời gian 24 giờ & Biểu đồ đường kép (Line Chart) nhiệt/ẩm 24h truy vấn từ Supabase & \textbf{ID 7, ID 8} \\ \hline
 9 & Khung mô hình khuyến nghị & Bảng 3 thông số: Thời lượng lý tưởng, Khung giờ vàng, Vi khí hậu & \textbf{ID 13} \\ \hline
 10 & Màn hình Cài đặt (Settings) & Cấu hình chu kỳ Pomodoro, nhắc nghỉ Telegram, email tuần, danh sách thẻ & \textbf{ID 9, 10, 12} \\ \hline
 11 & Màn hình Đăng nhập \& Đăng ký & Giao diện đăng nhập/tạo tài khoản, hiển thị trạng thái kết nối trạm & \textbf{ID 11} \\ \hline
-\end{tabular}
+\end{tabularx}
 \captionof{table}{Bảng ánh xạ các vùng thiết kế Wireframe Website với ID chức năng}
 \label{tab:map_wireframe_chuc_nang}
 \end{center}
@@ -112,19 +110,18 @@ Hệ thống giao diện được tổ chức theo cấu trúc của Node-RED Da
 \end{center}
 
 \begin{center}
-\scriptsize
-\renewcommand{\arraystretch}{0.95}
-\begin{tabularx}{\textwidth}{|p{3.0cm}|p{2.8cm}|X|c|}
+\setlength{\tabcolsep}{5pt}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}X|c|}
 \hline
 \textbf{Nhóm giao diện} & \textbf{Loại thành phần} & \textbf{Chức năng hiển thị \& Tác vụ tương tác} & \textbf{ID} \\ \hline
-\textbf{Đếm giờ Pomodoro} (\texttt{win\_timer}) & \texttt{ui\_template}, \texttt{ui\_button}, \texttt{ui\_dropdown} & Đồng hồ đếm ngược số lớn, thanh tiến trình, nút Bắt đầu / Tạm dừng, danh mục chọn thời gian (25p, 5p, 15p hoặc tùy chỉnh) & \textbf{ID 3} \\ \hline
-\textbf{Lời nhắc LCD 1602} (\texttt{win\_lcd}) & \texttt{ui\_template}, \texttt{ui\_text\_input}, \texttt{ui\_button} & Giả lập màn hình LCD 1602, ô nhập nội dung thông điệp, nút gửi bản tin xuống vi điều khiển qua topic \texttt{study/lcd} & \textbf{ID 5} \\ \hline
-\textbf{Vi khí hậu phòng học} (\texttt{win\_climate}) & \texttt{ui\_text}, \texttt{ui\_chart} & Hiển thị giá trị nhiệt độ ($^\circ\text{C}$), độ ẩm ($\%$) từ DHT22 và biểu đồ thu nhỏ Sparkline 1 giờ & \textbf{ID 1} \\ \hline
-\textbf{Độ sáng bàn học} (\texttt{win\_light}) & \texttt{ui\_text}, \texttt{ui\_template} & Hiển thị giá trị ADC ($0-4095$) quang trở LM393 và thanh đo cảnh báo thiếu sáng ($<300\text{ lux}$) & \textbf{ID 4} \\ \hline
-\textbf{Điểm danh \& Phiên học} (\texttt{win\_session}) & \texttt{ui\_text}, \texttt{ui\_template}, \texttt{ui\_button} & Hiển thị mã thẻ UID, số thứ tự phiên, đèn LED báo bận, khung cảnh báo Telegram ($>50$p), nút quẹt giả lập & \textbf{ID 2, 6, 9} \\ \hline
-\textbf{Nhật ký sự kiện} (\texttt{win\_log}) & \texttt{ui\_button}, \texttt{ui\_table} & Danh sách bản tin MQTT thời gian thực, nút lọc sự kiện theo tuần/tháng & \textbf{ID 7} \\ \hline
-\textbf{Đồ thị chuỗi thời gian} (\texttt{grp\_hist\_chart}) & \texttt{ui\_chart} & Biểu đồ đường kép 24 giờ nhiệt độ và độ ẩm truy vấn từ CSDL Supabase Cloud & \textbf{ID 7, 8} \\ \hline
-\textbf{Khuyến nghị học tập} (\texttt{grp\_hist\_model}) & \texttt{ui\_template} & Bảng hiển thị thông số gợi ý thời lượng phiên, khung giờ tập trung và vi khí hậu phù hợp & \textbf{ID 13} \\ \hline
+\textbf{Đếm giờ Pomodoro} \newline (\texttt{win\_timer}) & \texttt{ui\_template}, \newline \texttt{ui\_button}, \newline \texttt{ui\_dropdown} & Đồng hồ đếm ngược số lớn, thanh tiến trình, nút Bắt đầu / Tạm dừng, danh mục chọn thời gian (25p, 5p, 15p hoặc tùy chỉnh) & \textbf{ID 3} \\ \hline
+\textbf{Lời nhắc LCD 1602} \newline (\texttt{win\_lcd}) & \texttt{ui\_template}, \newline \texttt{ui\_text\_input}, \newline \texttt{ui\_button} & Giả lập màn hình LCD 1602, ô nhập nội dung thông điệp, nút gửi bản tin xuống vi điều khiển qua topic \texttt{study/lcd} & \textbf{ID 5} \\ \hline
+\textbf{Vi khí hậu bàn học} \newline (\texttt{win\_climate}) & \texttt{ui\_text}, \newline \texttt{ui\_chart} & Hiển thị giá trị nhiệt độ ($^\circ\text{C}$), độ ẩm ($\%$) từ DHT22 và biểu đồ thu nhỏ Sparkline 1 giờ & \textbf{ID 1} \\ \hline
+\textbf{Độ sáng bàn học} \newline (\texttt{win\_light}) & \texttt{ui\_text}, \newline \texttt{ui\_template} & Hiển thị giá trị ADC ($0-4095$) quang trở LM393 và thanh đo cảnh báo thiếu sáng ($<300\text{ lux}$) & \textbf{ID 4} \\ \hline
+\textbf{Điểm danh \& Phiên} \newline (\texttt{win\_session}) & \texttt{ui\_text}, \newline \texttt{ui\_template}, \newline \texttt{ui\_button} & Hiển thị mã thẻ UID, số thứ tự phiên, đèn LED báo bận, khung cảnh báo Telegram ($>50$p), nút quẹt giả lập & \textbf{ID 2, 6, 9} \\ \hline
+\textbf{Nhật ký sự kiện} \newline (\texttt{win\_log}) & \texttt{ui\_button}, \newline \texttt{ui\_table} & Danh sách bản tin MQTT thời gian thực, nút lọc sự kiện theo tuần/tháng & \textbf{ID 7} \\ \hline
+\textbf{Đồ thị 24 giờ} \newline (\texttt{grp\_hist\_chart}) & \texttt{ui\_chart} & Biểu đồ đường kép 24 giờ nhiệt độ và độ ẩm truy vấn từ CSDL Supabase Cloud & \textbf{ID 7, 8} \\ \hline
+\textbf{Khuyến nghị học tập} \newline (\texttt{grp\_hist\_model}) & \texttt{ui\_template} & Bảng hiển thị thông số gợi ý thời lượng phiên, khung giờ tập trung và vi khí hậu phù hợp & \textbf{ID 13} \\ \hline
 \end{tabularx}
 \captionof{table}{Cấu trúc thành phần giao diện Bàn làm việc Workspace và Lịch sử (Desktop)}
 \label{tab:comp_workspace}
@@ -160,14 +157,13 @@ Hệ thống giao diện được tổ chức theo cấu trúc của Node-RED Da
 \end{center}
 
 \begin{center}
-\scriptsize
-\renewcommand{\arraystretch}{0.95}
-\begin{tabularx}{\textwidth}{|p{3.0cm}|p{2.8cm}|X|c|}
+\setlength{\tabcolsep}{5pt}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}X|c|}
 \hline
 \textbf{Nhóm giao diện} & \textbf{Loại thành phần} & \textbf{Chức năng hiển thị \& Tác vụ tương tác} & \textbf{ID} \\ \hline
-\textbf{Trạng thái kết nối} (\texttt{grp\_auth\_intro}) & \texttt{ui\_template} & Hiển thị trạng thái hoạt động thực tế của các module phần cứng ngoại vi (DHT22, LM393, RC522, Buzzer, LCD) & \textbf{ID 11} \\ \hline
-\textbf{Biểu mẫu tài khoản} (\texttt{grp\_auth\_form}) & \texttt{ui\_text\_input}, \texttt{ui\_button}, \texttt{ui\_switch} & Ô nhập Họ tên, Email, Mật khẩu ($\ge 8$ ký tự); nút kích hoạt hàm băm mật mã bcrypt; công tắc ghi nhớ phiên đăng nhập & \textbf{ID 11} \\ \hline
-\textbf{Đánh giá sau phiên} (\texttt{win\_session\_rating}) & \texttt{ui\_template}, \texttt{ui\_button} & Hộp thoại xác nhận mức độ tập trung sau phiên; 3 nút chọn mức: \textbf{Distracted} ($0.0$), \textbf{Okay} ($0.5$), \textbf{Focused} ($1.0$); nút bỏ qua & \textbf{ID 13} \\ \hline
+\textbf{Trạng thái kết nối} \newline (\texttt{grp\_auth\_intro}) & \texttt{ui\_template} & Hiển thị trạng thái hoạt động thực tế của các module phần cứng ngoại vi (DHT22, LM393, RC522, Buzzer, LCD) & \textbf{ID 11} \\ \hline
+\textbf{Biểu mẫu tài khoản} \newline (\texttt{grp\_auth\_form}) & \texttt{ui\_text\_input}, \newline \texttt{ui\_button}, \newline \texttt{ui\_switch} & Ô nhập Họ tên, Email, Mật khẩu ($\ge 8$ ký tự); nút kích hoạt hàm băm mật mã bcrypt; công tắc ghi nhớ phiên đăng nhập & \textbf{ID 11} \\ \hline
+\textbf{Đánh giá sau phiên} \newline (\texttt{win\_rating}) & \texttt{ui\_template}, \newline \texttt{ui\_button} & Hộp thoại xác nhận mức độ tập trung sau phiên; 3 nút chọn mức: \textbf{Distracted} ($0.0$), \textbf{Okay} ($0.5$), \textbf{Focused} ($1.0$); nút bỏ qua & \textbf{ID 13} \\ \hline
 \end{tabularx}
 \captionof{table}{Cấu trúc thành phần giao diện Xác thực và Đánh giá sau phiên học}
 \label{tab:comp_auth}
@@ -199,15 +195,14 @@ Hệ thống giao diện được tổ chức theo cấu trúc của Node-RED Da
 \end{center}
 
 \begin{center}
-\scriptsize
-\renewcommand{\arraystretch}{0.95}
-\begin{tabularx}{\textwidth}{|p{3.0cm}|p{2.8cm}|X|c|}
+\setlength{\tabcolsep}{5pt}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}X|c|}
 \hline
 \textbf{Nhóm giao diện} & \textbf{Loại thành phần} & \textbf{Chức năng hiển thị \& Tác vụ tương tác} & \textbf{ID} \\ \hline
-\textbf{Cấu hình Pomodoro} (\texttt{grp\_set\_pomodoro}) & \texttt{ui\_numeric} & Ô nhập số điều chỉnh thời gian học ($1-120\text{p}$), nghỉ ngắn ($1-120\text{p}$), nghỉ dài ($1-120\text{p}$) và số chu kỳ lặp ($1-12$ vòng) & \textbf{ID 3} \\ \hline
-\textbf{Cấu hình cảnh báo} (\texttt{grp\_set\_alerts}) & \texttt{ui\_switch}, \texttt{ui\_text\_input}, \texttt{ui\_numeric} & Công tắc bật/tắt Telegram, ô nhập Chat ID, ngưỡng thời gian nhắc nghỉ ($10-240\text{p}$); công tắc bật gửi email báo cáo tuần qua Gmail SMTP & \textbf{ID 9, 10} \\ \hline
-\textbf{Quản lý phần cứng} (\texttt{grp\_set\_devices}) & \texttt{ui\_text}, \texttt{ui\_template}, \texttt{ui\_button} & Hiển thị trạng thái kết nối máy chủ MQTT Mosquitto; quản lý danh sách thẻ từ RFID được phép mở phiên học & \textbf{ID 12} \\ \hline
-\textbf{Giao diện di động} (Mobile Web App) & \texttt{ui\_template} & Bố cục 1 cột cuộn tối ưu cho màn hình hẹp ($\le 760\text{ px}$); thanh 5 tab chuyển màn hình cố định ở cạnh đáy (\textit{Timer, LCD, Room, Log, Settings}) & \textbf{ID 1--10} \\ \hline
+\textbf{Cấu hình Pomodoro} \newline (\texttt{grp\_pomodoro}) & \texttt{ui\_numeric} & Ô nhập số điều chỉnh thời gian học ($1-120\text{p}$), nghỉ ngắn ($1-120\text{p}$), nghỉ dài ($1-120\text{p}$) và số chu kỳ lặp ($1-12$ vòng) & \textbf{ID 3} \\ \hline
+\textbf{Cấu hình cảnh báo} \newline (\texttt{grp\_set\_alerts}) & \texttt{ui\_switch}, \newline \texttt{ui\_text\_input}, \newline \texttt{ui\_numeric} & Công tắc bật/tắt Telegram, ô nhập Chat ID, ngưỡng thời gian nhắc nghỉ ($10-240\text{p}$); công tắc bật gửi email báo cáo tuần qua Gmail SMTP & \textbf{ID 9, 10} \\ \hline
+\textbf{Quản lý phần cứng} \newline (\texttt{grp\_devices}) & \texttt{ui\_text}, \newline \texttt{ui\_template}, \newline \texttt{ui\_button} & Hiển thị trạng thái kết nối máy chủ MQTT Mosquitto; quản lý danh sách thẻ từ RFID được phép mở phiên học & \textbf{ID 12} \\ \hline
+\textbf{Giao diện di động} \newline (Mobile Web App) & \texttt{ui\_template} & Bố cục 1 cột cuộn tối ưu cho màn hình hẹp ($\le 760\text{ px}$); thanh 5 tab chuyển màn hình cố định ở cạnh đáy (\textit{Timer, LCD, Room, Log, Settings}) & \textbf{ID 1--10} \\ \hline
 \end{tabularx}
 \captionof{table}{Cấu trúc thành phần giao diện Cài đặt hệ thống và Giao diện thiết bị di động}
 \label{tab:comp_settings_mobile}
