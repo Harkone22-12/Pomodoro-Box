@@ -1,60 +1,68 @@
 \section{Giới thiệu}
 
-\subsection{Tổng quan sản phẩm và ý nghĩa thực tế}
+\subsection{Tổng quan sản phẩm và ý nghĩa của việc ứng dụng sản phẩm trong thực tế}
 
-Trong kỷ nguyên số, phương pháp quản lý thời gian \textbf{Pomodoro} (chia các phiên làm việc tập trung 25 phút xen kẽ 5 phút nghỉ ngắn) đã chứng minh hiệu quả vượt trội trong việc duy trì năng suất và chống mệt mỏi nhận thức. Tuy nhiên, khi tự học tại nhà hoặc ký túc xá, sinh viên thường đối mặt với bốn rào cản lớn: (1) \textit{Xao nhãng từ màn hình điện thoại} khi dùng ứng dụng bấm giờ; (2) \textit{Quên nghỉ ngơi} dẫn đến suy giảm thị lực và căng thẳng nhận thức; (3) \textit{Thiếu kiểm soát vi khí hậu bàn học} (nhiệt độ quá cao, ngột ngạt hoặc ánh sáng dưới 300 lux gây hại mắt); và (4) \textit{Bị gián đoạn} bởi người xung quanh do không biết sinh viên đang trong phiên tập trung cao độ.
+Phương pháp Pomodoro chia thời gian làm việc thành các phiên tập trung ngắn (mặc định 25 phút) xen kẽ các khoảng nghỉ (5 phút) nhằm duy trì khả năng làm việc liên tục. Trong thực tế, sinh viên khi tự học thường dùng ứng dụng bấm giờ trên điện thoại thông minh hoặc máy tính. Cách làm này thường dẫn đến các hạn chế:
+\begin{itemize}[leftmargin=1.2cm, noitemsep, topsep=2pt]
+    \item Dễ bị phân tâm bởi các thông báo mạng xã hội và tin nhắn trên màn hình điện thoại.
+    \item Thường ngồi học liên tục nhiều giờ mà quên nghỉ ngơi, gây mỏi mắt và giảm khả năng tiếp thu.
+    \item Không kiểm soát được điều kiện môi trường bàn học (nhiệt độ quá nóng hoặc ánh sáng dưới mức tiêu chuẩn 300 lux).
+    \item Người xung quanh không biết sinh viên đang trong phiên tập trung nên dễ làm gián đoạn.
+\end{itemize}
 
-Để giải quyết triệt để các vấn đề trên, nhóm phát triển sản phẩm \textbf{Trạm học tập Pomodoro (Pomodoro Box)} -- một hệ thống phần cứng IoT để bàn độc lập kết hợp với nền tảng quản trị trực tuyến Node-RED và cơ sở dữ liệu đám mây Supabase Cloud. Thiết bị đóng vai trò như một ``trợ lý vật lý'' tại góc học tập, tự động điều phối chu kỳ tập trung, giám sát tiện nghi môi trường và số hóa toàn diện tiến trình học tập mà không làm người học phân tâm vào màn hình thông minh.
+\textbf{Trạm học tập Pomodoro (Pomodoro Box)} là một thiết bị phần cứng IoT để bàn độc lập, kết hợp máy chủ điều khiển Node-RED và cơ sở dữ liệu Supabase Cloud. Thiết bị thực hiện đếm giờ phiên học trực tiếp trên vi điều khiển ESP32, hiển thị thời gian trên màn hình LCD, phát chuông báo kết thúc bằng còi buzzer và tích hợp các cảm biến giám sát môi trường bàn học.
 
 \textbf{Ý nghĩa thực tế của sản phẩm:}
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{Bảo vệ sức khỏe và thị lực học đường:} Liên tục giám sát vi khí hậu (nhiệt độ, độ ẩm, độ sáng) và chủ động cảnh báo khi môi trường học tập không đạt chuẩn tiện nghi hoặc khi người học ngồi liên tục quá ngưỡng an toàn.
-    \item \textbf{Rèn luyện kỷ luật học tập khoa học:} Sử dụng còi báo âm thanh buzzer, đèn LED báo trạng thái và màn hình LCD độc lập giúp người học duy trì nhịp tập trung tự giác và báo hiệu văn minh cho không gian xung quanh.
-    \item \textbf{Số hóa và cá nhân hóa lộ trình tiến bộ:} Dữ liệu quẹt thẻ RFID và lịch sử phiên học được lưu trữ đám mây lâu dài, hỗ trợ phân tích thói quen cá nhân và tự động đưa ra các khuyến nghị tối ưu hóa thời gian học tập.
+\begin{itemize}[leftmargin=1.2cm, noitemsep, topsep=2pt]
+    \item \textbf{Tập trung không phụ thuộc điện thoại:} Người học bấm giờ và theo dõi tiến trình ngay trên thiết bị phần cứng để bàn, hạn chế nhìn vào màn hình điện thoại trong lúc học.
+    \item \textbf{Cảnh báo bảo vệ sức khỏe và thị lực:} Cảm biến nhiệt độ, độ ẩm (DHT22) và cảm biến quang trở (LM393) liên tục theo dõi vi khí hậu tại bàn học. Hệ thống sẽ phát cảnh báo trên giao diện web khi thiếu sáng ($<300\text{ lux}$) hoặc gửi tin nhắn Telegram khi sinh viên ngồi học liên tục quá 60 phút.
+    \item \textbf{Theo dõi tiến độ học tập có hệ thống:} Người học quẹt thẻ từ RFID (RC522) để bắt đầu và kết thúc phiên. Toàn bộ thời gian học được lưu trữ trên cơ sở dữ liệu Supabase, cho phép xem lại lịch sử qua giao diện web và nhận email tổng kết tuần qua Gmail SMTP.
 \end{itemize}
 
 \subsection{Danh sách các chức năng có trong sản phẩm}
 
-Theo quy định thuyết minh dự án đồ án môn học \textit{Vật lý cho Công nghệ Thông tin}, toàn bộ 13 chức năng của hệ thống được chuẩn hóa và phân loại thành \textbf{Chức năng căn bản} và \textbf{Chức năng nâng cao} trong Bảng \ref{tab:danh_sach_chuc_nang}.
+Toàn bộ 13 chức năng của hệ thống được phân loại thành nhóm \textbf{Chức năng căn bản} và nhóm \textbf{Chức năng nâng cao} trong Bảng \ref{tab:danh_sach_chuc_nang}.
 
 {\small
-\renewcommand{\arraystretch}{1.08}
+\renewcommand{\arraystretch}{1.1}
 \begin{longtable}{|c|p{13.6cm}|}
 \hline
-\textbf{ID} & \textbf{Thông tin chức năng} \\ \hline
+\textbf{ID} & \textbf{Thông tin chức năng căn bản} \\ \hline
 \endfirsthead
 \hline
-\textbf{ID} & \textbf{Thông tin chức năng} \\ \hline
+\textbf{ID} & \textbf{Thông tin chức năng căn bản} \\ \hline
 \endhead
 \hline
-\multicolumn{2}{|c|}{\textbf{THÔNG TIN CHỨC NĂNG CĂN BẢN}} \\ \hline
-\textbf{1} & \textbf{Giám sát nhiệt độ \& độ ẩm phòng học (Cảm biến DHT22):} ESP32 đo chu kỳ mỗi 5s qua chân GPIO4 (1-Wire), kiểm tra checksum 40-bit, xuất bản JSON lên MQTT topic \texttt{study/dht}. Node-RED Dashboard hiển thị kim đo Gauge và chuyển tiếp lưu đám mây. \\ \hline
+\textbf{1} & \textbf{Cảm biến nhiệt độ \& độ ẩm DHT22:} ESP32 đọc dữ liệu nhiệt độ và độ ẩm qua chân GPIO4 (giao thức 1-Wire), kiểm tra mã checksum 40-bit chu kỳ mỗi 5 giây, đóng gói bản tin JSON xuất bản lên MQTT topic \texttt{study/dht}. Node-RED Dashboard nhận dữ liệu để hiển thị đồng hồ đo và lưu trữ. \\ \hline
 
-\textbf{2} & \textbf{Quản lý phiên học \& điểm danh bằng thẻ RFID (Module RC522 \& Thẻ Mifare S50):} Quét thẻ tần số 13.56 MHz qua SPI, xuất bản UID lên topic \texttt{study/rfid}. Node-RED đối soát Supabase để tự động mở/đóng phiên, tính thời lượng và gửi lời chào lên LCD. \\ \hline
+\textbf{2} & \textbf{Module RFID RC522 \& Thẻ Mifare Classic S50:} ESP32 giao tiếp với module RC522 qua bus SPI ở tần số 13.56 MHz. Khi phát hiện thẻ, ESP32 đọc mã UID và gửi lên MQTT topic \texttt{study/rfid}. Node-RED đối soát dữ liệu trên Supabase để mở hoặc đóng phiên học, tính thời lượng học và gửi phản hồi lên màn hình LCD. \\ \hline
 
-\textbf{3} & \textbf{Hẹn giờ Pomodoro \& báo còi kết thúc (Active Buzzer 5V):} Người dùng thiết lập số phút trên web; Node-RED gửi lệnh qua topic \texttt{study/timer}. ESP32 đếm ngược thời gian thực, kích hoạt GPIO25 phát chuỗi bíp còi buzzer (Active-LOW) khi hoàn thành phiên. \\ \hline
+\textbf{3} & \textbf{Còi báo Active Buzzer 5V:} Người dùng đặt số phút Pomodoro trên giao diện web; Node-RED gửi lệnh điều khiển xuống topic \texttt{study/timer}. ESP32 thực hiện đếm ngược thời gian thực và kích hoạt chân GPIO25 phát chuỗi bíp còi buzzer báo hiệu khi kết thúc phiên. \\ \hline
 
-\multicolumn{2}{|c|}{\textbf{THÔNG TIN CHỨC NĂNG NÂNG CAO}} \\ \hline
-\textbf{4} & \textbf{Đo cường độ ánh sáng bàn học (Module quang trở LM393):} ESP32 đọc điện áp tương tự qua bộ chuyển đổi ADC1 (GPIO34), xuất bản lên topic \texttt{study/light}. Node-RED hiển thị thanh đo và cảnh báo trên giao diện web khi thiếu sáng ($<300\text{ lux}$). \\ \hline
+\hline
+\multicolumn{2}{|c|}{\textbf{Thông tin chức năng nâng cao}} \\ \hline
 
-\textbf{5} & \textbf{Gửi tin nhắn \& lời nhắc lên màn hình (LCD 1602 I2C):} Người dùng nhập thông điệp trên Dashboard; Node-RED gửi JSON qua topic \texttt{study/lcd}. ESP32 giải mã qua chip I2C PCF8574, hiển thị lời nhắc trên dòng 1 và số phút đếm ngược trên dòng 2. \\ \hline
+\textbf{4} & \textbf{Module quang trở LM393 (Thiết bị phần cứng):} ESP32 đọc tín hiệu điện áp tương tự từ chân cảm biến qua bộ chuyển đổi ADC1 (chân GPIO34), gửi giá trị lên topic \texttt{study/light}. Node-RED hiển thị mức sáng trên web và phát cảnh báo khi môi trường học thiếu sáng ($<300\text{ lux}$). \\ \hline
 
-\textbf{6} & \textbf{Báo hiệu trạng thái tập trung tại chỗ (Nút nhấn GPIO27 \& LED đỏ GPIO26):} Nút nhấn cơ học kích hoạt ngắt chống rung 50 ms. ESP32 bật đèn LED đỏ báo bận cho người xung quanh, đồng thời xuất bản trạng thái lên topic \texttt{study/focus} để đồng bộ web. \\ \hline
+\textbf{5} & \textbf{Màn hình LCD 1602 kèm module I2C PCF8574 (Thiết bị phần cứng):} Người dùng nhập nội dung nhắc nhở trên giao diện web; Node-RED gửi chuỗi văn bản qua topic \texttt{study/lcd}. ESP32 nhận dữ liệu qua giao tiếp I2C, hiển thị lời nhắc trên dòng 1 và hiển thị thời gian đếm ngược phiên học trên dòng 2. \\ \hline
 
-\textbf{7} & \textbf{Lưu trữ chuỗi thời gian dữ liệu đám mây (Supabase Cloud PostgreSQL):} Node-RED tự động ghi nhận dữ liệu cảm biến định kỳ 60s vào bảng \texttt{sensor\_data} và nhật ký phiên học vào bảng \texttt{study\_sessions} có phân quyền bảo mật RLS. \\ \hline
+\textbf{6} & \textbf{Nút nhấn cơ 4 chân \& Đèn LED đỏ 5mm (Thiết bị phần cứng):} Nút nhấn kết nối chân GPIO27 với mạch ngắt ngoài chống rung phần mềm (50 ms). Khi người học bấm nút, ESP32 bật đèn LED đỏ tại chân GPIO26 để báo trạng thái đang tập trung, đồng thời xuất bản trạng thái lên topic \texttt{study/focus} để đồng bộ với giao diện web. \\ \hline
 
-\textbf{8} & \textbf{Bảng điều khiển trực quan hóa Dashboard (Node-RED Dashboard):} Giao diện web tương tác đa nền tảng (Desktop/Mobile), cung cấp kim đo Gauge vi khí hậu, biểu đồ đường kép 24h, danh sách lịch sử phiên học và các khối điều khiển thời gian thực. \\ \hline
+\textbf{7} & \textbf{Supabase Cloud PostgreSQL (Cơ sở dữ liệu):} Tự thiết kế và cấu hình cơ sở dữ liệu quan hệ PostgreSQL trên đám mây Supabase. Node-RED tự động ghi nhận dữ liệu cảm biến định kỳ mỗi 60 giây vào bảng \texttt{sensor\_data} và nhật ký phiên học vào bảng \texttt{study\_sessions}. \\ \hline
 
-\textbf{9} & \textbf{Cảnh báo học liên tục quá giờ qua Telegram (Telegram Bot API):} Bộ giám sát trên Node-RED theo dõi thời lượng phiên; khi người học ngồi liên tục quá 60 phút mà quên nghỉ ngơi, hệ thống tự động phát tin nhắn khẩn báo nhắc đứng dậy vận động bảo vệ mắt. \\ \hline
+\textbf{8} & \textbf{Node-RED Dashboard (Tự xây dựng):} Xây dựng giao diện web tương thích cả máy tính và điện thoại. Giao diện cung cấp đồng hồ đo vi khí hậu, biểu đồ chuỗi thời gian nhiệt ẩm 24 giờ truy vấn từ Supabase, nhật ký phiên học và các khối điều khiển thời gian thực. \\ \hline
 
-\textbf{10} & \textbf{Báo cáo tổng kết tuần qua Email (Gmail SMTP):} Định kỳ 20:00 tối Chủ nhật hàng tuần, Node-RED tổng hợp số phiên Pomodoro, tổng thời gian học từ Supabase, chèn vào mẫu email HTML và gửi trực tiếp đến hộp thư cá nhân của sinh viên. \\ \hline
+\textbf{9} & \textbf{Dịch vụ Telegram Bot API (Dịch vụ bên thứ ba):} Node-RED theo dõi thời gian của phiên học hiện tại. Khi thời gian học liên tục vượt quá 60 phút mà người học chưa nghỉ ngơi, hệ thống tự động gọi API Telegram Bot để gửi tin nhắn cảnh báo đến tài khoản Telegram của sinh viên. \\ \hline
 
-\textbf{11} & \textbf{Hệ thống xác thực \& phân quyền tài khoản (Node-RED Auth \& bcrypt):} Cung cấp luồng đăng ký, đăng nhập trên giao diện web. Mật khẩu được băm bảo mật kèm muối ngẫu nhiên (salt), cấp phát Session Token bảo đảm tính riêng tư dữ liệu cho từng sinh viên. \\ \hline
+\textbf{10} & \textbf{Dịch vụ Gmail SMTP (Dịch vụ bên thứ ba kết hợp luồng tự xây dựng):} Định kỳ vào lúc 20:00 tối Chủ nhật hàng tuần, Node-RED tự động truy vấn dữ liệu từ Supabase, tổng hợp số phiên Pomodoro và tổng thời gian học trong tuần, sau đó định dạng email HTML gửi trực tiếp đến hòm thư cá nhân của sinh viên. \\ \hline
 
-\textbf{12} & \textbf{Trang Web cấu hình Wi-Fi AP trên vi điều khiển (Web Server SoftAP ESP32):} Khi không tìm thấy Wi-Fi đã lưu, ESP32 tự phát Access Point \texttt{Pomodoro-Box-Setup} tại IP \texttt{192.168.4.1}. Người dùng kết nối điện thoại để đổi Wi-Fi mà không cần nạp lại mã. \\ \hline
+\textbf{11} & \textbf{Hệ thống xác thực tài khoản (Tự xây dựng trên Node-RED):} Xây dựng luồng đăng ký và đăng nhập tài khoản trên giao diện web. Mật khẩu người dùng được băm bảo mật bằng thuật toán bcrypt kèm muối ngẫu nhiên (salt), cấp phát mã phiên làm việc (session token) để bảo vệ dữ liệu cá nhân. \\ \hline
 
-\textbf{13} & \textbf{Mô hình phân tích điều kiện học tập tối ưu (Node-RED Engine):} Lượng hóa chất lượng phiên học $Q_{\text{session}} \ge 80\%$, giải quyết Cold Start 3 giai đoạn và trích xuất 3 chỉ số vàng: thời lượng lý tưởng, khung giờ vàng và vi khí hậu tối ưu. \\ \hline
-\caption{Danh sách phân loại 13 chức năng của hệ thống Trạm học tập Pomodoro}
+\textbf{12} & \textbf{Web Server SoftAP trên vi điều khiển (Tự xây dựng trên ESP32):} Khi không tìm thấy mạng Wi-Fi đã cấu hình, ESP32 tự động khởi tạo điểm truy cập Access Point tên \texttt{Pomodoro-Box-Setup} tại địa chỉ IP \texttt{192.168.4.1}. Người dùng dùng điện thoại kết nối vào mạng này để quét và lưu mật khẩu Wi-Fi mới mà không cần cắm nạp lại mã nguồn. \\ \hline
+
+\textbf{13} & \textbf{Mô hình phân tích điều kiện học tập tối ưu (Tự xây dựng trên Node-RED):} Xây dựng thuật toán phân tích tương quan giữa chất lượng tập trung và điều kiện môi trường. Đánh giá chất lượng phiên học $Q_{\text{session}}$ qua tỷ lệ hoàn thành thời gian mục tiêu và phản hồi sau phiên, xử lý khởi đầu lạnh khi chưa có dữ liệu và trích xuất 3 chỉ số: thời lượng học lý tưởng, khung giờ tập trung tốt nhất và điều kiện nhiệt ẩm phù hợp. \\ \hline
+
+\caption{Danh sách các chức năng có trong sản phẩm Pomodoro Box}
 \label{tab:danh_sach_chuc_nang}
 \end{longtable}
 }
