@@ -111,7 +111,7 @@ Hệ thống giao diện được tổ chức theo cấu trúc của Node-RED Da
 
 \begin{center}
 \setlength{\tabcolsep}{5pt}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}X|c|}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4.2cm}|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}X|c|}
 \hline
 \textbf{Nhóm giao diện} & \textbf{Loại thành phần} & \textbf{Chức năng hiển thị \& Tác vụ tương tác} & \textbf{ID} \\ \hline
 \textbf{Đếm giờ Pomodoro} \newline (\texttt{win\_timer}) & \texttt{ui\_template}, \newline \texttt{ui\_button}, \newline \texttt{ui\_dropdown} & Đồng hồ đếm ngược số lớn, thanh tiến trình, nút Bắt đầu / Tạm dừng, danh mục chọn thời gian (25p, 5p, 15p hoặc tùy chỉnh) & \textbf{ID 3} \\ \hline
@@ -158,7 +158,7 @@ Hệ thống giao diện được tổ chức theo cấu trúc của Node-RED Da
 
 \begin{center}
 \setlength{\tabcolsep}{5pt}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}X|c|}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4.2cm}|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}X|c|}
 \hline
 \textbf{Nhóm giao diện} & \textbf{Loại thành phần} & \textbf{Chức năng hiển thị \& Tác vụ tương tác} & \textbf{ID} \\ \hline
 \textbf{Trạng thái kết nối} \newline (\texttt{grp\_auth\_intro}) & \texttt{ui\_template} & Hiển thị trạng thái hoạt động thực tế của các module phần cứng ngoại vi (DHT22, LM393, RC522, Buzzer, LCD) & \textbf{ID 11} \\ \hline
@@ -171,7 +171,11 @@ Hệ thống giao diện được tổ chức theo cấu trúc của Node-RED Da
 
 \vspace{0.1cm}
 
+\clearpage
+
 \begin{center}
+\begin{minipage}{\textwidth}
+\centering
 \captionsetup{type=figure}
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
@@ -192,11 +196,12 @@ Hệ thống giao diện được tổ chức theo cấu trúc của Node-RED Da
     \vspace{0.04cm}
     \captionof{figure}{Giao diện Cài đặt hệ thống (ID 9, 10, 12) và Giao diện thiết bị di động (Mobile Web App)}
     \label{fig:wf_settings_mobile}
+\end{minipage}
 \end{center}
 
 \begin{center}
 \setlength{\tabcolsep}{5pt}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}X|c|}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4.2cm}|>{\raggedright\arraybackslash}p{2.8cm}|>{\raggedright\arraybackslash}X|c|}
 \hline
 \textbf{Nhóm giao diện} & \textbf{Loại thành phần} & \textbf{Chức năng hiển thị \& Tác vụ tương tác} & \textbf{ID} \\ \hline
 \textbf{Cấu hình Pomodoro} \newline (\texttt{grp\_pomodoro}) & \texttt{ui\_numeric} & Ô nhập số điều chỉnh thời gian học ($1-120\text{p}$), nghỉ ngắn ($1-120\text{p}$), nghỉ dài ($1-120\text{p}$) và số chu kỳ lặp ($1-12$ vòng) & \textbf{ID 3} \\ \hline
