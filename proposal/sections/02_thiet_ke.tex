@@ -16,7 +16,7 @@ Vỏ hộp sản phẩm được thiết kế trên phần mềm Autodesk Fusion
 5 & Đầu đón sáng quang trở LM393 & Khoét lỗ tròn $\varnothing 5.5\text{ mm}$ đón quang thông & \textbf{ID 4} \\ \hline
 6 & Còi báo âm thanh Active Buzzer & Cụm 5 lỗ tròn thoát âm $\varnothing 1.5\text{ mm}$ & \textbf{ID 3} \\ \hline
 7 & Khe cảm biến nhiệt ẩm DHT22 & 4 khe thông khí $12.0 \times 2.0\text{ mm}$ vách hông & \textbf{ID 1} \\ \hline
-8 & Khoang vi điều khiển ESP32 & 4 trụ đỡ ốc vít M3 có ren đồng cấy nhiệt ở đáy & \textbf{ID 11, ID 12} \\ \hline
+8 & Khoang vi điều khiển ESP32 & 4 trụ đỡ ốc vít M3 có ren đồng cấy nhiệt ở đáy & \textbf{ID 1--6, 12} \\ \hline
 9 & Cổng cấp nguồn Micro USB & Khoét lỗ vát bo tròn $12.0 \times 7.0\text{ mm}$ ở vách sau & Cấp nguồn \\ \hline
 \end{tabularx}
 \captionof{table}{Bảng ánh xạ vị trí lắp đặt linh kiện trên vỏ hộp 3D với ID chức năng}
@@ -71,12 +71,12 @@ Giao diện website quản lý sản phẩm được thiết kế trên nền t�
 2 & Cửa sổ Ánh sáng (Light) & Số đo ADC quang trở ($0 - 4095$), nhãn Đủ/Thiếu sáng, thanh đo mức & \textbf{ID 4} \\ \hline
 3 & Cửa sổ Hẹn giờ (Timer · Buzzer) & Đồng hồ số đếm ngược, thanh tiến trình, nút Gửi lệnh / Dừng & \textbf{ID 3} \\ \hline
 4 & Cửa sổ Lời nhắc LCD 16×2 & Khung nhập văn bản, bộ đếm ký tự, gửi lời nhắc xuống màn hình & \textbf{ID 5} \\ \hline
-5 & Cửa sổ Phiên thẻ RFID \& Feedback & Bộ đếm thời gian, mã thẻ UID, cảnh báo Telegram ($>50$p), nút quẹt giả lập, khối phản hồi sau phiên & \textbf{ID 2, 6, 9, 13} \\ \hline
+5 & Cửa sổ Phiên thẻ RFID \& Feedback & Bộ đếm thời gian, mã thẻ UID, cảnh báo Telegram ($>60$p), nút quẹt giả lập, khối phản hồi sau phiên & \textbf{ID 2, 6, 9, 13} \\ \hline
 6 & Đèn báo trạng thái tập trung & Biểu tượng hiển thị trạng thái đồng bộ với đèn LED đỏ GPIO26 & \textbf{ID 6} \\ \hline
 7 & Cửa sổ Nhật ký & Danh sách sự kiện MQTT thời gian thực, bộ lọc tuần/tháng/năm & \textbf{ID 7} \\ \hline
 8 & Đồ thị chuỗi thời gian 24 giờ & Biểu đồ đường kép (Line Chart) nhiệt/ẩm 24h truy vấn từ Supabase & \textbf{ID 7, ID 8} \\ \hline
 9 & Khung mô hình khuyến nghị & Bảng 3 thông số: Thời lượng lý tưởng, Khung giờ vàng, Vi khí hậu & \textbf{ID 13} \\ \hline
-10 & Màn hình Cài đặt (Settings) & Cấu hình chu kỳ Pomodoro, nhắc nghỉ Telegram, email tuần, danh sách thẻ & \textbf{ID 9, 10, 12} \\ \hline
+10 & Màn hình Cài đặt (Settings) & Cấu hình chu kỳ Pomodoro, nhắc nghỉ Telegram, email tuần, danh sách thẻ & \textbf{ID 2, 3, 9, 10} \\ \hline
 11 & Màn hình Đăng nhập \& Đăng ký & Giao diện đăng nhập/tạo tài khoản, hiển thị trạng thái kết nối trạm & \textbf{ID 11} \\ \hline
 \end{tabularx}
 \captionof{table}{Bảng ánh xạ các vùng thiết kế Wireframe Website với ID chức năng}
@@ -118,7 +118,7 @@ Hệ thống giao diện được tổ chức theo cấu trúc của Node-RED Da
 \textbf{Lời nhắc LCD 1602} \newline (\texttt{win\_lcd}) & \texttt{ui\_template}, \newline \texttt{ui\_text\_input}, \newline \texttt{ui\_button} & Giả lập màn hình LCD 1602, ô nhập nội dung thông điệp, nút gửi bản tin xuống vi điều khiển qua topic \texttt{study/lcd} & \textbf{ID 5} \\ \hline
 \textbf{Vi khí hậu bàn học} \newline (\texttt{win\_climate}) & \texttt{ui\_text}, \newline \texttt{ui\_chart} & Hiển thị giá trị nhiệt độ ($^\circ\text{C}$), độ ẩm ($\%$) từ DHT22 và biểu đồ thu nhỏ Sparkline 1 giờ & \textbf{ID 1} \\ \hline
 \textbf{Độ sáng bàn học} \newline (\texttt{win\_light}) & \texttt{ui\_text}, \newline \texttt{ui\_template} & Hiển thị giá trị ADC ($0-4095$) quang trở LM393 và thanh đo cảnh báo thiếu sáng ($<300\text{ lux}$) & \textbf{ID 4} \\ \hline
-\textbf{Điểm danh \& Phiên} \newline (\texttt{win\_session}) & \texttt{ui\_text}, \newline \texttt{ui\_template}, \newline \texttt{ui\_button} & Hiển thị mã thẻ UID, số thứ tự phiên, đèn LED báo bận, khung cảnh báo Telegram ($>50$p), nút quẹt giả lập & \textbf{ID 2, 6, 9} \\ \hline
+\textbf{Điểm danh \& Phiên} \newline (\texttt{win\_session}) & \texttt{ui\_text}, \newline \texttt{ui\_template}, \newline \texttt{ui\_button} & Hiển thị mã thẻ UID, số thứ tự phiên, đèn LED báo bận, khung cảnh báo Telegram ($>60$p), nút quẹt giả lập & \textbf{ID 2, 6, 9} \\ \hline
 \textbf{Nhật ký sự kiện} \newline (\texttt{win\_log}) & \texttt{ui\_button}, \newline \texttt{ui\_table} & Danh sách bản tin MQTT thời gian thực, nút lọc sự kiện theo tuần/tháng & \textbf{ID 7} \\ \hline
 \textbf{Đồ thị 24 giờ} \newline (\texttt{grp\_hist\_chart}) & \texttt{ui\_chart} & Biểu đồ đường kép 24 giờ nhiệt độ và độ ẩm truy vấn từ CSDL Supabase Cloud & \textbf{ID 7, 8} \\ \hline
 \textbf{Khuyến nghị học tập} \newline (\texttt{grp\_hist\_model}) & \texttt{ui\_template} & Bảng hiển thị thông số gợi ý thời lượng phiên, khung giờ tập trung và vi khí hậu phù hợp & \textbf{ID 13} \\ \hline
@@ -190,11 +190,11 @@ Hệ thống giao diện được tổ chức theo cấu trúc của Node-RED Da
         \includegraphics[height=2.8cm, width=0.235\linewidth, keepaspectratio]{assets/wireframes/09-workspace-mobile-lcd.png}\hfill
         \includegraphics[height=2.8cm, width=0.235\linewidth, keepaspectratio]{assets/wireframes/10-workspace-mobile-room.png}\hfill
         \includegraphics[height=2.8cm, width=0.235\linewidth, keepaspectratio]{assets/wireframes/11-workspace-mobile-log.png}
-        \caption{Giao diện Mobile Web App (4 Tab chạm cạnh đáy)}
+        \caption{Giao diện Mobile Web App (4 màn hình, thanh 5 tab ở cạnh đáy)}
         \label{fig:wf_mobile}
     \end{subfigure}
     \vspace{0.04cm}
-    \captionof{figure}{Giao diện Cài đặt hệ thống (ID 9, 10, 12) và Giao diện thiết bị di động (Mobile Web App)}
+    \captionof{figure}{Giao diện Cài đặt hệ thống (ID 2, 3, 9, 10) và Giao diện thiết bị di động (Mobile Web App)}
     \label{fig:wf_settings_mobile}
 \end{minipage}
 \end{center}
@@ -206,7 +206,7 @@ Hệ thống giao diện được tổ chức theo cấu trúc của Node-RED Da
 \textbf{Nhóm giao diện} & \textbf{Loại thành phần} & \textbf{Chức năng hiển thị \& Tác vụ tương tác} & \textbf{ID} \\ \hline
 \textbf{Cấu hình Pomodoro} \newline (\texttt{grp\_pomodoro}) & \texttt{ui\_numeric} & Ô nhập số điều chỉnh thời gian học ($1-120\text{p}$), nghỉ ngắn ($1-120\text{p}$), nghỉ dài ($1-120\text{p}$) và số chu kỳ lặp ($1-12$ vòng) & \textbf{ID 3} \\ \hline
 \textbf{Cấu hình cảnh báo} \newline (\texttt{grp\_set\_alerts}) & \texttt{ui\_switch}, \newline \texttt{ui\_text\_input}, \newline \texttt{ui\_numeric} & Công tắc bật/tắt Telegram, ô nhập Chat ID, ngưỡng thời gian nhắc nghỉ ($10-240\text{p}$); công tắc bật gửi email báo cáo tuần qua Gmail SMTP & \textbf{ID 9, 10} \\ \hline
-\textbf{Quản lý phần cứng} \newline (\texttt{grp\_devices}) & \texttt{ui\_text}, \newline \texttt{ui\_template}, \newline \texttt{ui\_button} & Hiển thị trạng thái kết nối máy chủ MQTT Mosquitto; quản lý danh sách thẻ từ RFID được phép mở phiên học & \textbf{ID 12} \\ \hline
+\textbf{Quản lý phần cứng} \newline (\texttt{grp\_devices}) & \texttt{ui\_text}, \newline \texttt{ui\_template}, \newline \texttt{ui\_button} & Hiển thị trạng thái kết nối máy chủ MQTT Mosquitto; quản lý danh sách thẻ từ RFID được phép mở phiên học & \textbf{ID 2} \\ \hline
 \textbf{Giao diện di động} \newline (Mobile Web App) & \texttt{ui\_template} & Bố cục 1 cột cuộn tối ưu cho màn hình hẹp ($\le 760\text{ px}$); thanh 5 tab chuyển màn hình cố định ở cạnh đáy (\textit{Timer, LCD, Room, Log, Settings}) & \textbf{ID 1--10} \\ \hline
 \end{tabularx}
 \captionof{table}{Cấu trúc thành phần giao diện Cài đặt hệ thống và Giao diện thiết bị di động}
@@ -235,7 +235,7 @@ Toàn bộ các luồng xử lý và đường truyền nhận dữ liệu của
 \begin{itemize}[leftmargin=0.8cm, noitemsep, topsep=2pt]
     \item \textbf{Luồng 1 (Phụ trách: Trần Nguyễn Tuấn Minh -- Đường nét liền):}
     \begin{itemize}[leftmargin=0.5cm, noitemsep]
-        \item \textit{Phần cứng $\rightarrow$ ESP32:} Cảm biến DHT22 truyền dữ liệu nhiệt độ và độ ẩm qua chân GPIO4 (giao thức 1-Wire, chu kỳ 5 giây, kiểm tra checksum 40-bit).
+        \item \textit{Phần cứng $\rightarrow$ ESP32:} Cảm biến DHT22 truyền dữ liệu nhiệt độ và độ ẩm qua chân GPIO4 (giao thức single-bus một dây, chu kỳ 5 giây, khung dữ liệu 40 bit có 8 bit checksum).
         \item \textit{ESP32 $\rightarrow$ MQTT Broker:} ESP32 xuất bản bản tin JSON chứa nhiệt độ và độ ẩm lên topic \texttt{study/dht} (QoS 0).
         \item \textit{MQTT Broker $\rightarrow$ Node-RED:} Node-RED đăng ký nhận topic \texttt{study/dht}, cập nhật dữ liệu lên đồng hồ đo Gauge trên giao diện web (ID 1, 8).
         \item \textit{Node-RED $\leftrightarrow$ Supabase Cloud:} Định kỳ mỗi 60 giây, Node-RED ghi nhận chuỗi thời gian vào bảng \texttt{sensor\_data} qua truy vấn SQL và cung cấp dữ liệu phân tích điều kiện học tập (ID 7, 13).
@@ -243,7 +243,7 @@ Toàn bộ các luồng xử lý và đường truyền nhận dữ liệu của
     
     \item \textbf{Luồng 2 (Phụ trách: Nguyễn Quốc Dương -- Đường nét đứt):}
     \begin{itemize}[leftmargin=0.5cm, noitemsep]
-        \item \textit{Phần cứng $\rightarrow$ ESP32:} Module quang trở LM393 truyền điện áp tương tự qua bộ chuyển đổi ADC1 chân GPIO34 (ID 4); đầu đọc RC522 gửi mã UID thẻ từ qua giao tiếp bus SPI tần số 13.56 MHz (ID 2); nút nhấn cơ kích hoạt tín hiệu ngắt tại GPIO27 (ID 6).
+        \item \textit{Phần cứng $\rightarrow$ ESP32:} Module quang trở LM393 truyền điện áp tương tự qua bộ chuyển đổi ADC1 chân GPIO34 (ID 4); đầu đọc RC522 gửi mã UID thẻ từ qua giao tiếp bus SPI, đọc thẻ bằng sóng RF 13.56 MHz (ID 2); nút nhấn cơ kích hoạt tín hiệu ngắt tại GPIO27 (ID 6).
         \item \textit{ESP32 $\rightarrow$ MQTT Broker:} ESP32 xuất bản giá trị mức sáng lên topic \texttt{study/light}, gửi mã thẻ UID lên topic \texttt{study/rfid} và trạng thái bận lên topic \texttt{study/focus}.
         \item \textit{ESP32 điều khiển tại chỗ:} Kích hoạt chân GPIO26 bật đèn LED đỏ báo bận cho không gian xung quanh khi nhấn nút (ID 6).
         \item \textit{MQTT $\leftrightarrow$ Node-RED $\leftrightarrow$ Dịch vụ ngoại vi:} Node-RED nhận dữ liệu từ broker, đối soát phiên học trên CSDL Supabase (ID 2); gửi tin nhắn cảnh báo qua Telegram Bot API khi người học ngồi liên tục quá 60 phút (ID 9); và định kỳ 20h00 tối Chủ nhật gửi email báo cáo tổng kết tuần qua giao thức Gmail SMTP (ID 10).
@@ -254,6 +254,6 @@ Toàn bộ các luồng xử lý và đường truyền nhận dữ liệu của
         \item \textit{Người dùng $\rightarrow$ Node-RED:} Người dùng đăng nhập tài khoản bằng mật khẩu băm bcrypt (ID 11); thiết lập số phút Pomodoro và nhập lời nhắc nhở trên giao diện web.
         \item \textit{Node-RED $\rightarrow$ MQTT Broker:} Xuất bản lệnh đặt giờ xuống topic \texttt{study/timer} (QoS 1) và nội dung văn bản xuống topic \texttt{study/lcd}.
         \item \textit{MQTT Broker $\rightarrow$ ESP32 $\rightarrow$ Phần cứng:} ESP32 nhận lệnh qua MQTT, hiển thị lời nhắc lên dòng 1 và số phút đếm ngược lên dòng 2 của màn hình LCD 1602 qua giao tiếp I2C PCF8574 (ID 5); kích hoạt chân GPIO25 phát chuỗi bíp còi Active Buzzer 5V báo hiệu khi hết phiên học (ID 3).
-        \item \textit{Cứu hộ SoftAP trên ESP32:} Khi mất kết nối Wi-Fi, vi điều khiển tự khởi tạo Web Server SoftAP tại địa chỉ IP \texttt{192.168.4.1} để người dùng cấu hình lại thông số mạng (ID 12).
+        \item \textit{Cứu hộ SoftAP trên ESP32:} Khi không tìm thấy mạng Wi-Fi đã cấu hình, vi điều khiển tự khởi tạo Web Server SoftAP tại địa chỉ IP \texttt{192.168.4.1} để người dùng cấu hình lại thông số mạng (ID 12).
     \end{itemize}
 \end{itemize}
