@@ -23,41 +23,42 @@ Vỏ hộp sản phẩm được thiết kế trên phần mềm Autodesk Fusion
 \label{tab:map_3d_chuc_nang}
 \end{center}
 
+\newpage
 \begin{center}
 \captionsetup{type=figure}
-    \begin{subfigure}[b]{0.46\textwidth}
+    \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[height=3.0cm, width=\textwidth, keepaspectratio]{assets/design_fusion360/hinh_3d_1_ben_ngoai_truoc.png}
+        \includegraphics[width=\linewidth, keepaspectratio]{assets/design_fusion360/hinh_3d_1_ben_ngoai_truoc.png}
         \caption{Ngoại quan mặt trước (LCD, Nút nhấn, LED, RFID)}
         \label{fig:3d_front}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.46\textwidth}
+    \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[height=3.0cm, width=\textwidth, keepaspectratio]{assets/design_fusion360/hinh_3d_2_ben_ngoai_sau.png}
+        \includegraphics[width=\linewidth, keepaspectratio]{assets/design_fusion360/hinh_3d_2_ben_ngoai_sau.png}
         \caption{Ngoại quan mặt sau (Cổng USB, Khe tản nhiệt)}
         \label{fig:3d_back}
     \end{subfigure}
-    \par\vspace{0.06cm}
-    \begin{subfigure}[b]{0.46\textwidth}
+    \par\vspace{0.15cm}
+    \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[height=3.0cm, width=\textwidth, keepaspectratio]{assets/design_fusion360/hinh_3d_3_ben_trong_than_hop.png}
+        \includegraphics[width=\linewidth, keepaspectratio]{assets/design_fusion360/hinh_3d_3_ben_trong_than_hop.png}
         \caption{Bố trí linh kiện bên trong thân hộp}
         \label{fig:3d_inside}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.46\textwidth}
+    \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[height=3.0cm, width=\textwidth, keepaspectratio]{assets/design_fusion360/hinh_3d_5_tach_nap.png}
+        \includegraphics[width=\linewidth, keepaspectratio]{assets/design_fusion360/hinh_3d_5_tach_nap.png}
         \caption{Bản vẽ bóc tách nắp và thân (Exploded View)}
         \label{fig:3d_exploded}
     \end{subfigure}
-    \vspace{0.06cm}
+    \vspace{0.08cm}
     \captionof{figure}{Bản vẽ phối cảnh 3D bên ngoài và bên trong vỏ hộp Trạm học tập Pomodoro}
     \label{fig:3d_full}
 \end{center}
 
-\clearpage
+\vspace{0.2cm}
 \subsection{Hình ảnh wireframe cho website quản lý sản phẩm}
 
 Giao diện website quản lý sản phẩm được thiết kế trên nền tảng Node-RED Dashboard phục vụ việc theo dõi và điều khiển trạm học tập. Toàn bộ các vùng chức năng trên bản vẽ wireframe đều được ánh xạ trực tiếp với danh sách các chức năng đã đăng ký ở Mục 1, được tổng hợp chi tiết trong Bảng \ref{tab:map_wireframe_chuc_nang}.
@@ -87,24 +88,23 @@ Giao diện website quản lý sản phẩm được thiết kế trên nền t�
 
 Hệ thống giao diện được tổ chức theo cấu trúc của Node-RED Dashboard gồm: \textbf{Trang (\texttt{ui\_tab}) $\rightarrow$ Nhóm (\texttt{ui\_group}) $\rightarrow$ Thành phần hiển thị và điều khiển (\texttt{ui\_component})}. Dưới đây là hình ảnh wireframe các màn hình và bảng liệt kê chi tiết từng thành phần:
 
-\clearpage
-
+\vspace{0.15cm}
 \begin{center}
 \captionsetup{type=figure}
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[height=3.0cm, width=\textwidth, keepaspectratio]{assets/wireframes/03-workspace-desktop.png}
+        \includegraphics[height=5.0cm, width=\textwidth, keepaspectratio]{assets/wireframes/03-workspace-desktop.png}
         \caption{Bàn làm việc Workspace Desktop (6 cửa sổ điều khiển)}
         \label{fig:wf_workspace}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[height=3.0cm, width=\textwidth, keepaspectratio]{assets/wireframes/04-history-desktop.png}
+        \includegraphics[height=5.0cm, width=\textwidth, keepaspectratio]{assets/wireframes/04-history-desktop.png}
         \caption{Trang Lịch sử, biểu đồ thời gian và khối khuyến nghị}
         \label{fig:wf_history}
     \end{subfigure}
-    \vspace{0.04cm}
+    \vspace{0.08cm}
     \captionof{figure}{Giao diện Bàn làm việc Workspace và Lịch sử phân tích dữ liệu trên Desktop (ID 1--8, 13)}
     \label{fig:wf_desktop_main}
 \end{center}
@@ -117,7 +117,7 @@ Hệ thống giao diện được tổ chức theo cấu trúc của Node-RED Da
 \textbf{Đếm giờ Pomodoro} \newline (\texttt{win\_timer}) & \texttt{ui\_template}, \newline \texttt{ui\_button}, \newline \texttt{ui\_dropdown} & Đồng hồ đếm ngược số lớn, thanh tiến trình, nút Bắt đầu / Tạm dừng, danh mục chọn thời gian (25p, 5p, 15p hoặc tùy chỉnh) & \textbf{ID 3} \\ \hline
 \textbf{Lời nhắc LCD 1602} \newline (\texttt{win\_lcd}) & \texttt{ui\_template}, \newline \texttt{ui\_text\_input}, \newline \texttt{ui\_button} & Giả lập màn hình LCD 1602, ô nhập nội dung thông điệp, nút gửi bản tin xuống vi điều khiển qua topic \texttt{study/lcd} & \textbf{ID 5} \\ \hline
 \textbf{Vi khí hậu bàn học} \newline (\texttt{win\_climate}) & \texttt{ui\_text}, \newline \texttt{ui\_chart} & Hiển thị giá trị nhiệt độ ($^\circ\text{C}$), độ ẩm ($\%$) từ DHT22 và biểu đồ thu nhỏ Sparkline 1 giờ & \textbf{ID 1} \\ \hline
-\textbf{Độ sáng bàn học} \newline (\texttt{win\_light}) & \texttt{ui\_text}, \newline \texttt{ui\_template} & Hiển thị giá trị ADC ($0-4095$) quang trở LM393 và thanh đo cảnh báo thiếu sáng ($<300\text{ lux}$) & \textbf{ID 4} \\ \hline
+\textbf{Độ sáng bàn học} \newline (\texttt{win\_light}) & \texttt{ui\_text}, \newline \texttt{ui\_template} & Hiển thị giá trị ADC ($0-4095$) quang trở LM393 và thanh đo cảnh báo thiếu sáng ($<300\text{ lux}$, nhóm dựa trên dữ liệu trước đây để ước tính chuyển đổi giữa lux và ADC) & \textbf{ID 4} \\ \hline
 \textbf{Điểm danh \& Phiên} \newline (\texttt{win\_session}) & \texttt{ui\_text}, \newline \texttt{ui\_template}, \newline \texttt{ui\_button} & Hiển thị mã thẻ UID, số thứ tự phiên, đèn LED báo bận, khung cảnh báo Telegram ($>60$p), nút quẹt giả lập & \textbf{ID 2, 6, 9} \\ \hline
 \textbf{Nhật ký sự kiện} \newline (\texttt{win\_log}) & \texttt{ui\_button}, \newline \texttt{ui\_table} & Danh sách bản tin MQTT thời gian thực, nút lọc sự kiện theo tuần/tháng & \textbf{ID 7} \\ \hline
 \textbf{Đồ thị 24 giờ} \newline (\texttt{grp\_hist\_chart}) & \texttt{ui\_chart} & Biểu đồ đường kép 24 giờ nhiệt độ và độ ẩm truy vấn từ CSDL Supabase Cloud & \textbf{ID 7, 8} \\ \hline
@@ -127,31 +127,30 @@ Hệ thống giao diện được tổ chức theo cấu trúc của Node-RED Da
 \label{tab:comp_workspace}
 \end{center}
 
-\clearpage
-
+\vspace{0.15cm}
 \begin{center}
 \captionsetup{type=figure}
-    \begin{subfigure}[b]{0.31\textwidth}
+    \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[height=2.8cm, width=\textwidth, keepaspectratio]{assets/wireframes/01-sign-in-desktop.png}
+        \includegraphics[height=4.4cm, width=\linewidth, keepaspectratio]{assets/wireframes/01-sign-in-desktop.png}
         \caption{Đăng nhập (Sign in)}
         \label{fig:wf_signin}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.31\textwidth}
+    \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[height=2.8cm, width=\textwidth, keepaspectratio]{assets/wireframes/02-register-desktop.png}
+        \includegraphics[height=4.4cm, width=\linewidth, keepaspectratio]{assets/wireframes/02-register-desktop.png}
         \caption{Đăng ký (Register)}
         \label{fig:wf_register}
     \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.31\textwidth}
+    \par\vspace{0.12cm}
+    \begin{subfigure}[b]{0.62\textwidth}
         \centering
-        \includegraphics[height=2.8cm, width=\textwidth, keepaspectratio]{assets/wireframes/14-rating-desktop.png}
-        \caption{Đánh giá sau phiên}
+        \includegraphics[height=4.6cm, width=\linewidth, keepaspectratio]{assets/wireframes/14-rating-desktop.png}
+        \caption{Đánh giá sau phiên học (Session Rating Modal)}
         \label{fig:wf_rating}
     \end{subfigure}
-    \vspace{0.04cm}
+    \vspace{0.08cm}
     \captionof{figure}{Giao diện Xác thực người dùng (ID 11) và Khối đánh giá sau phiên học (ID 13)}
     \label{fig:wf_auth_rating}
 \end{center}
@@ -169,31 +168,28 @@ Hệ thống giao diện được tổ chức theo cấu trúc của Node-RED Da
 \label{tab:comp_auth}
 \end{center}
 
-\vspace{0.1cm}
-
-\clearpage
-
+\vspace{0.15cm}
 \begin{center}
 \begin{minipage}{\textwidth}
 \centering
 \captionsetup{type=figure}
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.42\textwidth}
         \centering
-        \includegraphics[height=2.8cm, width=\linewidth, keepaspectratio]{assets/wireframes/05-settings-desktop.png}
+        \includegraphics[height=5.6cm, width=\linewidth, keepaspectratio]{assets/wireframes/05-settings-desktop.png}
         \caption{Trang Cài đặt hệ thống (Desktop)}
         \label{fig:wf_settings}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.52\textwidth}
+    \begin{subfigure}[b]{0.55\textwidth}
         \centering
-        \includegraphics[height=2.8cm, width=0.235\linewidth, keepaspectratio]{assets/wireframes/08-workspace-mobile-timer.png}\hfill
-        \includegraphics[height=2.8cm, width=0.235\linewidth, keepaspectratio]{assets/wireframes/09-workspace-mobile-lcd.png}\hfill
-        \includegraphics[height=2.8cm, width=0.235\linewidth, keepaspectratio]{assets/wireframes/10-workspace-mobile-room.png}\hfill
-        \includegraphics[height=2.8cm, width=0.235\linewidth, keepaspectratio]{assets/wireframes/11-workspace-mobile-log.png}
+        \includegraphics[height=5.6cm, width=0.235\linewidth, keepaspectratio]{assets/wireframes/08-workspace-mobile-timer.png}\hfill
+        \includegraphics[height=5.6cm, width=0.235\linewidth, keepaspectratio]{assets/wireframes/09-workspace-mobile-lcd.png}\hfill
+        \includegraphics[height=5.6cm, width=0.235\linewidth, keepaspectratio]{assets/wireframes/10-workspace-mobile-room.png}\hfill
+        \includegraphics[height=5.6cm, width=0.235\linewidth, keepaspectratio]{assets/wireframes/11-workspace-mobile-log.png}
         \caption{Giao diện Mobile Web App (4 màn hình, thanh 5 tab ở cạnh đáy)}
         \label{fig:wf_mobile}
     \end{subfigure}
-    \vspace{0.04cm}
+    \vspace{0.08cm}
     \captionof{figure}{Giao diện Cài đặt hệ thống (ID 2, 3, 9, 10) và Giao diện thiết bị di động (Mobile Web App)}
     \label{fig:wf_settings_mobile}
 \end{minipage}
@@ -213,7 +209,7 @@ Hệ thống giao diện được tổ chức theo cấu trúc của Node-RED Da
 \label{tab:comp_settings_mobile}
 \end{center}
 
-\clearpage
+\newpage
 \subsection{Sơ đồ truyền và nhận dữ liệu giữa các thành phần trong hệ thống}
 
 Toàn bộ các luồng xử lý và đường truyền nhận dữ liệu của 13 chức năng được gộp chung vào một sơ đồ duy nhất tại Hình \ref{fig:so_do_hop_nhat_toan_he_thong}. Sơ đồ mô tả chi tiết đường truyền dữ liệu giữa các cảm biến/linh kiện ngoại vi, vi điều khiển ESP32, máy chủ MQTT Mosquitto, hệ thống điều phối Node-RED, cơ sở dữ liệu Supabase Cloud và các dịch vụ cảnh báo (Telegram Bot, Gmail SMTP). Ba luồng xử lý được phân biệt bằng 3 kiểu đường nét tương ứng với phân công công việc của từng thành viên:
@@ -223,9 +219,10 @@ Toàn bộ các luồng xử lý và đường truyền nhận dữ liệu của
     \item \textbf{Đường nét chấm gạch [L3] (La Anh Hào phụ trách):} Luồng hẹn giờ Pomodoro, còi báo, lời nhắc LCD, xác thực bảo mật và SoftAP Wi-Fi (ID 3, 5, 11, 12).
 \end{itemize}
 
+\vspace{0.15cm}
 \begin{center}
 \captionsetup{type=figure}
-\includegraphics[height=19.5cm, width=\textwidth, keepaspectratio]{assets/diagrams/so_do_luong_du_lieu_hop_nhat_doc.png}
+\includegraphics[height=15.2cm, width=\textwidth, keepaspectratio]{assets/diagrams/so_do_luong_du_lieu_hop_nhat_doc.png}
 \captionof{figure}{Sơ đồ truyền và nhận dữ liệu hợp nhất toàn hệ thống Pomodoro Box}
 \label{fig:so_do_hop_nhat_toan_he_thong}
 \end{center}

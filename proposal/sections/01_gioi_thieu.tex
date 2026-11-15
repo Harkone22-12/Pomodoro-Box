@@ -40,7 +40,7 @@ Toàn bộ 13 chức năng của hệ thống được phân loại thành nhóm
 \hline
 \multicolumn{2}{|c|}{\textbf{Thông tin chức năng nâng cao}} \\ \hline
 
-\textbf{4} & \textbf{Module quang trở LM393 (YC2 -- Thiết bị phần cứng):} ESP32 đọc tín hiệu điện áp tương tự từ chân cảm biến qua bộ chuyển đổi ADC1 (chân GPIO34), gửi giá trị lên topic \texttt{study/light}. Node-RED hiển thị mức sáng trên web và phát cảnh báo khi môi trường học thiếu sáng ($<300\text{ lux}$). \\ \hline
+\textbf{4} & \textbf{Module quang trở LM393 (YC2 -- Thiết bị phần cứng):} ESP32 đọc tín hiệu điện áp tương tự từ chân cảm biến qua bộ chuyển đổi ADC1 (chân GPIO34), gửi giá trị lên topic \texttt{study/light}. Nhóm dựa trên dữ liệu trước đây để ước tính chuyển đổi giữa lux và ADC, Node-RED hiển thị mức sáng trên web và phát cảnh báo khi môi trường học thiếu sáng ($<300\text{ lux}$). \\ \hline
 
 \textbf{5} & \textbf{Màn hình LCD 1602 kèm module I2C PCF8574 (YC3 -- Thiết bị phần cứng):} Người dùng nhập nội dung nhắc nhở trên giao diện web; Node-RED gửi chuỗi văn bản qua topic \texttt{study/lcd}. ESP32 nhận dữ liệu qua giao tiếp I2C, hiển thị lời nhắc trên dòng 1 và hiển thị thời gian đếm ngược phiên học trên dòng 2. \\ \hline
 
