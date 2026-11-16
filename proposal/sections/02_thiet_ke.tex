@@ -1,0 +1,294 @@
+\section{Thiết kế}
+
+\subsection{Hình ảnh thiết kế hình dáng 3D của sản phẩm}
+
+Vỏ hộp sản phẩm được thiết kế trên phần mềm Autodesk Fusion 360~\cite{fusion360} và dự kiến chế tạo bằng công nghệ in 3D FDM nhựa PLA. Kích thước tổng thể của vỏ hộp sau lắp nắp là $150 \times 100 \times 50\text{ mm}$ (gồm thân hộp cao $47\text{ mm}$ và nắp hộp dày $3.0\text{ mm}$), độ dày thành và đáy $2.5\text{ mm}$, bo góc ngoài $R6\text{ mm}$. Cấu trúc gồm hai phần: Thân hộp (Bottom Case) và Nắp hộp (Top Cover), liên kết bằng 4 vít M3 bắt vào 4 trụ đỡ ở 4 góc.
+
+Để đảm bảo độ chính xác cho cảm biến môi trường, cảm biến nhiệt ẩm DHT22 được bố trí ở sát cụm 5 khe hút gió tại vách trái, cách xa khoang vi điều khiển ESP32 khoảng $100\text{ mm}$; đồng thời vách phải bố trí 3 khe thoát nhiệt đặt ở vị trí cao nhằm tạo đối lưu tự nhiên, hạn chế nhiệt lượng tỏa ra từ vi điều khiển làm sai lệch số đo. Bảng~\ref{tab:map_3d_chuc_nang} ánh xạ vị trí cơ khí của từng linh kiện trên mô hình 3D với ID chức năng tương ứng, được minh họa trực quan theo từng góc nhìn từ Hình~\ref{fig:3d_front} đến Hình~\ref{fig:3d_dim}.
+
+\begin{table}[H]
+\centering
+\setlength{\tabcolsep}{5pt}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash}p{4.6cm}|>{\raggedright\arraybackslash}X|c|}
+\hline
+\textbf{STT} & \textbf{Vị trí bố trí trên vỏ hộp 3D} & \textbf{Chi tiết khoét lỗ / Gia công cơ khí} & \textbf{ID CN} \\ \hline
+1 & Màn hình LCD 1602 mặt trên & Khoét cửa sổ chữ nhật $73.0 \times 26.0\text{ mm}$ (bo góc $R1$) & \textbf{ID 5} \\ \hline
+2 & Nút nhấn cơ học đổi trạng thái & Khoét lỗ tròn $\varnothing 12.2\text{ mm}$ bắt ren/đai ốc trên nắp (cách mép phải $17\text{ mm}$) & \textbf{ID 6} \\ \hline
+3 & Đèn LED đỏ báo tập trung & Khoét lỗ tròn $\varnothing 6.0\text{ mm}$ kèm đế giữ LED $5\text{ mm}$ & \textbf{ID 6} \\ \hline
+4 & Vùng cảm ứng quẹt thẻ RFID & Khu vực $52 \times 34\text{ mm}$ đánh dấu trên nắp; mạch RC522 dán sát mặt dưới nắp (đọc xuyên nhựa $3\text{ mm}$) & \textbf{ID 2} \\ \hline
+5 & Đầu đón sáng quang trở LM393 & Khoét lỗ tròn $\varnothing 5.6\text{ mm}$ đón ánh sáng trực tiếp từ bàn học & \textbf{ID 4} \\ \hline
+6 & Còi báo âm thanh Active Buzzer & Cụm 19 lỗ tròn thoát âm $\varnothing 2.2\text{ mm}$ bố trí đồng tâm & \textbf{ID 3} \\ \hline
+7 & Khe thông khí DHT22 \& tản nhiệt & 5 khe hút gió $30.0 \times 2.4\text{ mm}$ ở vách trái cho DHT22; 3 khe thoát nhiệt $30.0 \times 2.4\text{ mm}$ đặt cao ở vách phải & \textbf{ID 1} \\ \hline
+8 & Khoang vi điều khiển ESP32 & Cắm trên board đục lỗ hàn mạch $70 \times 50\text{ mm}$ (cắt từ phíp đục lỗ $7 \times 9\text{ cm}$) gắn trên 4 trụ đồng ở đáy hộp & \textbf{ID 1--6, 12} \\ \hline
+9 & Cổng USB \& Jack nguồn DC 5V & Khoét lỗ USB $13.0 \times 9.0\text{ mm}$ thẳng cổng nạp ESP32 và lỗ tròn $\varnothing 8.0\text{ mm}$ lắp Jack DC 5V ở vách sau & Cấp nguồn \\ \hline
+\end{tabularx}
+\caption{Bảng ánh xạ vị trí lắp đặt linh kiện trên vỏ hộp 3D với ID chức năng}
+\label{tab:map_3d_chuc_nang}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth, keepaspectratio]{assets/design_fusion360/hinh_3d_1_ben_ngoai_truoc.png}
+    \caption{Phối cảnh 3D ngoại quan mặt trước và mặt trên vỏ hộp (LCD, RFID, LED, Nút nhấn, Buzzer, Quang trở)}
+    \label{fig:3d_front}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth, keepaspectratio]{assets/design_fusion360/hinh_3d_2_ben_ngoai_sau.png}
+    \caption{Phối cảnh 3D ngoại quan mặt sau và cạnh bên vỏ hộp (Cổng USB, Jack DC 5V, Khe hút gió DHT22)}
+    \label{fig:3d_back}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth, keepaspectratio]{assets/design_fusion360/hinh_3d_3_ben_trong_than_hop.png}
+    \caption{Phối cảnh 3D bố trí linh kiện bên trong thân hộp (Cảm biến DHT22, ESP32 DevKit V1, Jack DC 5V)}
+    \label{fig:3d_inside}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth, keepaspectratio]{assets/design_fusion360/hinh_3d_4_ben_trong_mat_duoi_nap.png}
+    \caption{Phối cảnh 3D bố trí linh kiện gắn dưới mặt nắp hộp (RC522, LCD 1602 I2C, LM393, Buzzer)}
+    \label{fig:3d_under_lid}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth, keepaspectratio]{assets/design_fusion360/hinh_3d_5_tach_nap.png}
+    \caption{Bản vẽ 3D bóc tách lắp ráp nắp và thân hộp (Exploded View)}
+    \label{fig:3d_exploded}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.98\textwidth, keepaspectratio]{assets/design_fusion360/hinh_3d_6_ban_ve_kich_thuoc.png}
+    \caption{Bản vẽ kỹ thuật 2D kích thước tổng thể và tọa độ gia công lỗ khoét vỏ hộp}
+    \label{fig:3d_dim}
+\end{figure}
+
+\subsection{Hình ảnh wireframe cho website quản lý sản phẩm}
+
+Website quản lý sản phẩm được xây dựng theo kiến trúc kết hợp giữa \textbf{máy chủ xử lý luồng/API Node-RED} (tiếp nhận bản tin MQTT, ghi/truy vấn Supabase, cung cấp REST API và WebSocket thời gian thực) với \textbf{giao diện Web UI tự xây dựng} (HTML/CSS/JS tương thích cả máy tính, máy tính bảng và điện thoại). Toàn bộ các thẻ chức năng trên bản vẽ wireframe đều được gắn nhãn định danh nhóm và đánh dấu trực tiếp ID chức năng tương ứng với danh sách đã đăng ký ở Mục 1, được tổng hợp trong Bảng~\ref{tab:map_wireframe_chuc_nang}.
+
+\begin{table}[H]
+\centering
+\setlength{\tabcolsep}{5pt}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash}p{4.3cm}|>{\raggedright\arraybackslash}X|c|}
+\hline
+\textbf{STT} & \textbf{Vùng giao diện trên Web UI} & \textbf{Thành phần hiển thị \& Tác vụ tương tác} & \textbf{ID CN} \\ \hline
+1 & Khối \textit{Góc học lúc này} -- Nhiệt \& Ẩm & Chỉ số nhiệt độ ($^\circ\text{C}$), độ ẩm (\%), nhãn tiện nghi và biểu đồ xu hướng 1 giờ & \textbf{ID 1} \\ \hline
+2 & Khối \textit{Góc học lúc này} -- Mức sáng & Giá trị ADC quang trở ($0 - 4095$), thanh đo mức, vạch ngưỡng $1200$ ($\approx 300\text{ lux}$), nhãn Đủ/Thiếu sáng & \textbf{ID 4} \\ \hline
+3 & Khối \textit{Hẹn giờ nhanh} \& \textit{Hẹn giờ Pomodoro} & Đồng hồ đếm ngược, thanh tiến trình vòng học, bộ chọn chế độ (25p/5p/15p/Tùy chỉnh), xem trước bản tin MQTT, nút Gửi xuống hộp / Dừng & \textbf{ID 3} \\ \hline
+4 & Khối \textit{Màn hình trên hộp} \& \textit{Lời nhắc LCD 16×2} & Mô phỏng 2 dòng 16 ký tự LCD, ô nhập lời nhắc có bộ đếm ký tự, mẫu câu nhanh, nút Gửi lên màn hình & \textbf{ID 5} \\ \hline
+5 & Khối \textit{Phiên quẹt thẻ} \& \textit{Đánh giá sau phiên} & Bộ đếm thời gian học, mã thẻ UID, cảnh báo Telegram ($>60$p), nút mô phỏng quẹt thẻ, 3 nút đánh giá chất lượng tập trung sau phiên & \textbf{ID 2, 6, 9, 13} \\ \hline
+6 & Chỉ báo trạng thái đèn LED tập trung & Nhãn đồng bộ trạng thái đèn LED đỏ GPIO26 trên khối \textit{Phiên quẹt thẻ} và thanh trạng thái thiết bị & \textbf{ID 6} \\ \hline
+7 & Khối \textit{Nhật ký lệnh} \& \textit{Các phiên học} & Bảng sự kiện MQTT/Telegram theo thời gian thực và bảng danh sách phiên học lưu trên Supabase & \textbf{ID 7, 13} \\ \hline
+8 & Biểu đồ \textit{24 giờ}, \textit{Lịch 30 ngày} \& \textit{Năng suất theo giờ} & Đồ thị đường kép nhiệt/ẩm 24h từ bảng \texttt{sensor\_data}, bản đồ nhiệt 30 ngày và biểu đồ cột theo giờ & \textbf{ID 7, 8, 13} \\ \hline
+9 & Khối \textit{Điều kiện học tốt nhất} & Bảng khuyến nghị từ mô hình phân tích: Thời lượng lý tưởng, Khung giờ vàng, Nhiệt độ, Độ ẩm, Ánh sáng, Tỷ lệ dự đoán & \textbf{ID 13} \\ \hline
+10 & Trang \textit{Cài đặt} (4 tab chức năng) & Cấu hình Tài khoản, Chu kỳ Pomodoro, Ngưỡng Telegram/Email/Môi trường, Trạng thái ESP32/SoftAP \& Danh sách thẻ RFID & \textbf{ID 1--4, 9--12} \\ \hline
+11 & Trang \textit{Đăng nhập} \& \textit{Tạo tài khoản} & Biểu mẫu đăng nhập/tạo tài khoản (băm bcrypt) và thanh chân trang hiển thị trạng thái kết nối thực tế của hộp & \textbf{ID 1, 4, 11} \\ \hline
+\end{tabularx}
+\caption{Bảng ánh xạ các vùng thiết kế Wireframe Website với ID chức năng}
+\label{tab:map_wireframe_chuc_nang}
+\end{table}
+
+\subsubsection{Chi tiết các màn hình giao diện và cấu trúc thành phần Web UI kết hợp Node-RED}
+
+Hệ thống giao diện Web UI tự xây dựng được tổ chức theo cấu trúc: \textbf{Trang giao diện $\rightarrow$ Khối chức năng (\texttt{grp\_*}) $\rightarrow$ Thành phần tương tác \& API Node-RED}. Để bảo đảm quan sát rõ từng nhãn ID chức năng trên mỗi thẻ giao diện, từng màn hình Desktop và từng cặp màn hình di động được tách riêng theo hàng từ Hình~\ref{fig:wf_overview} đến Hình~\ref{fig:wf_mobile_row2}, đối chiếu với bảng đặc tả cấu trúc tương ứng trong Bảng~\ref{tab:comp_workspace}, Bảng~\ref{tab:comp_auth} và Bảng~\ref{tab:comp_settings_mobile}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth, keepaspectratio]{assets/wireframes/03-tong-quan-desktop.png}
+    \caption{Giao diện Web UI trang Tổng quan trên Desktop (\texttt{grp\_quick\_timer}, \texttt{grp\_room\_monitor}, \texttt{grp\_rfid\_session}, \texttt{grp\_lcd\_preview}, \texttt{grp\_stats\_productivity} -- ID 1--7, 9)}
+    \label{fig:wf_overview}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=11.0cm, width=0.88\textwidth, keepaspectratio]{assets/wireframes/04-phien-hoc-desktop.png}
+    \caption{Giao diện Web UI trang Phiên học trên Desktop (\texttt{grp\_pomodoro\_ctrl}, \texttt{grp\_lcd\_composer}, \texttt{grp\_command\_feed} -- điều khiển Timer, LCD và nhật ký MQTT -- ID 3, 5, 7)}
+    \label{fig:wf_session}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=9.8cm, width=0.88\textwidth, keepaspectratio]{assets/wireframes/16-danh-gia-desktop.png}
+    \caption{Khối đánh giá mức độ tập trung sau khi kết thúc phiên quẹt thẻ RFID trên Desktop (\texttt{grp\_rfid\_session} -- ID 2, 6, 13)}
+    \label{fig:wf_rating}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.94\textwidth, height=16.5cm, keepaspectratio]{assets/wireframes/05-lich-su-desktop.png}
+    \caption{Giao diện Web UI trang Lịch sử phân tích dữ liệu, đồ thị 24h và khối khuyến nghị mô hình (\texttt{grp\_habit\_analysis}, \texttt{grp\_chart\_timeseries}, \texttt{grp\_ai\_insights}, \texttt{grp\_sessions\_table} -- ID 7, 8, 13)}
+    \label{fig:wf_history}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4.7cm}|>{\raggedright\arraybackslash}p{3.9cm}|>{\raggedright\arraybackslash}X|c|}
+\hline
+\textbf{Khối giao diện} & \textbf{Kênh Node-RED} & \textbf{Chức năng hiển thị \& Tác vụ tương tác} & \textbf{ID} \\ \hline
+\textbf{Hẹn giờ nhanh / Pomodoro} \newline {\small(\texttt{grp\_quick\_timer}, \newline \texttt{grp\_pomodoro\_ctrl})} & REST API \newline {\small\texttt{POST /api/timer}} $\rightarrow$ \texttt{study/timer} & Đồng hồ đếm ngược, thanh tiến trình, bộ chọn chế độ (25p, 5p, 15p, Tùy chỉnh 1--120p), xem trước payload JSON, nút Gửi xuống hộp / Dừng & \textbf{ID 3} \\ \hline
+\textbf{Lời nhắc trên LCD 16×2} \newline {\small(\texttt{grp\_lcd\_preview}, \newline \texttt{grp\_lcd\_composer})} & REST API \newline {\small\texttt{POST /api/lcd}} $\rightarrow$ \texttt{study/lcd} & Mô phỏng màn hình LCD $16 \times 2$, ô nhập chuỗi văn bản (tự lọc dấu tiếng Việt, tối đa 32 ký tự), bộ câu mẫu nhanh, nút Gửi lên màn hình & \textbf{ID 5} \\ \hline
+\textbf{Góc học lúc này} \newline {\small(\texttt{grp\_room\_monitor})} & WebSocket đẩy từ \newline {\small\texttt{study/dht}, \texttt{study/light}} & Hiển thị nhiệt độ ($^\circ\text{C}$), độ ẩm (\%) kèm sparkline 1 giờ từ DHT22; giá trị ADC quang trở ($0-4095$), thanh chia mức và vạch ngưỡng thiếu sáng $1200$ ($\approx 300\text{ lux}$) & \textbf{ID 1, 4} \\ \hline
+\textbf{Phiên quẹt thẻ} \newline {\small(\texttt{grp\_rfid\_session})} & WebSocket đẩy từ \newline {\small\texttt{study/rfid}, \texttt{study/focus}}, Telegram & Hiển thị mã thẻ UID, thời gian học hiện tại, trạng thái LED đỏ trên hộp, khung cảnh báo nhắc nghỉ Telegram khi vượt $60$ phút và nút mô phỏng quẹt thẻ & \textbf{ID 2, 6, 9} \\ \hline
+\textbf{Nhật ký lệnh \& Hôm nay} \newline {\small(\texttt{grp\_command\_feed}, \newline \texttt{grp\_stats\_productivity})} & REST API {\small\texttt{GET /api/logs}} truy vấn Supabase & Bảng ghi nhận các bản tin MQTT và thông báo Telegram theo thời gian thực; thống kê số vòng hoàn thành trong ngày và 7 ngày gần nhất & \textbf{ID 7} \\ \hline
+\textbf{Lịch học, Đồ thị 24h \& Phiên} \newline {\small(\texttt{grp\_habit\_analysis}, \newline \texttt{grp\_chart\_timeseries}, \newline \texttt{grp\_sessions\_table})} & REST API {\small\texttt{GET /api/history}} truy vấn Supabase & Bộ lọc 7/30/90 ngày, bản đồ nhiệt 30 ngày, biểu đồ cột năng suất theo giờ, đồ thị đường kép nhiệt/ẩm 24 giờ từ bảng \texttt{sensor\_data} và bảng chi tiết các phiên học & \textbf{ID 7, 8, 13} \\ \hline
+\textbf{Điều kiện học tốt nhất} \newline {\small(\texttt{grp\_ai\_insights})} & REST API {\small\texttt{GET /api/insights}} (Node-RED AI) & Hiển thị 3 nhóm thông số trích xuất từ mô hình phân tích: Thời lượng lý tưởng, Khung giờ vàng, Điều kiện nhiệt độ -- độ ẩm -- ánh sáng và tỷ lệ hoàn thành dự đoán & \textbf{ID 13} \\ \hline
+\end{tabularx}
+\caption{Cấu trúc thành phần giao diện Tổng quan, Phiên học và Lịch sử (Desktop)}
+\label{tab:comp_workspace}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.90\textwidth, keepaspectratio]{assets/wireframes/01-dang-nhap-desktop.png}
+    \caption{Giao diện Web UI trang Đăng nhập kèm chân trang trạng thái trạm trên Desktop (\texttt{grp\_auth\_form}, \texttt{grp\_auth\_footer} -- ID 1, 4, 11)}
+    \label{fig:wf_signin}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.90\textwidth, keepaspectratio]{assets/wireframes/02-dang-ky-desktop.png}
+    \caption{Giao diện Web UI trang Tạo tài khoản kèm kiểm tra độ mạnh mật khẩu trên Desktop (\texttt{grp\_auth\_form}, \texttt{grp\_auth\_footer} -- ID 1, 4, 11)}
+    \label{fig:wf_register}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4.2cm}|>{\raggedright\arraybackslash}p{4.3cm}|>{\raggedright\arraybackslash}X|c|}
+\hline
+\textbf{Khối giao diện} & \textbf{Kênh Node-RED} & \textbf{Chức năng hiển thị \& Tác vụ tương tác} & \textbf{ID} \\ \hline
+\textbf{Chân trang trạng thái} \newline {\small(\texttt{grp\_auth\_footer})} & WebSocket / API trạng thái trạm & Hiển thị kết nối trực tuyến của hộp cùng thông số nhanh nhiệt độ, độ ẩm và mức sáng hiện tại & \textbf{ID 1, 4, 11} \\ \hline
+\textbf{Biểu mẫu tài khoản} \newline {\small(\texttt{grp\_auth\_form})} & REST API {\small\texttt{POST}} \newline {\small\texttt{/api/auth/login}}, \newline {\small\texttt{/api/auth/register}} & Ô nhập Họ tên, Email sinh viên, Mật khẩu ($\ge 8$ ký tự, đo độ mạnh), công tắc ghi nhớ phiên; Node-RED băm mật khẩu \texttt{bcrypt} và lưu bảng \texttt{users} trên Supabase & \textbf{ID 11} \\ \hline
+\textbf{Đánh giá sau phiên} \newline {\small(\texttt{grp\_rfid\_session})} & REST API {\small\texttt{POST}} \newline {\small\texttt{/api/sessions/rate}} & Xuất hiện ngay trong khối Phiên quẹt thẻ khi vừa kết thúc phiên; 3 nút chọn mức tập trung (\textbf{Mất tập trung}, \textbf{Tạm ổn}, \textbf{Tập trung tốt}) hoặc \textbf{Bỏ qua} & \textbf{ID 2, 6, 13} \\ \hline
+\end{tabularx}
+\caption{Cấu trúc thành phần giao diện Xác thực và Đánh giá sau phiên học}
+\label{tab:comp_auth}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.90\textwidth, keepaspectratio]{assets/wireframes/09-cai-dat-tai-khoan-desktop.png}
+    \caption{Giao diện Trang Cài đặt hệ thống -- Tab Tài khoản, Hồ sơ và Bảo mật (\texttt{grp\_conf\_account} -- ID 11)}
+    \label{fig:wf_set_acc}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.90\textwidth, keepaspectratio]{assets/wireframes/06-cai-dat-pomodoro-desktop.png}
+    \caption{Giao diện Trang Cài đặt hệ thống -- Tab Pomodoro cấu hình thời lượng và chu kỳ (\texttt{grp\_conf\_pomodoro} -- ID 3)}
+    \label{fig:wf_set_pomo}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.90\textwidth, keepaspectratio]{assets/wireframes/07-cai-dat-canh-bao-desktop.png}
+    \caption{Giao diện Trang Cài đặt hệ thống -- Tab Cảnh báo Telegram, Email và ngưỡng phòng (\texttt{grp\_conf\_alerts} -- ID 1, 4, 9, 10)}
+    \label{fig:wf_set_alert}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.90\textwidth, keepaspectratio]{assets/wireframes/08-cai-dat-thiet-bi-desktop.png}
+    \caption{Giao diện Trang Cài đặt hệ thống -- Tab Thiết bị ESP32, SoftAP và danh sách thẻ RFID (\texttt{grp\_conf\_devices} -- ID 2, 12)}
+    \label{fig:wf_set_dev}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.46\textwidth}
+        \centering
+        \includegraphics[height=10.5cm, width=\linewidth, keepaspectratio]{assets/wireframes/12-tong-quan-mobile-vp.png}
+        \caption{Trang Tổng quan trên di động (ID 1, 3, 4)}
+        \label{fig:wf_mob_overview}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.46\textwidth}
+        \centering
+        \includegraphics[height=10.5cm, width=\linewidth, keepaspectratio]{assets/wireframes/13-phien-hoc-mobile-vp.png}
+        \caption{Trang Phiên học trên di động (ID 3, 5)}
+        \label{fig:wf_mob_session}
+    \end{subfigure}
+    \caption{Giao diện Responsive trên thiết bị di động -- Hàng 1: Tổng quan và Phiên học}
+    \label{fig:wf_mobile_row1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.46\textwidth}
+        \centering
+        \includegraphics[height=10.5cm, width=\linewidth, keepaspectratio]{assets/wireframes/14-lich-su-mobile-vp.png}
+        \caption{Trang Lịch sử trên di động (ID 7)}
+        \label{fig:wf_mob_history}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.46\textwidth}
+        \centering
+        \includegraphics[height=10.5cm, width=\linewidth, keepaspectratio]{assets/wireframes/15-cai-dat-mobile-vp.png}
+        \caption{Trang Cài đặt Thiết bị \& thẻ trên di động (ID 2, 12)}
+        \label{fig:wf_mob_settings}
+    \end{subfigure}
+    \caption{Giao diện Responsive trên thiết bị di động -- Hàng 2: Lịch sử và Cài đặt}
+    \label{fig:wf_mobile_row2}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4.3cm}|>{\raggedright\arraybackslash}p{4.5cm}|>{\raggedright\arraybackslash}X|c|}
+\hline
+\textbf{Khối giao diện} & \textbf{Kênh Node-RED} & \textbf{Chức năng hiển thị \& Tác vụ tương tác} & \textbf{ID} \\ \hline
+\textbf{Hồ sơ \& Bảo mật} \newline {\small(\texttt{grp\_conf\_account})} & REST API \newline {\small\texttt{/api/account}} & Cập nhật Họ tên, Email, đổi mật khẩu (xác thực mật khẩu cũ và băm lại bằng \texttt{bcrypt}), nút Đăng xuất & \textbf{ID 11} \\ \hline
+\textbf{Chu kỳ Pomodoro} \newline {\small(\texttt{grp\_conf\_pomodoro})} & REST API \newline {\small\texttt{/api/settings/pomodoro}} & Thanh trượt điều chỉnh Tập trung ($1-120\text{p}$), Nghỉ ngắn ($1-30\text{p}$), Nghỉ dài ($5-60\text{p}$), số vòng nghỉ dài ($2-8$ vòng) và khung xem trước chu kỳ & \textbf{ID 3} \\ \hline
+\textbf{Cảnh báo \& Môi trường} \newline {\small(\texttt{grp\_conf\_alerts})} & REST API \newline {\small\texttt{/api/settings/alerts}} & Công tắc bật/tắt Telegram, ô nhập Chat ID, thanh trượt ngưỡng ngồi lâu ($10-240\text{p}$, mặc định $60\text{p}$); công tắc Email tổng kết tuần qua Gmail SMTP; ngưỡng nhiệt độ \& thiếu sáng & \textbf{ID 1, 4, 9, 10} \\ \hline
+\textbf{Thiết bị và thẻ} \newline {\small(\texttt{grp\_conf\_devices})} & REST API \newline {\small\texttt{/api/devices}, \texttt{/api/cards}} & Trạng thái bo mạch ESP32, kết nối MQTT, hướng dẫn truy cập SoftAP \texttt{Pomodoro-Box-Setup} (\texttt{192.168.4.1}); thêm/xóa danh sách thẻ RFID được phép & \textbf{ID 2, 12} \\ \hline
+\textbf{Giao diện di động} \newline (Mobile Web App) & Đồng bộ API \& WebSocket chung & Bố cục 1 cột tối ưu màn hình hẹp ($\le 760\text{ px}$); thanh 4 tab chuyển trang cố định ở cạnh đáy (\textit{Tổng quan, Phiên học, Lịch sử, Cài đặt}) & \textbf{ID 1--13} \\ \hline
+\end{tabularx}
+\caption{Cấu trúc thành phần giao diện Cài đặt hệ thống và Giao diện thiết bị di động}
+\label{tab:comp_settings_mobile}
+\end{table}
+
+\newpage
+\subsection{Sơ đồ truyền và nhận dữ liệu giữa các thành phần trong hệ thống}
+
+Toàn bộ các luồng xử lý và đường truyền nhận dữ liệu của 13 chức năng (gồm phần cứng ngoại vi, vi điều khiển ESP32, MQTT Broker, máy chủ luồng/API Node-RED, Web UI tự xây dựng, cơ sở dữ liệu Supabase và dịch vụ thông báo) được thể hiện thống nhất trên sơ đồ tại Hình~\ref{fig:so_do_hop_nhat_toan_he_thong}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=20.2cm, width=\textwidth, keepaspectratio]{assets/diagrams/so_do_luong_du_lieu_hop_nhat_doc.png}
+    \caption{Sơ đồ truyền và nhận dữ liệu hợp nhất toàn hệ thống Pomodoro Box}
+    \label{fig:so_do_hop_nhat_toan_he_thong}
+\end{figure}
+
+\subsubsection{Đặc tả 3 luồng truyền nhận dữ liệu trên sơ đồ}
+
+\begin{itemize}[leftmargin=0.8cm, noitemsep, topsep=2pt]
+    \item \textbf{Luồng 1 (Phụ trách: Trần Nguyễn Tuấn Minh -- Đường nét liền):}
+    \begin{itemize}[leftmargin=0.5cm, noitemsep]
+        \item \textit{Phần cứng $\rightarrow$ ESP32:} Cảm biến DHT22 truyền dữ liệu nhiệt độ và độ ẩm qua chân GPIO4 (giao thức single-bus một dây, chu kỳ 5 giây, khung dữ liệu 40 bit có 8 bit checksum).
+        \item \textit{ESP32 $\rightarrow$ MQTT Broker $\rightarrow$ Node-RED:} ESP32 xuất bản bản tin JSON lên topic \texttt{study/dht} (QoS 0); Node-RED đăng ký nhận topic này.
+        \item \textit{Node-RED $\leftrightarrow$ Web UI tự xây:} Node-RED đẩy thông số vi khí hậu theo thời gian thực qua WebSocket lên khối \textit{Góc học lúc này} trên Web UI và cung cấp REST API cho trang \textit{Lịch sử} (ID 1, 8).
+        \item \textit{Node-RED $\leftrightarrow$ Supabase Cloud:} Định kỳ mỗi 60 giây, Node-RED ghi nhận chuỗi thời gian vào bảng \texttt{sensor\_data} qua truy vấn SQL và cung cấp dữ liệu cho mô hình phân tích điều kiện học tập tối ưu (ID 7, 13).
+    \end{itemize}
+    
+    \item \textbf{Luồng 2 (Phụ trách: Nguyễn Quốc Dương -- Đường nét đứt):}
+    \begin{itemize}[leftmargin=0.5cm, noitemsep]
+        \item \textit{Phần cứng $\leftrightarrow$ ESP32:} Module quang trở LM393 truyền điện áp tương tự qua bộ chuyển đổi ADC1 chân GPIO34 (ID 4); đầu đọc RC522 giao tiếp qua bus SPI đọc UID thẻ RF 13.56 MHz (ID 2); nút nhấn cơ kích hoạt ngắt tại GPIO27 và điều khiển đèn LED đỏ báo tập trung tại GPIO26 (ID 6).
+        \item \textit{ESP32 $\rightarrow$ MQTT Broker $\rightarrow$ Node-RED:} ESP32 xuất bản mức sáng lên \texttt{study/light}, mã thẻ UID lên \texttt{study/rfid} và trạng thái bận lên \texttt{study/focus}.
+        \item \textit{Node-RED $\leftrightarrow$ Supabase, Web UI \& Dịch vụ ngoại vi:} Node-RED đối soát mã thẻ và ghi nhận phiên học vào bảng \texttt{study\_sessions} trên Supabase, đẩy trạng thái phiên và mức sáng qua WebSocket/API lên Web UI (ID 2, 4, 6); gửi tin nhắn cảnh báo qua Telegram Bot API khi học liên tục quá 60 phút (ID 9); và thực hiện luồng gửi email tổng kết tuần qua Gmail SMTP lúc 20:00 tối Chủ nhật như phương án bổ sung/dự phòng (ID 10).
+    \end{itemize}
+    
+    \item \textbf{Luồng 3 (Phụ trách: La Anh Hào -- Đường nét chấm gạch):}
+    \begin{itemize}[leftmargin=0.5cm, noitemsep]
+        \item \textit{Người dùng $\leftrightarrow$ Web UI $\leftrightarrow$ Node-RED:} Người dùng đăng ký/đăng nhập trên Web UI thông qua REST API Node-RED với mật khẩu băm \texttt{bcrypt} lưu trong bảng \texttt{users} trên Supabase (ID 11); thiết lập số phút Pomodoro và nhập lời nhắc trên Web UI.
+        \item \textit{Node-RED $\rightarrow$ MQTT Broker:} Node-RED tiếp nhận lệnh từ REST API của Web UI và xuất bản lệnh đặt giờ xuống topic \texttt{study/timer} (QoS 1) cùng nội dung văn bản xuống topic \texttt{study/lcd}.
+        \item \textit{MQTT Broker $\rightarrow$ ESP32 $\rightarrow$ Phần cứng:} ESP32 nhận lệnh qua MQTT, hiển thị lời nhắc trên dòng 1 và thời gian đếm ngược trên dòng 2 của màn hình LCD 1602 qua giao tiếp I2C PCF8574 (ID 5); kích hoạt chân GPIO25 phát chuỗi bíp còi Active Buzzer 5V khi hết phiên học (ID 3).
+        \item \textit{Cứu hộ SoftAP trực tiếp trên ESP32:} Khi không tìm thấy mạng Wi-Fi đã lưu, ESP32 tự khởi tạo Web Server tự xây dựng ở chế độ SoftAP (\texttt{Pomodoro-Box-Setup}, IP \texttt{192.168.4.1}) để người dùng cấu hình lại Wi-Fi trực tiếp bằng trình duyệt điện thoại (ID 12).
+    \end{itemize}
+\end{itemize}

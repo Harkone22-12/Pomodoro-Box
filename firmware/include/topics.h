@@ -7,6 +7,7 @@
 #define TOPIC_DHT   "study/dht"    // minh {"temp": number, "hum": number}
 #define TOPIC_LIGHT "study/light"  // duong {"raw": number, "level": string}
 #define TOPIC_RFID  "study/rfid"   // duong {"uid": string, "action": "start"|"stop"}
+#define TOPIC_FOCUS "study/focus"  // duong {"status": "busy"|"idle"}
 
 // web -> ESP32
 #define TOPIC_TIMER "study/timer"  // hao {"minutes": number}

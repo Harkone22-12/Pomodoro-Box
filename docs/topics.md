@@ -11,10 +11,11 @@ All payloads are JSON objects encoded as UTF-8.
 | `study/dht` | ESP32 → web | ESP32 `dht_flow` | backend `dht.flow.ts` | `{"temp": number, "hum": number}` | minh |
 | `study/light` | ESP32 → web | ESP32 `light_flow` | backend `light.flow.ts` | `{"raw": number, "level": string}` | duong |
 | `study/rfid` | ESP32 → web | ESP32 `rfid_flow` | backend `rfid.flow.ts` | `{"uid": string, "action": "start" \| "stop"}` | duong |
+| `study/focus` | ESP32 → web | ESP32 `focus_flow` | backend `focus.flow.ts` | `{"status": "busy" \| "idle"}` | duong |
 | `study/timer` | web → ESP32 | backend `timer.flow.ts` | ESP32 `timer_flow` | `{"minutes": number}` | hao |
 | `study/lcd` | web → ESP32 | backend `lcd.flow.ts` | ESP32 `lcd_flow` | `{"text": string}` | hao |
 
-The focus flow (button → red LED) runs only on the ESP32 and has no topic.
+The focus flow (button → red LED) runs on the ESP32 and publishes `study/focus` to sync status with the web dashboard.
 
 ## Field notes
 
