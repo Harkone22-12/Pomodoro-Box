@@ -232,7 +232,7 @@ extrude_all(
 
 # 2c. Circular Through-Holes on Lid:
 # - 4 corner M3 holes Ø3.4 at (7,7), (143,7), (7,93), (143,93)
-# - ID 4 Button Ø12.2 at (133, 76)
+# - ID 6 Button cap hole Ø12.2 at (133, 76) (3D-printed cap over a 6x6 mm tactile switch)
 # - ID 4 Red LED Ø6.0 at (110, 76)
 # - ID 2 Photoresistor LDR Ø5.6 at (134, 18)
 # - ID 3 Buzzer 19 holes Ø2.2 at (122, 48): 1 center + 6 on R4 + 12 on R8
@@ -293,6 +293,18 @@ for lx, ly in lcd_standoffs:
     sk_lcd_post.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_lcd_post, lx, ly, 0), mm(2.75))
 extrude_all(
     comp_top, sk_lcd_post, 40.0, 47.0,
+    adsk.fusion.FeatureOperations.JoinFeatureOperation,
+    target_bodies=[body_lid]
+)
+
+# 2g. 2 Underside Posts for the push-button perfboard piece (Ø5, Z = 40.5..47 mm, M2 screws)
+btn_posts = [(133.0, 65.5), (133.0, 86.5)]
+sk_btn_post = comp_top.sketches.add(comp_top.xYConstructionPlane)
+sk_btn_post.name = "Sk_2_Cot_Do_Phip_Nut_Nhan"
+for px_, py_ in btn_posts:
+    sk_btn_post.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_post, px_, py_, 0), mm(2.5))
+extrude_all(
+    comp_top, sk_btn_post, 40.5, 47.0,
     adsk.fusion.FeatureOperations.JoinFeatureOperation,
     target_bodies=[body_lid]
 )
@@ -511,33 +523,63 @@ extrude_all(
     name="Quang_Tro_Cam_Bien", color=col_perfboard
 )
 
-# 4e. ID 4: Push Button at (133, 76) & Red LED 5mm at (110, 76)
-sk_btn_body = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
-sk_btn_body.name = "Sk_Nut_Nhan_Than_Ren"
-sk_btn_body.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_body, 133.0, 76.0, 0), mm(5.9))
+# 4e. ID 6: Push Button at (133, 76) & Red LED 5mm at (110, 76)
+# The button is a 6x6 mm tactile switch (4.5 mm tall, through-hole) soldered on a small
+# perfboard piece (12 x 28 mm) screwed to 2 lid posts. A 3D-printed cap rides in the
+# Ø12.2 lid hole and presses the switch. Z stack (mm): perfboard 38.9..40.5,
+# switch body 40.5..44.0, plunger 44.0..45.0, cap flange 45.0..47.0, cap stem 47.0..52.0.
+sk_btn_pcb = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
+sk_btn_pcb.name = "Sk_Nut_Nhan_Phip_12x28"
+sk_btn_pcb.sketchCurves.sketchLines.addTwoPointRectangle(sk_pt(sk_btn_pcb, 127.0, 62.0, 0), sk_pt(sk_btn_pcb, 139.0, 90.0, 0))
 extrude_all(
-    comp_top_parts, sk_btn_body, 32.0, 50.0,
+    comp_top_parts, sk_btn_pcb, 38.9, 40.5,
     adsk.fusion.FeatureOperations.NewBodyFeatureOperation,
-    name="Nut_Nhan_Than_Duoi", color=col_dark_gray
+    name="Nut_Nhan_Phip_Do", color=col_perfboard
 )
 
-sk_btn_bezel = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
-sk_btn_bezel.name = "Sk_Nut_Nhan_Vien_Va_De_LED"
-sk_btn_bezel.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_bezel, 133.0, 76.0, 0), mm(7.4))
-sk_btn_bezel.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_bezel, 110.0, 76.0, 0), mm(3.8))
+sk_btn_body = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
+sk_btn_body.name = "Sk_Nut_Nhan_6x6_Than"
+sk_btn_body.sketchCurves.sketchLines.addTwoPointRectangle(sk_pt(sk_btn_body, 130.0, 73.0, 0), sk_pt(sk_btn_body, 136.0, 79.0, 0))
 extrude_all(
-    comp_top_parts, sk_btn_bezel, 50.0, 51.3,
+    comp_top_parts, sk_btn_body, 40.5, 44.0,
     adsk.fusion.FeatureOperations.NewBodyFeatureOperation,
-    name="Vien_Giu_Nut_Va_LED", color=col_silver
+    name="Nut_Nhan_6x6_Than", color=col_dark_gray
+)
+
+sk_btn_plunger = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
+sk_btn_plunger.name = "Sk_Nut_Nhan_6x6_Truc"
+sk_btn_plunger.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_plunger, 133.0, 76.0, 0), mm(1.75))
+extrude_all(
+    comp_top_parts, sk_btn_plunger, 44.0, 45.0,
+    adsk.fusion.FeatureOperations.NewBodyFeatureOperation,
+    name="Nut_Nhan_6x6_Truc", color=col_dark_gray
+)
+
+sk_btn_flange = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
+sk_btn_flange.name = "Sk_Nut_Nhan_Mu_Vanh_D14"
+sk_btn_flange.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_flange, 133.0, 76.0, 0), mm(7.0))
+extrude_all(
+    comp_top_parts, sk_btn_flange, 45.0, 47.0,
+    adsk.fusion.FeatureOperations.NewBodyFeatureOperation,
+    name="Nut_Nhan_Mu_Vanh_Giu", color=col_red_accent
 )
 
 sk_btn_cap = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
-sk_btn_cap.name = "Sk_Nut_Nhan_Mu_Do"
-sk_btn_cap.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_cap, 133.0, 76.0, 0), mm(5.5))
+sk_btn_cap.name = "Sk_Nut_Nhan_Mu_Do_D11_8"
+sk_btn_cap.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_cap, 133.0, 76.0, 0), mm(5.9))
 extrude_all(
-    comp_top_parts, sk_btn_cap, 51.3, 54.5,
+    comp_top_parts, sk_btn_cap, 47.0, 52.0,
     adsk.fusion.FeatureOperations.NewBodyFeatureOperation,
-    name="Nut_Nhan_Do_ID4", color=col_red_accent
+    name="Nut_Nhan_Mu_In3D_ID6", color=col_red_accent
+)
+
+sk_led_bezel = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
+sk_led_bezel.name = "Sk_De_Giu_LED"
+sk_led_bezel.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_led_bezel, 110.0, 76.0, 0), mm(3.8))
+extrude_all(
+    comp_top_parts, sk_led_bezel, 50.0, 51.3,
+    adsk.fusion.FeatureOperations.NewBodyFeatureOperation,
+    name="Vien_Giu_LED", color=col_silver
 )
 
 sk_led_dome = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
