@@ -284,7 +284,7 @@ vp.fit()
         "lcd": [52.0, 68.0, 47.1],
         "rfid": [34.0, 27.0, 50.15],
         "led": [110.0, 76.0, 54.5],
-        "btn": [133.0, 76.0, 54.0],
+        "btn": [133.0, 76.0, 52.0],
         "buzzer": [122.0, 48.0, 50.0],
         "vent_right": [150.0, 72.0, 35.5],
         "ldr": [134.0, 18.0, 50.0],
@@ -400,7 +400,7 @@ vp.fit()
         "ldr": [120.0, 18.0, 39.0],
         "buzzer": [111.0, 48.0, 36.0],
         "led": [110.0, 76.0, 42.5],
-        "btn": [133.0, 76.0, 35.0],
+        "btn": [133.0, 76.0, 38.9],
     }
     raw_4, _, p2d_4 = capture_scene_with_points("view4_under_lid", setup_4, pts_4)
     canvas_4, tp_4 = clean_background_and_pad(raw_4, p2d_4, out_w=2200, out_h=1060, scale_render=1.12)
@@ -410,7 +410,7 @@ vp.fit()
         {"side": "right", "box_y": 355, "id_text": "ID 4", "label": "Module quang trở LM393", "color": "#fb8c00", "target": tp_4["ldr"]},
         {"side": "right", "box_y": 450, "id_text": "ID 3", "label": "Buzzer chủ động", "color": "#1e88e5", "target": tp_4["buzzer"]},
         {"side": "right", "box_y": 695, "id_text": "ID 6", "label": "LED đỏ 5 mm + đế giữ", "color": "#8e24aa", "target": tp_4["led"]},
-        {"side": "right", "box_y": 780, "id_text": "ID 6", "label": "Nút nhấn (thân ren + đai ốc)", "color": "#8e24aa", "target": tp_4["btn"]},
+        {"side": "right", "box_y": 780, "id_text": "ID 6", "label": "Nút nhấn 6×6 + mũ nút in 3D", "color": "#8e24aa", "target": tp_4["btn"]},
     ]
     img_4 = draw_callouts(canvas_4, callouts_4)
     save_both(img_4, "hinh_3d_4_ben_trong_mat_duoi_nap.png")
@@ -464,7 +464,7 @@ for i in range(root.bRepBodies.count):
         "lcd": [52.0, 68.0, 46.8 + dz_explode],
         "rc522": [52.0, 26.0, 45.2 + dz_explode],
         "led": [110.0, 76.0, 54.5 + dz_explode],
-        "btn": [133.0, 76.0, 54.0 + dz_explode],
+        "btn": [133.0, 76.0, 52.0 + dz_explode],
         "buzzer": [122.0, 48.0, 42.0 + dz_explode],
         "ldr": [120.0, 18.0, 39.8 + dz_explode],
         "dht22": [6.5, 67.0, 20.0],
@@ -683,7 +683,7 @@ for i in range(root.bRepBodies.count):
     # Panel (a) badges & dimensions
     draw_badge(224, 235, "ID 5", "LCD 1602 (cửa sổ 73 × 26)", "#6d4c41")
     draw_badge(615, 235, "ID 6", "Ø6 LED", "#8e24aa")
-    draw_badge(860, 235, "ID 6", "Ø12.2 nút nhấn", "#8e24aa")
+    draw_badge(860, 235, "ID 6", "Ø12.2 mũ nút nhấn", "#8e24aa")
     draw_badge(775, 550, "ID 3", "19 lỗ Ø2.2", "#1e88e5")
     draw_badge(685, 680, "ID 4", "Ø5.6 quang trở", "#fb8c00")
     draw_badge(240, 720, "ID 2", "Vùng quẹt thẻ RC522 (52 × 34)", "#43a047")

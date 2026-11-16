@@ -10,7 +10,7 @@ Phương pháp Pomodoro chia thời gian làm việc thành các phiên tập tr
     \item Người xung quanh không biết sinh viên đang trong phiên tập trung nên dễ làm gián đoạn.
 \end{itemize}
 
-\textbf{Trạm học tập Pomodoro (Pomodoro Box)} là một thiết bị phần cứng IoT để bàn độc lập, kết hợp máy chủ xử lý luồng/API Node-RED~\cite{nodered2024}, giao diện Web UI tự xây dựng và cơ sở dữ liệu Supabase Cloud~\cite{supabase2024}. Thiết bị thực hiện đếm giờ phiên học trực tiếp trên vi điều khiển ESP32~\cite{espressif2023}, giao tiếp qua giao thức MQTT~\cite{mqttspec}, hiển thị thời gian và lời nhắc trên màn hình LCD, phát chuông báo kết thúc bằng còi buzzer và tích hợp các cảm biến giám sát môi trường bàn học với chi phí linh kiện tối ưu (khoảng 380.630 VNĐ), phù hợp cho sinh viên và người tự học triển khai thực tế.
+\textbf{Trạm học tập Pomodoro (Pomodoro Box)} là một thiết bị phần cứng IoT để bàn độc lập, kết hợp máy chủ xử lý luồng/API Node-RED~\cite{nodered2024}, giao diện Web UI tự xây dựng và cơ sở dữ liệu Supabase Cloud~\cite{supabase2024}. Thiết bị thực hiện đếm giờ phiên học trực tiếp trên vi điều khiển ESP32~\cite{espressif2023}, giao tiếp qua giao thức MQTT~\cite{mqttspec}, hiển thị thời gian và lời nhắc trên màn hình LCD, phát chuông báo kết thúc bằng còi buzzer và tích hợp các cảm biến giám sát môi trường bàn học với chi phí linh kiện tối ưu (khoảng 422.630 VNĐ), phù hợp cho sinh viên và người tự học triển khai thực tế.
 
 \textbf{Ý nghĩa thực tế của sản phẩm:}
 \begin{itemize}[leftmargin=1.2cm, noitemsep, topsep=2pt]
@@ -45,7 +45,7 @@ Toàn bộ 13 chức năng của hệ thống được phân loại thành nhóm
 \hline
 \multicolumn{3}{|c|}{\textbf{Thông tin chức năng nâng cao (Yêu cầu nâng cao)}} \\ \hline
 
-\textbf{4} & \textbf{YC2 -- Thiết bị phần cứng:} \newline Module quang trở LM393 \newline \textit{(Input -- Dương)} & ESP32 đọc điện áp tương tự từ chân cảm biến qua bộ chuyển đổi ADC1 (chân GPIO34), xuất bản lên topic \texttt{study/light}. Dựa trên thực nghiệm hiệu chỉnh, hệ thống ước tính ngưỡng $<300\text{ lux}$ tương ứng mức ADC $<1200$; Node-RED xử lý và cập nhật mức sáng cùng cảnh báo thiếu sáng lên Web UI. \\ \hline
+\textbf{4} & \textbf{YC2 -- Thiết bị phần cứng:} \newline Module quang trở LM393 \newline \textit{(Input -- Dương)} & ESP32 đọc điện áp tương tự từ chân cảm biến qua bộ chuyển đổi ADC1 (chân GPIO34), xuất bản lên topic \texttt{study/light}. Ngưỡng thiếu sáng $<300\text{ lux}$ dự kiến tương ứng mức ADC $<1200$ và sẽ được nhóm hiệu chỉnh lại bằng thực nghiệm khi có linh kiện; Node-RED xử lý và cập nhật mức sáng cùng cảnh báo thiếu sáng lên Web UI. \\ \hline
 
 \textbf{5} & \textbf{YC3 -- Thiết bị phần cứng:} \newline Màn hình LCD 1602 kèm module I2C PCF8574 \newline \textit{(Output -- Hào)} & Người dùng nhập lời nhắc trên Web UI tự xây; giao diện gọi REST API gửi chuỗi văn bản qua Node-RED xuống topic \texttt{study/lcd} (chuẩn hóa bỏ dấu tiếng Việt). ESP32 nhận bản tin, hiển thị lời nhắc trên dòng 1 và thời gian đếm ngược trên dòng 2 qua bus I2C. \\ \hline
 

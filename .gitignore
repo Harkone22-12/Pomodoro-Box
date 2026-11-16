@@ -22,6 +22,7 @@ graphify-out/
 Thumbs.db
 *.log
 
+graphify-out/
 # LaTeX build artifacts
 *.aux
 *.out
