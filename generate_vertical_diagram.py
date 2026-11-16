@@ -67,9 +67,9 @@ def draw_multi_arrows(xs, y1, y2, styles, label):
 ax.text(4.83, 15.55, "1. LINH KIỆN NGOẠI VI & PHẦN CỨNG BÀN HỌC", ha='center', va='center', fontsize=13.8, fontweight='bold', color='#111827', zorder=3)
 
 hw_nodes = [
-    ("DHT22 (ID 1)", "GPIO4 (1-Wire)", 0.35, 1.68),
+    ("DHT22 (ID 1)", "GPIO4 (single-bus)", 0.35, 1.68),
     ("LM393 (ID 4)", "GPIO34 (ADC1)", 2.17, 1.68),
-    ("RC522 (ID 2)", "SPI 13.56MHz", 3.99, 1.68),
+    ("RC522 (ID 2)", "SPI, RF 13.56 MHz", 3.99, 1.68),
     ("Nút & LED (ID 6)", "GPIO27 & 26", 5.81, 1.68),
     ("Còi & LCD (ID 3, 5)", "GPIO25 & I2C", 7.63, 1.68)
 ]
@@ -91,7 +91,7 @@ ax.text(4.83, 10.95 + 2.4 - 0.28, "2. TRẠM HỌC TẬP ESP32 (FreeRTOS Dual-Co
 ax.plot([0.65, 9.0], [12.7, 12.7], color='#888888', lw=0.9, zorder=3)
 
 esp_subs = [
-    ("[L1] dht_flow", "Đọc mẫu DHT22 5s\nChecksum 40-bit", 0.55, 2.05),
+    ("[L1] dht_flow", "Đọc mẫu DHT22 5s\nKhung 40 bit, checksum 8 bit", 0.55, 2.05),
     ("[L2] light, rfid, focus", "ADC1, ngắt nút & LED\nQuét UID RFID (ID 2,4,6)", 2.75, 2.20),
     ("[L3] timer, lcd_flow", "Bộ đếm ngược Pomodoro\nBuzzer & LCD I2C (ID 3,5)", 5.10, 2.15),
     ("SoftAP Wi-Fi (ID 12)", "Web Server tự xây dựng\nAP IP: 192.168.4.1", 7.40, 1.75)
