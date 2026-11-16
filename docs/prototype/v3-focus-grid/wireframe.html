@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trạm học tập · Wireframe v3 "Focus Grid"</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Fira+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Wireframe v3 "Focus Grid".
+   Tokens from UI/UX Pro Max: style "Minimalism & Swiss" + "Data-Dense Dashboard",
+   palette "Timer & Pomodoro" (focus red, break green) on neutral slate,
+   font pairing "Dashboard Data" (Fira Sans + Fira Code). */
+:root{
+  --bg:#F8FAFC; --card:#FFFFFF; --soft:#F1F5F9; --soft2:#E2E8F0;
+  --ink:#0F172A; --muted:#475569; --line:#CBD5E1; --line-strong:#94A3B8;
+  --accent:#DC2626; --accent-dark:#B91C1C; --on-accent:#FFFFFF; --accent-soft:#FEF2F2;
+  --ok:#047857; --ok-soft:#ECFDF5;
+  --r:10px; --r-sm:6px;
+  --sans:"Fira Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"Fira Code",Consolas,"Courier New",monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--sans)}
+h1,h2,h3,p{margin:0}
+a{color:inherit}
+.ico{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.xs{font-size:12px}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+
+/* ---------- controls ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border:1.5px solid var(--ink);border-radius:var(--r-sm);background:var(--card);color:var(--ink);font:600 15px/1 var(--sans);text-decoration:none;cursor:pointer;transition:background-color .15s ease}
+.btn:hover{background:var(--soft)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.primary:hover{background:var(--accent-dark)}
+.btn.ghost{border-color:transparent;padding:0 8px;text-decoration:underline;text-underline-offset:3px}
+.btn.block{width:100%}
+.btn.lg{min-height:52px;font-size:16px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.tag{display:inline-block;padding:2px 7px;border:1px dashed var(--line-strong);border-radius:4px;font:500 12px/1.4 var(--mono);color:var(--muted);white-space:nowrap}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-weight:600;font-size:13px;background:var(--ok-soft);color:var(--ok);border:1px solid var(--ok)}
+.dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
+.seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:var(--r-sm);overflow:hidden;flex-wrap:wrap}
+.seg>*{min-height:44px;padding:0 14px;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--card);border:0;border-right:1px solid var(--line);font:500 14px/1.2 var(--sans);color:var(--ink);text-decoration:none;cursor:pointer;flex:1 1 auto;text-align:center}
+.seg>*:last-child{border-right:0}
+.seg>[aria-pressed=true],.seg>[aria-selected=true],.seg>[aria-current=page]{background:var(--ink);color:#fff;font-weight:600}
+.field{display:grid;gap:6px;margin-bottom:16px}
+.field label,.lab{font-weight:600;font-size:14px}
+.input{display:flex;align-items:center;gap:8px;min-height:46px;padding:0 12px;border:1.5px solid var(--line-strong);border-radius:var(--r-sm);background:var(--card);color:var(--muted);font-size:15px}
+.input.filled{color:var(--ink)}
+.input .ico{color:var(--muted)}
+.help{font-size:13px;color:var(--muted)}
+.check{display:flex;align-items:center;gap:10px;min-height:44px;font-size:15px}
+.box{width:20px;height:20px;border:1.5px solid var(--ink);border-radius:4px;display:grid;place-items:center;font-size:13px;line-height:1;flex:none}
+.switch{width:46px;height:26px;border-radius:999px;border:1.5px solid var(--ink);background:var(--card);position:relative;flex:none}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:var(--ink)}
+.switch.on{background:var(--ink)}
+.switch.on::after{left:auto;right:3px;background:#fff}
+.slider{padding:14px 0;border-bottom:1px solid var(--soft2)}
+.slider:last-of-type{border-bottom:0}
+.slider .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.slider .val{font:600 18px/1 var(--mono)}
+.track{position:relative;height:6px;border-radius:3px;background:var(--soft2);margin:16px 9px 8px}
+.track i{position:absolute;inset:0 auto 0 0;border-radius:3px;background:var(--ink)}
+.track b{position:absolute;top:50%;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;background:var(--card);border:2px solid var(--ink)}
+.slider .ends{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.setrow{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--soft2)}
+.setrow:last-child{border-bottom:0}
+.note{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:var(--r-sm);background:var(--soft);font-size:14px;color:var(--muted)}
+.note .ico{width:18px;height:18px;margin-top:2px}
+.alert{display:flex;gap:10px;align-items:flex-start;padding:12px;border-radius:var(--r-sm);border:1px solid var(--accent);border-left-width:4px;background:var(--accent-soft);font-size:14px}
+.alert .ico{color:var(--accent-dark);margin-top:1px}
+.code{display:block;padding:10px 12px;border:1px dashed var(--line-strong);border-radius:var(--r-sm);background:var(--soft);font:500 13px/1.5 var(--mono);overflow-wrap:anywhere}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:36px;padding:0 12px;display:inline-flex;align-items:center;border:1px solid var(--line-strong);border-radius:999px;background:var(--card);font-size:14px;color:var(--ink)}
+
+/* ---------- app shell ---------- */
+.side{position:fixed;inset:0 auto 0 0;width:248px;background:var(--card);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:20px 16px;gap:20px;overflow:auto}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px}
+.logo{width:36px;height:36px;border-radius:8px;background:var(--accent);color:#fff;display:grid;place-items:center;flex:none}
+.nav{display:grid;gap:4px}
+.nav a{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border-radius:var(--r-sm);text-decoration:none;font-weight:500;color:var(--muted)}
+.nav a:hover{background:var(--soft)}
+.nav a[aria-current=page]{background:var(--ink);color:#fff;font-weight:600}
+.tele{margin-top:auto;border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.tele h3{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.tele dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:6px 8px;font-size:14px}
+.tele dt{color:var(--muted)} .tele dd{margin:0;font-weight:600;text-align:right}
+.me{display:flex;align-items:center;gap:10px;padding-top:16px;border-top:1px solid var(--line)}
+.avatar{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--ink);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+.main{margin-left:248px;padding:28px 32px 40px;max-width:1440px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.top h1{font-size:26px;line-height:1.2}
+.appbar,.tabbar{display:none}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.card>header{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2{font-size:16px;font-weight:600}
+.meta{display:flex;gap:6px;flex-wrap:wrap}
+.push{margin-top:auto}
+
+/* ---------- widgets ---------- */
+.clock{font:600 72px/1 var(--mono);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.clock small{font-size:20px;font-weight:500;color:var(--muted);letter-spacing:0}
+.bar{height:10px;border-radius:5px;background:var(--soft2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.rounds{display:flex;gap:6px;align-items:center}
+.rounds i{width:22px;height:8px;border-radius:4px;background:var(--soft2)}
+.rounds i.done{background:var(--ink)} .rounds i.now{background:var(--accent)}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;flex:1}
+.tile{border:1px solid var(--line);border-radius:var(--r-sm);padding:12px;display:grid;gap:6px;min-width:0;align-content:start}
+.tile .k{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);font-weight:500}
+.tile .v{font:600 28px/1.1 var(--mono)}
+.tile .v small{font-size:14px;font-weight:500;color:var(--muted)}
+.spark{width:100%;height:36px;display:block}
+.meter{display:grid;grid-template-columns:repeat(8,1fr);gap:3px;position:relative;margin-top:4px}
+.meter i{height:12px;border-radius:2px;background:var(--soft2)}
+.meter i.on{background:var(--ink)}
+.meter::after{content:"";position:absolute;left:29.3%;top:-4px;bottom:-4px;border-left:2px dashed var(--accent)}
+.lcd{background:#E7ECDD;border:2px solid var(--ink);border-radius:var(--r-sm);padding:12px;display:grid;gap:4px;justify-content:center}
+.lcd div{display:grid;grid-template-columns:repeat(16,1fr);gap:2px}
+.lcd span{width:18px;height:26px;background:#D5DCC6;display:grid;place-items:center;font:500 15px/1 var(--mono);color:#1F2A14}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{padding:10px;border-radius:var(--r-sm);background:var(--soft)}
+.stat b{display:block;font:600 22px/1.2 var(--mono)}
+.stat span{font-size:13px;color:var(--muted)}
+.bars{display:flex;align-items:flex-end;gap:6px;height:120px}
+.bars .b{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;gap:4px;min-width:0}
+.bars .b i{width:100%;border-radius:3px 3px 0 0;background:var(--line-strong)}
+.bars .b.hi i{background:var(--accent)}
+.bars .b span{font-size:12px;color:var(--muted);height:16px;white-space:nowrap}
+.bars.tall{height:170px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted);align-items:center}
+.legend i{display:inline-block;width:22px;height:0;border-top:2.5px solid var(--accent);vertical-align:middle;margin-right:6px}
+.legend i.dash{border-top:2.5px dashed var(--ink)}
+.legend i.sq{width:12px;height:12px;border:0;border-radius:2px;background:var(--accent)}
+.chart{position:relative;border-left:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong);background:repeating-linear-gradient(to bottom,transparent 0 24.5%,var(--soft2) 24.5% 25%)}
+.chart svg{display:block;width:100%;height:200px}
+.xaxis{display:flex;justify-content:space-between;font:400 12px/1 var(--mono);color:var(--muted);margin-top:6px}
+.heat{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.heat span{aspect-ratio:1.5;border-radius:4px;display:grid;place-items:center;font:500 12px/1 var(--mono)}
+.heat .hd{aspect-ratio:auto;color:var(--muted);font-family:var(--sans);padding-bottom:2px}
+.l0{background:var(--soft);color:var(--muted)}.l1{background:#CBD5E1}.l2{background:#94A3B8}.l3{background:#475569;color:#fff}.l4{background:#0F172A;color:#fff}
+.scale{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--muted)}
+.scale i{width:16px;height:12px;border-radius:2px}
+.kpi b{font:600 32px/1.1 var(--mono)}
+.kpi b small{font-size:15px;font-weight:500;color:var(--muted)}
+.kv{display:grid;gap:0}
+.kv>div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--soft2);font-size:15px}
+.kv>div:last-child{border-bottom:0}
+.kv b{font-weight:600;text-align:right}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 10px;border-bottom:1.5px solid var(--ink);white-space:nowrap}
+td{padding:10px;border-bottom:1px solid var(--soft2);vertical-align:top}
+tr:last-child td{border-bottom:0}
+.rate{display:grid;gap:10px;padding-top:14px;border-top:1px solid var(--soft2)}
+.rate-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.rate-btn{display:grid;justify-items:center;gap:6px;min-height:72px;padding:10px 4px;border:1.5px solid var(--ink);border-radius:var(--r-sm);background:var(--card);color:var(--ink);font:600 14px/1.2 var(--sans);text-align:center;cursor:pointer;transition:background-color .15s ease}
+.rate-btn:hover{background:var(--soft)}
+.rate-btn .ico{width:26px;height:26px}
+.strength{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.strength i{height:6px;border-radius:3px;background:var(--soft2)} .strength i.on{background:var(--ink)}
+
+/* ---------- auth ---------- */
+.auth{min-height:100vh;display:flex;flex-direction:column}
+.auth-in{flex:1;display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;max-width:1180px;width:100%;margin:0 auto;padding:48px 40px}
+.hero{display:grid;gap:24px}
+.hero h1{font-size:40px;line-height:1.15;letter-spacing:-.01em}
+.hero .clock{font-size:112px}
+.cycle{display:flex;gap:3px}
+.cycle i{height:26px;border-radius:3px;background:var(--ink)}
+.cycle i.brk{background:repeating-linear-gradient(135deg,var(--line) 0 3px,var(--card) 3px 6px);border:1px solid var(--line-strong)}
+.cycle i.long{background:var(--ok)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;list-style:none;margin:0;padding:0}
+.steps li{border:1px solid var(--line);border-radius:var(--r-sm);padding:12px;background:var(--card);font-size:14px}
+.steps b{display:block;font:600 13px/1 var(--mono);color:var(--accent-dark);margin-bottom:6px}
+.form{background:var(--card);border:1.5px solid var(--ink);border-radius:var(--r);padding:32px}
+.form h2{font-size:24px;margin-bottom:4px}
+.form .seg{width:100%;margin:20px 0}
+.foot{border-top:1px solid var(--line);background:var(--card);padding:14px 40px;display:flex;gap:24px;flex-wrap:wrap;justify-content:center;font-size:14px;color:var(--muted)}
+.foot b{color:var(--ink)}
+.live{display:inline-flex;align-items:center;gap:6px;color:var(--ok);font-weight:600}
+
+/* ---------- tablet: icon rail ---------- */
+@media (max-width:1100px){
+  .side{width:88px;padding:20px 12px;align-items:center}
+  .side .lbl,.tele,.me .who{display:none}
+  .nav{width:100%}.nav a{justify-content:center;padding:0;min-height:52px}
+  .me{margin-top:auto;border-top:0}
+  .main{margin-left:88px;padding:24px}
+  .t6{grid-column:span 6}.t12{grid-column:span 12}
+  .auth-in{gap:32px;padding:32px 24px}
+  .hero .clock{font-size:88px}
+}
+/* ---------- phone: one column, bottom tabs ---------- */
+@media (max-width:760px){
+  .side{display:none}
+  .appbar{display:flex;position:sticky;top:0;z-index:5;align-items:center;justify-content:space-between;gap:12px;height:56px;padding:0 16px;background:var(--card);border-bottom:1px solid var(--line)}
+  .appbar strong{font-size:17px}
+  .tabbar{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;inset:auto 0 0 0;z-index:5;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:60px;font-size:12px;font-weight:500;color:var(--muted);text-decoration:none}
+  .tabbar a[aria-current=page]{color:var(--ink);font-weight:700;box-shadow:inset 0 3px 0 var(--accent)}
+  .main{margin:0;padding:16px 16px 88px}
+  .top h1{display:none}.top{margin-bottom:12px}
+  .grid{gap:12px}
+  .grid>*{grid-column:span 12}
+  .grid>.m6{grid-column:span 6}
+  .card{padding:16px}
+  .clock{font-size:60px}
+  .tiles{grid-template-columns:1fr 1fr}.tiles .wide{grid-column:span 2}
+  .lcd span{width:16px;height:24px;font-size:14px}
+  .lcd{padding:10px 6px}
+  .btn.mfull{width:100%}
+  .seg{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .seg.three{grid-template-columns:repeat(3,1fr)}
+  .seg>*{border-bottom:1px solid var(--line)}
+  table.stack thead{display:none}
+  table.stack tr{display:block;padding:10px 0;border-bottom:1px solid var(--soft2)}
+  table.stack tr:last-child{border-bottom:0}
+  table.stack td{display:flex;justify-content:space-between;gap:12px;padding:3px 0;border:0;text-align:right}
+  table.stack td::before{content:attr(data-l);color:var(--muted);font-size:13px;text-align:left;flex:none}
+  .auth-in{grid-template-columns:1fr;gap:24px;padding:20px 16px}
+  .hero{order:2;gap:16px}.hero h1{font-size:24px}.hero .clock{font-size:64px}
+  .steps{grid-template-columns:1fr}
+  .form{padding:20px}
+  .foot{padding:12px 16px;gap:8px 16px;justify-content:flex-start}
+  .savebar{position:sticky;bottom:72px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// Static wireframe: every number is sample data. Open with ?screen=<name>[&tab=<name>].
+const q = new URLSearchParams(location.search);
+const SCREEN = q.get('screen') || 'tong-quan';
+const TAB = q.get('tab') || 'pomodoro';
+const STATE = q.get('state') || '';   // "danh-gia": the session has just ended and the one-tap rating is showing
+
+const P = {
+  home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+  timer:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/>',
+  history:'<path d="M5 20V10M11 20V4M17 20v-8M2 20h20"/>',
+  settings:'<path d="M4 6h8M16 6h4M4 12h2M10 12h10M4 18h10M18 18h2"/><circle cx="14" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="18" r="2"/>',
+  temp:'<path d="M10 14V5a2 2 0 0 1 4 0v9a4 4 0 1 1-4 0z"/>',
+  drop:'<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/>',
+  send:'<path d="M4 12l16-8-6 16-3-7z"/>',
+  stop:'<rect x="6" y="6" width="12" height="12" rx="1"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+  mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 8l9 6 9-6"/>',
+  lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+  eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  download:'<path d="M12 4v11M7 11l5 5 5-5M4 20h16"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',
+  warn:'<path d="M12 3l10 18H2zM12 10v5M12 18v.5"/>',
+  logout:'<path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9"/>',
+  save:'<path d="M5 4h11l3 3v13H5zM8 4v5h7V4M8 20v-6h8v6"/>',
+  faceLow:'<circle cx="12" cy="12" r="9"/><path d="M8 16s1.5-2 4-2 4 2 4 2M9 9.5h.01M15 9.5h.01"/>',
+  faceMid:'<circle cx="12" cy="12" r="9"/><path d="M8 15h8M9 9.5h.01M15 9.5h.01"/>',
+  faceHigh:'<circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9.5h.01M15 9.5h.01"/>'
+};
+const ico = n => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${P[n]}</svg>`;
+const LOGO = ico("timer");
+const tags = (...t) => `<span class="meta">${t.map(x => `<span class="tag">${x}</span>`).join('')}</span>`;
+const card = (cls, title, meta, body) => `<section class="card ${cls}"><header><h2>${title}</h2>${meta}</header>${body}</section>`;
+const NAV = [['tong-quan','Tổng quan','home'],['phien-hoc','Phiên học','timer'],['lich-su','Lịch sử','history'],['cai-dat','Cài đặt','settings']];
+const link = (s, extra = '') => `?screen=${s}${extra}`;
+
+function spark(vals){
+  const min = Math.min(...vals), max = Math.max(...vals), n = vals.length - 1;
+  const pts = vals.map((v, i) => `${(i / n * 100).toFixed(1)},${(30 - (v - min) / (max - min || 1) * 26).toFixed(1)}`).join(' ');
+  return `<svg class="spark" viewBox="0 0 100 34" preserveAspectRatio="none" role="img" aria-label="Xu hướng 1 giờ"><polyline points="${pts}" fill="none" stroke="#0F172A" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>`;
+}
+function bars(data, opt = {}){
+  const max = Math.max(...data.map(d => d[1]));
+  return `<div class="bars ${opt.cls || ''}" role="img" aria-label="${opt.label || ''}">` + data.map(d =>
+    `<div class="b ${d[2] ? 'hi' : ''}"><i style="height:${Math.max(3, d[1] / max * 100)}%"></i><span>${d[0]}</span></div>`).join('') + '</div>';
+}
+function lcd(text){
+  const rows = [text.slice(0, 16).padEnd(16), text.slice(16, 32).padEnd(16)];
+  return `<div class="lcd" role="img" aria-label="LCD 16x2: ${text}">` + rows.map(r => '<div>' + [...r].map(c => `<span>${c === ' ' ? '&nbsp;' : c}</span>`).join('') + '</div>').join('') + '</div>';
+}
+function slider(label, val, unit, min, max, hint){
+  const pct = (val - min) / (max - min) * 100;
+  return `<div class="slider"><div class="top"><div><div class="lab">${label}</div>${hint ? `<div class="help">${hint}</div>` : ''}</div><span class="val">${val}<span class="small muted"> ${unit}</span></span></div>
+  <div class="track" role="slider" aria-label="${label}" aria-valuemin="${min}" aria-valuemax="${max}" aria-valuenow="${val}" tabindex="0"><i style="width:${pct}%"></i><b style="left:${pct}%"></b></div>
+  <div class="ends"><span>${min}</span><span>${max}</span></div></div>`;
+}
+const setrow = (title, help, on) => `<div class="setrow"><div><div class="lab">${title}</div><div class="help">${help}</div></div><span class="switch ${on ? 'on' : ''}" role="switch" aria-checked="${!!on}" aria-label="${title}" tabindex="0"></span></div>`;
+
+/* ---------- shell ---------- */
+function shell(cur, title, sub, tools, body){
+  const nav = NAV.map(([s, l, i]) => `<a href="${link(s)}" ${s === cur ? 'aria-current="page"' : ''} title="${l}">${ico(i)}<span class="lbl">${l}</span></a>`).join('');
+  return `
+  <aside class="side">
+    <div class="brand"><span class="logo">${LOGO}</span><span class="lbl">Trạm học tập</span></div>
+    <nav class="nav" aria-label="Điều hướng chính">${nav}</nav>
+    <div class="tele"><h3>Hộp lúc này <span class="live"><span class="dot"></span>Đang kết nối</span></h3>
+      <dl><dt>Nhiệt độ</dt><dd class="mono">29,5 °C</dd><dt>Độ ẩm</dt><dd class="mono">70 %</dd><dt>Mức sáng</dt><dd>Đủ sáng</dd><dt>Thẻ</dt><dd>Đang học</dd><dt>MQTT cuối</dt><dd class="mono">2 giây</dd></dl></div>
+    <div class="me"><span class="avatar">LH</span><div class="who"><div class="lab">La Anh Hào</div><div class="xs muted">Sinh viên</div></div></div>
+  </aside>
+  <header class="appbar"><strong>${title}</strong><span class="live small"><span class="dot"></span>Hộp đang kết nối</span></header>
+  <main class="main">
+    <div class="top"><div><h1>${title}</h1><p class="muted small">${sub}</p></div>${tools || ''}</div>
+    ${body}
+  </main>
+  <nav class="tabbar" aria-label="Điều hướng chính">${NAV.map(([s, l, i]) => `<a href="${link(s)}" ${s === cur ? 'aria-current="page"' : ''}>${ico(i)}${l}</a>`).join('')}</nav>`;
+}
+
+/* ---------- auth ---------- */
+function auth(reg){
+  const cyc = [[25,''],[5,'brk'],[25,''],[5,'brk'],[25,''],[5,'brk'],[25,''],[15,'long']].map(([m, c]) => `<i class="${c}" style="flex:${m}" title="${m} phút"></i>`).join('');
+  const form = reg ? `
+    <div class="field"><label>Họ và tên</label><div class="input filled">${ico('user')}La Anh Hào</div></div>
+    <div class="field"><label>Email sinh viên</label><div class="input filled">${ico('mail')}ban@student.hcmus.edu.vn</div></div>
+    <div class="field"><label>Mật khẩu</label><div class="input filled">${ico('lock')}<span style="flex:1" class="mono">••••••••••</span>${ico('eye')}</div>
+      <div class="strength" role="img" aria-label="Độ mạnh mật khẩu: 3 trên 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+      <div class="help">Độ mạnh: <b>Khá</b> · tối thiểu 8 ký tự, thêm ký hiệu để mạnh hơn</div></div>
+    <div class="field"><label>Nhập lại mật khẩu</label><div class="input filled">${ico('lock')}<span class="mono">••••••••••</span></div></div>
+    <button class="btn primary block lg">Tạo tài khoản</button>` : `
+    <div class="field"><label>Email sinh viên</label><div class="input">${ico('mail')}ban@student.hcmus.edu.vn</div><div class="help">Kiểm tra định dạng ngay khi rời ô nhập</div></div>
+    <div class="field"><label>Mật khẩu</label><div class="input">${ico('lock')}<span style="flex:1">Tối thiểu 8 ký tự</span>${ico('eye')}</div></div>
+    <div class="row" style="justify-content:space-between;margin-bottom:16px"><span class="check"><span class="box">✓</span>Ghi nhớ đăng nhập</span><a href="#" class="small">Quên mật khẩu?</a></div>
+    <button class="btn primary block lg">Đăng nhập</button>`;
+  return `<div class="auth"><div class="auth-in">
+    <section class="hero">
+      <div class="brand"><span class="logo">${LOGO}</span>Trạm học tập</div>
+      <h1>Học sâu, nghỉ đúng lúc.</h1>
+      <div class="clock" aria-label="25 phút">25:00</div>
+      <div><div class="cycle" role="img" aria-label="Chu kỳ: 4 vòng học 25 phút, 3 lần nghỉ 5 phút, 1 lần nghỉ dài 15 phút">${cyc}</div>
+        <div class="legend" style="margin-top:8px"><span>■ Học 25p × 4</span><span>▨ Nghỉ ngắn 5p × 3</span><span style="color:var(--ok)">■ Nghỉ dài 15p</span></div></div>
+      <ol class="steps"><li><b>01</b>Đặt giờ trên web</li><li><b>02</b>Quẹt thẻ lên hộp</li><li><b>03</b>Xem thống kê</li></ol>
+    </section>
+    <section class="form">
+      <header class="row" style="justify-content:space-between"><h2>${reg ? 'Tạo tài khoản' : 'Chào mừng trở lại'}</h2>${tags('grp_auth_form', 'ID 11')}</header>
+      <p class="muted small">${reg ? 'Dùng email sinh viên để lưu lịch sử học.' : 'Đăng nhập để điều khiển hộp trên bàn học.'}</p>
+      <div class="seg" role="tablist"><a href="${link('dang-nhap')}" role="tab" aria-selected="${!reg}">Đăng nhập</a><a href="${link('dang-ky')}" role="tab" aria-selected="${!!reg}">Tạo tài khoản</a></div>
+      ${form}
+      <p class="help" style="margin-top:12px;text-align:center">Mật khẩu được băm bằng bcrypt trước khi lưu.</p>
+    </section></div>
+    <footer class="foot"><span class="live"><span class="dot"></span>Hộp đang kết nối</span><span>Nhiệt độ <b class="mono">29,4 °C</b></span><span>Độ ẩm <b class="mono">70 %</b></span><span>Ánh sáng <b>Đủ sáng</b></span><span class="tag">grp_auth_footer</span></footer>
+  </div>`;
+}
+
+/* ---------- shared cards ---------- */
+const timerCore = `
+  <div class="row" style="justify-content:space-between"><span class="badge" style="background:var(--accent-soft);color:var(--accent-dark);border-color:var(--accent)"><span class="dot"></span>Tập trung</span>
+    <span class="rounds" role="img" aria-label="Vòng 3 trên 4"><i class="done"></i><i class="done"></i><i class="now"></i><i></i><span class="small muted">&nbsp;Vòng 3/4</span></span></div>
+  <div><div class="clock">18:37 <small>/ 25:00</small></div></div>
+  <div class="bar" role="progressbar" aria-valuenow="26" aria-valuemin="0" aria-valuemax="100" aria-label="Tiến độ vòng"><i style="width:26%"></i></div>`;
+const timerBtns = `<div class="row"><button class="btn primary mfull">${ico('send')}Gửi xuống hộp</button><button class="btn mfull">${ico('stop')}Dừng</button></div>`;
+
+/* ---------- Tổng quan ---------- */
+function overview(){
+  const body = `<div class="grid">
+  ${card('s5 t12', 'Hẹn giờ nhanh', tags('grp_quick_timer', 'ID 3'), `${timerCore}
+    <p class="small muted">Sau vòng 4 sẽ nghỉ dài 15 phút.</p>${timerBtns}
+    <a class="btn ghost push" href="${link('phien-hoc')}" style="align-self:flex-start">Chỉnh phiên học →</a>`)}
+  ${card('s7 t12', 'Góc học lúc này', tags('grp_room_monitor', 'ID 1', 'ID 4'), `
+    <div class="tiles">
+      <div class="tile"><span class="k">${ico('temp')}Nhiệt độ</span><span class="v">29,5<small> °C</small></span><span class="small"><b>Hơi ấm</b></span>${spark([28.6,28.8,28.7,29,29.1,29,29.3,29.4,29.3,29.5])}<span class="xs muted">1 giờ qua · DHT22</span></div>
+      <div class="tile"><span class="k">${ico('drop')}Độ ẩm</span><span class="v">70<small> %</small></span><span class="small"><b>Bình thường</b></span>${spark([72,71,71,70,69,70,70,71,70,70])}<span class="xs muted">1 giờ qua · DHT22</span></div>
+      <div class="tile wide"><span class="k">${ico('sun')}Mức sáng</span><span class="v">2106<small> / 4095</small></span><span class="small"><b>Đủ sáng</b></span>
+        <div class="meter" role="img" aria-label="Mức sáng 2106 trên 4095, ngưỡng thiếu sáng 1200"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
+        <span class="xs muted">Vạch đứt: ngưỡng thiếu sáng 1200</span></div>
+    </div>
+    <div class="note">${ico('info')}<span>Phòng đang hơi ấm. Bật quạt để giữ <b>26 – 28 °C</b>, khoảng nhiệt độ học tốt nhất.</span></div>`)}
+  ${STATE === 'danh-gia'
+    ? card('s4 t6', 'Phiên quẹt thẻ', tags('grp_rfid_session', 'ID 2', 'mới'), `
+    <div class="row" style="justify-content:space-between"><span class="badge" style="background:var(--soft);color:var(--muted);border-color:var(--line-strong)"><span class="dot"></span>Đã kết thúc</span><span class="xs muted">LED đỏ trên hộp đã tắt</span></div>
+    <div><div class="mono" style="font-size:40px;font-weight:600;line-height:1.1">0:57:02</div><div class="small muted">Thẻ <span class="mono">A1B2C3D4</span> · 20:43 → 21:40 · 2 vòng</div></div>
+    <div class="rate" role="group" aria-label="Đánh giá phiên học vừa xong">
+      <div><div class="lab">Phiên vừa rồi thế nào?</div><div class="help">Chạm một lần là lưu, không cần bấm gửi.</div></div>
+      <div class="rate-opts"><button class="rate-btn">${ico('faceLow')}Mất tập trung</button><button class="rate-btn">${ico('faceMid')}Tạm ổn</button><button class="rate-btn">${ico('faceHigh')}Tập trung tốt</button></div>
+      <a class="btn ghost" href="${link('tong-quan')}" style="justify-self:start">Bỏ qua</a>
+    </div>`)
+    : card('s4 t6', 'Phiên quẹt thẻ', tags('grp_rfid_session', 'ID 2', 'ID 6', 'ID 9'), `
+    <div class="row" style="justify-content:space-between"><span class="badge"><span class="dot"></span>Đang học</span><span class="xs muted">LED đỏ trên hộp đang bật</span></div>
+    <div><div class="mono" style="font-size:40px;font-weight:600;line-height:1.1">0:56:23</div><div class="small muted">Thẻ <span class="mono">A1B2C3D4</span> · bắt đầu 20:43</div></div>
+    <div class="alert" role="status">${ico('warn')}<span><b>Đã 56 phút chưa nghỉ.</b> Đã nhắc qua Telegram lúc 21:39.</span></div>
+    <a class="btn push" href="${link('tong-quan', '&state=danh-gia')}">Mô phỏng quẹt thẻ để kết thúc</a>`)}
+  ${card('s4 t6', 'Màn hình trên hộp', tags('grp_lcd_preview', 'ID 5'), `
+    ${lcd('On tap chuong 3')}
+    <p class="small muted">LCD 1602 đang hiện lời nhắc gần nhất gửi từ web.</p>
+    <a class="btn ghost push" href="${link('phien-hoc')}" style="align-self:flex-start">Đổi lời nhắc →</a>`)}
+  ${card('s4 t12', 'Hôm nay và 7 ngày', tags('grp_stats_productivity'), `
+    <div class="stats"><div class="stat"><b>2</b><span>Vòng xong</span></div><div class="stat"><b>50p</b><span>Tập trung</span></div><div class="stat"><b>7</b><span>Ngày liên tiếp</span></div></div>
+    ${bars([['T2',4],['T3',5],['T4',3],['T5',6],['T6',4],['T7',2],['CN',2,1]], {label:'Số vòng hoàn thành 7 ngày'})}
+    <div class="legend"><span><i class="sq"></i>Hôm nay</span><span>Số vòng Pomodoro mỗi ngày</span></div>`)}
+  </div>`;
+  return shell('tong-quan', 'Tổng quan', 'Chủ nhật, 15/11 · bàn học của bạn theo thời gian thực', '', body);
+}
+
+/* ---------- Phiên học ---------- */
+function session(){
+  const log = [['21:39:02','Telegram','Nhắc nghỉ: đã 56 phút','Đã gửi'],['21:20:41','study/timer','{"minutes":25}','Hộp đã nhận'],['21:20:05','study/lcd','{"text":"On tap chuong 3"}','Hộp đã nhận'],['20:43:17','study/rfid','{"uid":"A1B2C3D4","action":"start"}','Từ hộp'],['20:42:50','study/timer','{"minutes":5}','Hộp đã nhận']];
+  const body = `<div class="grid">
+  ${card('s7 t12', 'Hẹn giờ Pomodoro', tags('grp_pomodoro_ctrl', 'ID 3'), `
+    <div class="seg" role="group" aria-label="Chế độ"><button aria-pressed="true">Tập trung 25p</button><button aria-pressed="false">Nghỉ ngắn 5p</button><button aria-pressed="false">Nghỉ dài 15p</button><button aria-pressed="false">Tùy chỉnh 1–120p</button></div>
+    ${timerCore}${timerBtns}
+    <div><div class="xs muted" style="margin-bottom:4px">Bản tin MQTT sẽ gửi</div><code class="code">study/timer ← {"minutes":25}</code></div>
+    <div class="note">${ico('info')}<span>Hộp tự đếm giờ bằng FreeRTOS. Mất mạng giữa chừng còi vẫn kêu đúng lúc.</span></div>`)}
+  ${card('s5 t12', 'Lời nhắc trên LCD 16×2', tags('grp_lcd_composer', 'ID 5'), `
+    ${lcd('On tap chuong 3')}
+    <div class="field" style="margin:0"><label>Lời nhắc</label><div class="input filled">Ôn tập chương 3</div>
+      <div class="row xs muted mono" style="justify-content:space-between"><span>Dòng 1: 15/16</span><span>Dòng 2: 0/16</span><span>Tổng: 15/32</span></div></div>
+    <div class="note">${ico('info')}<span>LCD không có dấu tiếng Việt. Hộp sẽ hiện: <b class="mono">On tap chuong 3</b></span></div>
+    <div><div class="lab" style="margin-bottom:8px">Câu mẫu</div><div class="chips"><button class="chip">Đang tập trung</button><button class="chip">Đừng làm phiền</button><button class="chip">Giờ nghỉ 5 phút</button><button class="chip">Uống nước đi</button><button class="chip">Ôn tập chương 3</button></div></div>
+    <button class="btn primary mfull" style="align-self:flex-start">${ico('send')}Gửi lên màn hình</button>
+    <code class="code">study/lcd ← {"text":"On tap chuong 3"}</code>`)}
+  ${card('s12', 'Nhật ký lệnh và sự kiện', tags('grp_command_feed', 'ID 7'), `
+    <table class="stack"><thead><tr><th>Thời điểm</th><th>Kênh</th><th>Nội dung</th><th>Trạng thái</th></tr></thead><tbody>
+    ${log.map(r => `<tr><td data-l="Thời điểm" class="mono">${r[0]}</td><td data-l="Kênh" class="mono">${r[1]}</td><td data-l="Nội dung" class="mono" style="overflow-wrap:anywhere">${r[2]}</td><td data-l="Trạng thái">${r[3]}</td></tr>`).join('')}
+    </tbody></table>`)}
+  </div>`;
+  return shell('phien-hoc', 'Phiên học', 'Đặt giờ, gửi lời nhắc xuống hộp và xem các lệnh đã gửi', '', body);
+}
+
+/* ---------- Lịch sử ---------- */
+function history(){
+  const lv = [2,3,1,4,3,0,1, 3,4,2,3,4,1,0, 2,3,3,4,2,1,2, 4,3,2,4,3,0,1, 3,2];
+  const heat = ['T2','T3','T4','T5','T6','T7','CN'].map(d => `<span class="hd">${d}</span>`).join('') + lv.map((l, i) => `<span class="l${l}" title="Ngày ${i + 1}">${i + 1}</span>`).join('');
+  const hrs = [1,2,4,5,3,2,1,2,4,5,4,3,5,9,11,10,6,2].map((v, i) => [(i % 3 === 0 ? (i + 6) + 'h' : ''), v, i + 6 >= 19 && i + 6 <= 21]);
+  const T = [], H = [];
+  for (let i = 0; i < 24; i++){ T.push(27.4 + 2.3 * Math.sin((i - 9) / 24 * 6.283) + (i % 3 - 1) * .15); H.push(67 - 7 * Math.sin((i - 9) / 24 * 6.283) + (i % 4 - 1.5) * .5); }
+  const pl = (a, lo, hi) => a.map((v, i) => `${(i / 23 * 100).toFixed(2)},${(100 - (v - lo) / (hi - lo) * 100).toFixed(1)}`).join(' ');
+  const rows = [['15/11','20:43 → đang học','2','A1B2C3D4','29,4 °C','Đủ sáng','Chưa có'],['14/11','19:05 → 21:40','5','A1B2C3D4','27,8 °C','Đủ sáng','Tập trung tốt'],['13/11','14:10 → 15:35','3','A1B2C3D4','30,6 °C','Đủ sáng','Mất tập trung'],['12/11','20:15 → 22:30','4','9F3E21B7','27,1 °C','Thiếu sáng','Tạm ổn'],['11/11','08:30 → 10:05','3','A1B2C3D4','26,4 °C','Đủ sáng','Tập trung tốt']];
+  const tools = `<div class="row"><div class="seg three" role="group" aria-label="Khoảng thời gian"><button aria-pressed="false">7 ngày</button><button aria-pressed="true">30 ngày</button><button aria-pressed="false">90 ngày</button></div><button class="btn mfull">${ico('download')}Xuất CSV</button></div>`;
+  const kpi = (t, v, u, s) => `<section class="card s3 t6 m6 kpi"><span class="small muted">${t}</span><b>${v}<small> ${u}</small></b><span class="xs muted">${s}</span></section>`;
+  const body = `<div class="grid">
+  ${kpi('Vòng hoàn thành', '98', 'vòng', 'TB 3,3 vòng/ngày')}${kpi('Thời gian tập trung', '40,8', 'giờ', '30 ngày qua')}${kpi('Dừng giữa chừng', '11', 'vòng', '10 % số vòng')}${kpi('Nhắc nghỉ Telegram', '9', 'tin', 'Ngồi quá 60 phút')}
+  ${card('s5 t12', 'Lịch học 30 ngày', tags('grp_habit_analysis'), `<div class="heat" role="img" aria-label="Bản đồ nhiệt số vòng theo ngày">${heat}</div>
+    <div class="scale"><span>Ít</span><i class="l0"></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i><span>Nhiều vòng</span></div>`)}
+  ${card('s7 t12', 'Năng suất theo giờ', tags('grp_habit_analysis'), `${bars(hrs, {cls:'tall', label:'Số vòng theo giờ trong ngày, từ 6 giờ đến 23 giờ'})}
+    <div class="legend"><span><i class="sq"></i>Khung giờ tốt nhất: <b style="color:var(--ink)">19:00 – 22:00</b></span><span>Số vòng theo giờ, 6h → 23h</span></div>`)}
+  ${card('s8 t12', 'Nhiệt độ và độ ẩm 24 giờ', tags('grp_chart_timeseries', 'ID 7', 'ID 8'), `
+    <div class="legend"><span><i></i>Nhiệt độ (24 – 32 °C)</span><span><i class="dash"></i>Độ ẩm (55 – 80 %)</span></div>
+    <div><div class="chart"><svg viewBox="0 0 100 100" preserveAspectRatio="none" role="img" aria-label="Biểu đồ đường nhiệt độ và độ ẩm 24 giờ">
+      <polyline points="${pl(T, 24, 32)}" fill="none" stroke="#DC2626" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+      <polyline points="${pl(H, 55, 80)}" fill="none" stroke="#0F172A" stroke-width="2" stroke-dasharray="6 4" vector-effect="non-scaling-stroke"/></svg></div>
+    <div class="xaxis"><span>00h</span><span>04h</span><span>08h</span><span>12h</span><span>16h</span><span>20h</span><span>24h</span></div></div>
+    <p class="xs muted">Nguồn: bảng <span class="mono">sensor_data</span>, lưu mỗi 60 giây.</p>`)}
+  ${card('s4 t12', 'Điều kiện học tốt nhất', tags('grp_ai_insights', 'ID 13'), `
+    <div class="kv"><div><span class="muted">Khung giờ vàng</span><b>19:00 – 22:00</b></div><div><span class="muted">Nhiệt độ</span><b>26 – 28 °C</b></div><div><span class="muted">Độ ẩm</span><b>60 – 70 %</b></div><div><span class="muted">Ánh sáng</span><b>Đủ sáng</b></div><div><span class="muted">Tỷ lệ hoàn thành dự đoán</span><b>91 %</b></div></div>
+    <div class="note push">${ico('info')}<span>Gợi ý từ mô hình phân tích trên 30 ngày dữ liệu của bạn.</span></div>`)}
+  ${card('s12', 'Các phiên học', tags('grp_sessions_table'), `
+    <table class="stack"><thead><tr><th>Ngày</th><th>Bắt đầu → Kết thúc</th><th>Số vòng</th><th>Mã thẻ</th><th>Nhiệt độ TB</th><th>Ánh sáng</th><th>Đánh giá</th></tr></thead><tbody>
+    ${rows.map(r => `<tr><td data-l="Ngày" class="mono">${r[0]}</td><td data-l="Thời gian" class="mono">${r[1]}</td><td data-l="Số vòng" class="mono">${r[2]}</td><td data-l="Mã thẻ" class="mono">${r[3]}</td><td data-l="Nhiệt độ TB" class="mono">${r[4]}</td><td data-l="Ánh sáng">${r[5]}</td><td data-l="Đánh giá">${r[6]}</td></tr>`).join('')}
+    </tbody></table>`)}
+  </div>`;
+  return shell('lich-su', 'Lịch sử', 'Thói quen học, môi trường phòng và gợi ý từ mô hình', tools, body);
+}
+
+/* ---------- Cài đặt ---------- */
+function settings(){
+  const TABS = [['tai-khoan','Tài khoản'],['pomodoro','Pomodoro'],['canh-bao','Cảnh báo'],['thiet-bi','Thiết bị và thẻ']];
+  const save = `<div class="savebar"><button class="btn primary mfull lg">${ico('save')}Lưu thay đổi</button></div>`;
+  const panels = {
+    'pomodoro': `<div class="grid">
+      ${card('s7 t12', 'Chu kỳ Pomodoro', tags('grp_conf_pomodoro', 'ID 3'), `<div>
+        ${slider('Tập trung', 25, 'phút', 1, 120, 'Độ dài một vòng học')}${slider('Nghỉ ngắn', 5, 'phút', 1, 30, 'Giữa các vòng')}${slider('Nghỉ dài', 15, 'phút', 5, 60, 'Sau một chuỗi vòng')}${slider('Nghỉ dài sau mỗi', 4, 'vòng', 2, 8, '')}${slider('Mục tiêu mỗi ngày', 8, 'vòng', 1, 16, '')}</div>${save}`)}
+      ${card('s5 t12', 'Xem trước một chu kỳ', tags('2 giờ 10 phút'), `
+        <div class="cycle" role="img" aria-label="4 vòng 25 phút, 3 lần nghỉ 5 phút, 1 lần nghỉ dài 15 phút">${[[25,''],[5,'brk'],[25,''],[5,'brk'],[25,''],[5,'brk'],[25,''],[15,'long']].map(([m, c]) => `<i class="${c}" style="flex:${m}"></i>`).join('')}</div>
+        <div class="kv"><div><span class="muted">■ Tập trung</span><b>4 × 25 phút</b></div><div><span class="muted">▨ Nghỉ ngắn</span><b>3 × 5 phút</b></div><div><span class="muted">■ Nghỉ dài</span><b>1 × 15 phút</b></div><div><span class="muted">Mục tiêu ngày</span><b>8 vòng = 2 chu kỳ</b></div></div>
+        <div class="note push">${ico('info')}<span>Lưu xong, thời lượng mới áp dụng từ lần <b>Gửi xuống hộp</b> kế tiếp.</span></div>`)}</div>`,
+    'canh-bao': `<div class="grid">
+      ${card('s6 t12', 'Nhắc nghỉ qua Telegram', tags('grp_conf_alerts', 'ID 9'), `<div>
+        ${setrow('Bật nhắc nghỉ Telegram', 'Bot nhắn khi bạn ngồi học quá lâu', true)}</div>
+        <div class="field" style="margin:0"><label>Telegram Chat ID</label><div class="input filled mono">5820194637</div><div class="help">Nhắn /start cho bot để lấy mã này</div></div>
+        <div>${slider('Ngưỡng ngồi lâu', 60, 'phút', 50, 60, 'Học liên tục không nghỉ')}</div>`)}
+      ${card('s6 t12', 'Email và môi trường', tags('grp_conf_alerts', 'ID 10'), `<div>
+        ${setrow('Email tổng kết tuần', 'Gửi lúc 20:00 tối Chủ nhật qua Gmail', true)}
+        ${slider('Báo phòng nóng khi trên', 30, '°C', 26, 36, '')}${slider('Báo thiếu sáng khi dưới', 1200, '', 400, 2400, 'Giá trị ADC 0 – 4095')}</div>${save}`)}</div>`,
+    'thiet-bi': `<div class="grid">
+      ${card('s5 t12', 'Hộp trên bàn học', tags('grp_conf_devices', 'ID 12'), `
+        <div class="kv"><div><span class="muted">Bo mạch</span><b>ESP32 DevKit V1</b></div><div><span class="muted">Trạng thái MQTT</span><b class="live"><span class="dot"></span>Đang kết nối</b></div><div><span class="muted">Nhịp tin cuối</span><b class="mono">2 giây trước</b></div><div><span class="muted">Wi-Fi</span><b>KTX-Khu-B</b></div></div>
+        <div class="note">${ico('info')}<span>Đổi Wi-Fi: giữ nút trên hộp 5 giây, kết nối mạng <b class="mono">PomodoroBox_Config</b> rồi mở <b class="mono">192.168.4.1</b>.</span></div>`)}
+      ${card('s7 t12', 'Thẻ được phép học', tags('grp_conf_devices', 'ID 2'), `
+        <table class="stack"><thead><tr><th>Mã thẻ (UID)</th><th>Tên gợi nhớ</th><th>Lần quẹt cuối</th><th></th></tr></thead><tbody>
+        <tr><td data-l="Mã thẻ" class="mono">A1B2C3D4</td><td data-l="Tên">Thẻ sinh viên</td><td data-l="Lần cuối" class="mono">15/11 20:43</td><td data-l=""><a href="#">Xóa</a></td></tr>
+        <tr><td data-l="Mã thẻ" class="mono">9F3E21B7</td><td data-l="Tên">Móc khóa dự phòng</td><td data-l="Lần cuối" class="mono">12/11 20:15</td><td data-l=""><a href="#">Xóa</a></td></tr>
+        </tbody></table>
+        <button class="btn push mfull" style="align-self:flex-start">${ico('plus')}Thêm thẻ mới bằng cách quẹt lên hộp</button>`)}</div>`,
+    'tai-khoan': `<div class="grid">
+      ${card('s6 t12', 'Hồ sơ', tags('grp_conf_account', 'ID 11'), `
+        <div class="field" style="margin:0"><label>Họ và tên</label><div class="input filled">${ico('user')}La Anh Hào</div></div>
+        <div class="field" style="margin:0"><label>Email sinh viên</label><div class="input filled">${ico('mail')}ban@student.hcmus.edu.vn</div><div class="help">Email dùng để đăng nhập và nhận báo cáo tuần</div></div>${save}`)}
+      ${card('s6 t12', 'Bảo mật', tags('ID 11'), `
+        <div class="field" style="margin:0"><label>Mật khẩu hiện tại</label><div class="input">${ico('lock')}<span style="flex:1">Nhập mật khẩu hiện tại</span>${ico('eye')}</div></div>
+        <div class="field" style="margin:0"><label>Mật khẩu mới</label><div class="input">${ico('lock')}<span style="flex:1">Tối thiểu 8 ký tự</span>${ico('eye')}</div></div>
+        <div class="row"><button class="btn mfull">Đổi mật khẩu</button><button class="btn mfull">${ico('logout')}Đăng xuất</button></div>`)}</div>`
+  };
+  const tabs = `<div class="seg" role="tablist" style="margin-bottom:16px">${TABS.map(([k, l]) => `<a role="tab" href="${link('cai-dat', '&tab=' + k)}" aria-selected="${k === TAB}">${l}</a>`).join('')}</div>`;
+  return shell('cai-dat', 'Cài đặt', 'Tài khoản, chu kỳ Pomodoro, cảnh báo và thiết bị', '', tabs + (panels[TAB] || panels.pomodoro));
+}
+
+const SCREENS = {'dang-nhap':() => auth(false), 'dang-ky':() => auth(true), 'tong-quan':overview, 'phien-hoc':session, 'lich-su':history, 'cai-dat':settings};
+// The two blocks below exist only for capture.ps1 (full-page screenshots).
+const FRAME_W = +q.get('w');
+if (FRAME_W) {
+  // Headless Edge cannot open a window narrower than ~500 px, so phone shots load the
+  // page inside an iframe of the wanted width; the script crops the picture afterwards.
+  const minH = +q.get('minh') || 0;
+  q.delete('w'); q.delete('minh');
+  document.body.style.background = '#fff';
+  document.getElementById('app').innerHTML = `<iframe title="Wireframe" src="${location.pathname.split('/').pop()}?${q}" style="display:block;border:0;width:${FRAME_W}px;height:${minH || 100}px"></iframe>`;
+  addEventListener('message', e => {
+    const h = Math.max(minH, +e.data.h || 0);
+    document.querySelector('iframe').style.height = h + 'px';
+    document.documentElement.dataset.h = h;
+  });
+} else {
+  document.getElementById('app').innerHTML = (SCREENS[SCREEN] || overview)();
+  const mark = () => {
+    // Measure the content, not the viewport, so min-height:100vh screens report their real height.
+    const el = document.querySelector('.main') || document.querySelector('.auth-in');
+    const foot = document.querySelector('.foot');
+    const h = Math.ceil(el.getBoundingClientRect().height + (foot ? foot.offsetHeight : 0) + (document.querySelector('.appbar')?.offsetHeight || 0));
+    document.documentElement.dataset.h = h;
+    if (parent !== window) parent.postMessage({h}, '*');
+  };
+  mark(); (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(mark);
+}
+</script>
+</body>
+</html>
