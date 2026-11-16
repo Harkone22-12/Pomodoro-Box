@@ -19,6 +19,16 @@ Phương pháp Pomodoro chia thời gian làm việc thành các phiên tập tr
     \item \textbf{Theo dõi tiến độ học tập có hệ thống:} Người học quẹt thẻ từ RFID (RC522~\cite{mfrc522}) để bắt đầu và kết thúc phiên. Toàn bộ thời gian học được lưu trữ trên cơ sở dữ liệu Supabase, cho phép xem lại lịch sử qua giao diện web và nhận email tổng kết tuần qua Gmail SMTP.
 \end{itemize}
 
+\textbf{Kịch bản sử dụng trong một buổi học} (số ID tương ứng với Bảng~\ref{tab:danh_sach_chuc_nang}):
+\begin{enumerate}[leftmargin=1.2cm, noitemsep, topsep=2pt]
+    \item \textbf{Cài đặt lần đầu:} Người học cấp nguồn cho hộp, dùng điện thoại kết nối vào mạng \texttt{Pomodoro-Box-Setup} để nhập Wi-Fi (ID 12), sau đó tạo tài khoản và đăng nhập trên Web UI (ID 11).
+    \item \textbf{Bắt đầu học:} Người học ngồi vào bàn, quẹt thẻ RFID để mở phiên học (ID 2) và nhấn nút trên hộp để bật đèn LED đỏ báo đang tập trung (ID 6).
+    \item \textbf{Đặt giờ:} Trên Web UI, người học chọn 25 phút và bấm \textit{Bắt đầu đếm giờ} để hộp đếm ngược (ID 3), đồng thời gõ mục tiêu của vòng học để hiện lên màn hình LCD (ID 5).
+    \item \textbf{Trong lúc học:} Hộp tự đo nhiệt độ, độ ẩm (ID 1) và ánh sáng (ID 4), lưu dữ liệu lên Supabase (ID 7); Web UI cảnh báo khi bàn học thiếu sáng. Nếu người học ngồi liên tục quá 60 phút, điện thoại nhận tin nhắn Telegram nhắc nghỉ (ID 9).
+    \item \textbf{Hết giờ:} Còi kêu báo kết thúc vòng học (ID 3). Khi học xong, người học quẹt thẻ lần nữa để đóng phiên (ID 2), tắt đèn đỏ (ID 6) và đánh giá mức độ tập trung của phiên trên Web UI (ID 13).
+    \item \textbf{Xem lại:} Người học xem biểu đồ và lịch sử phiên học (ID 8), nhận khuyến nghị về thời lượng, khung giờ và điều kiện phòng học phù hợp (ID 13), và nhận email tổng kết vào tối Chủ nhật (ID 10).
+\end{enumerate}
+
 \subsection{Danh sách các chức năng có trong sản phẩm}
 
 Toàn bộ 13 chức năng của hệ thống được phân loại thành nhóm \textbf{Chức năng căn bản} và nhóm \textbf{Chức năng nâng cao} trong Bảng~\ref{tab:danh_sach_chuc_nang}. Ký hiệu YC$n$ ở mỗi chức năng nâng cao là số thứ tự yêu cầu nâng cao tương ứng trong Quy định đồ án cuối kỳ.
