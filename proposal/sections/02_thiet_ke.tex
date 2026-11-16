@@ -4,7 +4,7 @@
 
 Vỏ hộp sản phẩm được thiết kế trên phần mềm Autodesk Fusion 360~\cite{fusion360} và dự kiến chế tạo bằng công nghệ in 3D FDM nhựa PLA. Kích thước tổng thể của vỏ hộp sau lắp nắp là $150 \times 100 \times 50\text{ mm}$ (gồm thân hộp cao $47\text{ mm}$ và nắp hộp dày $3.0\text{ mm}$), độ dày thành và đáy $2.5\text{ mm}$, bo góc ngoài $R6\text{ mm}$. Cấu trúc gồm hai phần: Thân hộp (Bottom Case) và Nắp hộp (Top Cover), liên kết bằng 4 vít M3 bắt vào 4 trụ đỡ ở 4 góc.
 
-Để đảm bảo độ chính xác cho cảm biến môi trường, cảm biến nhiệt ẩm DHT22 được bố trí ở sát cụm 5 khe hút gió tại vách trái, cách xa khoang vi điều khiển ESP32 khoảng $100\text{ mm}$; đồng thời vách phải bố trí 3 khe thoát nhiệt đặt ở vị trí cao nhằm tạo đối lưu tự nhiên, hạn chế nhiệt lượng tỏa ra từ vi điều khiển làm sai lệch số đo. Bảng~\ref{tab:map_3d_chuc_nang} ánh xạ vị trí cơ khí của từng linh kiện trên mô hình 3D với ID chức năng tương ứng, được minh họa trực quan trong Hình~\ref{fig:3d_full} và Hình~\ref{fig:3d_exploded_dim}.
+Để đảm bảo độ chính xác cho cảm biến môi trường, cảm biến nhiệt ẩm DHT22 được bố trí ở sát cụm 5 khe hút gió tại vách trái, cách xa khoang vi điều khiển ESP32 khoảng $100\text{ mm}$; đồng thời vách phải bố trí 3 khe thoát nhiệt đặt ở vị trí cao nhằm tạo đối lưu tự nhiên, hạn chế nhiệt lượng tỏa ra từ vi điều khiển làm sai lệch số đo. Bảng~\ref{tab:map_3d_chuc_nang} ánh xạ vị trí cơ khí của từng linh kiện trên mô hình 3D với ID chức năng tương ứng, được minh họa trực quan theo từng góc nhìn từ Hình~\ref{fig:3d_front} đến Hình~\ref{fig:3d_dim}.
 
 \begin{table}[H]
 \centering
@@ -28,54 +28,44 @@ Vỏ hộp sản phẩm được thiết kế trên phần mềm Autodesk Fusion
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth, keepaspectratio]{assets/design_fusion360/hinh_3d_1_ben_ngoai_truoc.png}
-        \caption{Ngoại quan mặt trước (LCD, RFID, LED, Nút, Buzzer, Quang trở)}
-        \label{fig:3d_front}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth, keepaspectratio]{assets/design_fusion360/hinh_3d_2_ben_ngoai_sau.png}
-        \caption{Ngoại quan mặt sau (Cổng USB, Jack DC 5V, Khe hút gió DHT22)}
-        \label{fig:3d_back}
-    \end{subfigure}
-    \par\vspace{0.18cm}
-    \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth, keepaspectratio]{assets/design_fusion360/hinh_3d_3_ben_trong_than_hop.png}
-        \caption{Bố trí linh kiện bên trong thân hộp (DHT22, ESP32, Jack DC)}
-        \label{fig:3d_inside}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth, keepaspectratio]{assets/design_fusion360/hinh_3d_4_ben_trong_mat_duoi_nap.png}
-        \caption{Bố trí linh kiện gắn dưới nắp hộp (RC522, LCD, LM393, Buzzer)}
-        \label{fig:3d_under_lid}
-    \end{subfigure}
-    \caption{Bản vẽ phối cảnh 3D bên ngoài và bên trong vỏ hộp Trạm học tập Pomodoro}
-    \label{fig:3d_full}
+    \includegraphics[width=0.95\textwidth, keepaspectratio]{assets/design_fusion360/hinh_3d_1_ben_ngoai_truoc.png}
+    \caption{Phối cảnh 3D ngoại quan mặt trước và mặt trên vỏ hộp (LCD, RFID, LED, Nút nhấn, Buzzer, Quang trở)}
+    \label{fig:3d_front}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[height=4.8cm, width=\linewidth, keepaspectratio]{assets/design_fusion360/hinh_3d_5_tach_nap.png}
-        \caption{Bản vẽ bóc tách nắp và thân hộp (Exploded View)}
-        \label{fig:3d_exploded}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[height=4.8cm, width=\linewidth, keepaspectratio]{assets/design_fusion360/hinh_3d_6_ban_ve_kich_thuoc.png}
-        \caption{Bản vẽ kỹ thuật 2D kích thước tổng thể và tọa độ lỗ khoét}
-        \label{fig:3d_dim}
-    \end{subfigure}
-    \caption{Bản vẽ bóc tách lắp ráp và thông số kích thước gia công vỏ hộp 3D}
-    \label{fig:3d_exploded_dim}
+    \includegraphics[width=0.95\textwidth, keepaspectratio]{assets/design_fusion360/hinh_3d_2_ben_ngoai_sau.png}
+    \caption{Phối cảnh 3D ngoại quan mặt sau và cạnh bên vỏ hộp (Cổng USB, Jack DC 5V, Khe hút gió DHT22)}
+    \label{fig:3d_back}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth, keepaspectratio]{assets/design_fusion360/hinh_3d_3_ben_trong_than_hop.png}
+    \caption{Phối cảnh 3D bố trí linh kiện bên trong thân hộp (Cảm biến DHT22, ESP32 DevKit V1, Jack DC 5V)}
+    \label{fig:3d_inside}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth, keepaspectratio]{assets/design_fusion360/hinh_3d_4_ben_trong_mat_duoi_nap.png}
+    \caption{Phối cảnh 3D bố trí linh kiện gắn dưới mặt nắp hộp (RC522, LCD 1602 I2C, LM393, Buzzer)}
+    \label{fig:3d_under_lid}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth, keepaspectratio]{assets/design_fusion360/hinh_3d_5_tach_nap.png}
+    \caption{Bản vẽ 3D bóc tách lắp ráp nắp và thân hộp (Exploded View)}
+    \label{fig:3d_exploded}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.98\textwidth, keepaspectratio]{assets/design_fusion360/hinh_3d_6_ban_ve_kich_thuoc.png}
+    \caption{Bản vẽ kỹ thuật 2D kích thước tổng thể và tọa độ gia công lỗ khoét vỏ hộp}
+    \label{fig:3d_dim}
 \end{figure}
 
 \subsection{Hình ảnh wireframe cho website quản lý sản phẩm}
@@ -106,44 +96,34 @@ Website quản lý sản phẩm được xây dựng theo kiến trúc kết h�
 
 \subsubsection{Chi tiết các màn hình giao diện và cấu trúc thành phần Web UI kết hợp Node-RED}
 
-Hệ thống giao diện Web UI tự xây dựng được tổ chức theo cấu trúc: \textbf{Trang giao diện $\rightarrow$ Khối chức năng (\texttt{grp\_*}) $\rightarrow$ Thành phần tương tác \& API Node-RED}. Các màn hình trên Desktop và thiết bị di động được trình bày chi tiết tại Hình~\ref{fig:wf_desktop_main}, Hình~\ref{fig:wf_history_rating}, Hình~\ref{fig:wf_auth}, Hình~\ref{fig:wf_settings} và Hình~\ref{fig:wf_mobile}, cùng bảng đặc tả cấu trúc tương ứng trong Bảng~\ref{tab:comp_workspace}, Bảng~\ref{tab:comp_auth} và Bảng~\ref{tab:comp_settings_mobile}.
+Hệ thống giao diện Web UI tự xây dựng được tổ chức theo cấu trúc: \textbf{Trang giao diện $\rightarrow$ Khối chức năng (\texttt{grp\_*}) $\rightarrow$ Thành phần tương tác \& API Node-RED}. Để bảo đảm quan sát rõ từng nhãn ID chức năng trên mỗi thẻ giao diện, từng màn hình Desktop và từng cặp màn hình di động được tách riêng theo hàng từ Hình~\ref{fig:wf_overview} đến Hình~\ref{fig:wf_mobile_row2}, đối chiếu với bảng đặc tả cấu trúc tương ứng trong Bảng~\ref{tab:comp_workspace}, Bảng~\ref{tab:comp_auth} và Bảng~\ref{tab:comp_settings_mobile}.
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.485\textwidth}
-        \centering
-        \includegraphics[height=5.2cm, width=\linewidth, keepaspectratio]{assets/wireframes/03-tong-quan-desktop.png}
-        \caption{Trang Tổng quan (theo dõi nhanh toàn bộ thiết bị)}
-        \label{fig:wf_overview}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.485\textwidth}
-        \centering
-        \includegraphics[height=5.2cm, width=\linewidth, keepaspectratio]{assets/wireframes/04-phien-hoc-desktop.png}
-        \caption{Trang Phiên học (điều khiển Timer, LCD và nhật ký MQTT)}
-        \label{fig:wf_session}
-    \end{subfigure}
-    \caption{Giao diện Web UI trang Tổng quan và Phiên học trên Desktop (ID 1--7, 9)}
-    \label{fig:wf_desktop_main}
+    \includegraphics[width=0.88\textwidth, keepaspectratio]{assets/wireframes/03-tong-quan-desktop.png}
+    \caption{Giao diện Web UI trang Tổng quan trên Desktop (\texttt{grp\_quick\_timer}, \texttt{grp\_room\_monitor}, \texttt{grp\_rfid\_session}, \texttt{grp\_lcd\_preview}, \texttt{grp\_stats\_productivity} -- ID 1--7, 9)}
+    \label{fig:wf_overview}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.485\textwidth}
-        \centering
-        \includegraphics[height=5.5cm, width=\linewidth, keepaspectratio]{assets/wireframes/05-lich-su-desktop.png}
-        \caption{Trang Lịch sử, đồ thị 24h và khối khuyến nghị mô hình}
-        \label{fig:wf_history}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.485\textwidth}
-        \centering
-        \includegraphics[height=5.5cm, width=\linewidth, keepaspectratio]{assets/wireframes/16-danh-gia-desktop.png}
-        \caption{Khối đánh giá tập trung sau khi kết thúc phiên quẹt thẻ}
-        \label{fig:wf_rating}
-    \end{subfigure}
-    \caption{Giao diện Lịch sử phân tích dữ liệu và Đánh giá sau phiên học trên Desktop (ID 2, 6, 7, 8, 13)}
-    \label{fig:wf_history_rating}
+    \includegraphics[height=11.0cm, width=0.88\textwidth, keepaspectratio]{assets/wireframes/04-phien-hoc-desktop.png}
+    \caption{Giao diện Web UI trang Phiên học trên Desktop (\texttt{grp\_pomodoro\_ctrl}, \texttt{grp\_lcd\_composer}, \texttt{grp\_command\_feed} -- điều khiển Timer, LCD và nhật ký MQTT -- ID 3, 5, 7)}
+    \label{fig:wf_session}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=9.8cm, width=0.88\textwidth, keepaspectratio]{assets/wireframes/16-danh-gia-desktop.png}
+    \caption{Khối đánh giá mức độ tập trung sau khi kết thúc phiên quẹt thẻ RFID trên Desktop (\texttt{grp\_rfid\_session} -- ID 2, 6, 13)}
+    \label{fig:wf_rating}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.94\textwidth, height=16.5cm, keepaspectratio]{assets/wireframes/05-lich-su-desktop.png}
+    \caption{Giao diện Web UI trang Lịch sử phân tích dữ liệu, đồ thị 24h và khối khuyến nghị mô hình (\texttt{grp\_habit\_analysis}, \texttt{grp\_chart\_timeseries}, \texttt{grp\_ai\_insights}, \texttt{grp\_sessions\_table} -- ID 7, 8, 13)}
+    \label{fig:wf_history}
 \end{figure}
 
 \begin{table}[H]
@@ -166,21 +146,16 @@ Hệ thống giao diện Web UI tự xây dựng được tổ chức theo cấu
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.485\textwidth}
-        \centering
-        \includegraphics[height=4.8cm, width=\linewidth, keepaspectratio]{assets/wireframes/01-dang-nhap-desktop.png}
-        \caption{Trang Đăng nhập (kèm chân trang trạng thái trạm)}
-        \label{fig:wf_signin}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.485\textwidth}
-        \centering
-        \includegraphics[height=4.8cm, width=\linewidth, keepaspectratio]{assets/wireframes/02-dang-ky-desktop.png}
-        \caption{Trang Tạo tài khoản (kiểm tra độ mạnh mật khẩu)}
-        \label{fig:wf_register}
-    \end{subfigure}
-    \caption{Giao diện Xác thực người dùng trên Desktop (ID 1, 4, 11)}
-    \label{fig:wf_auth}
+    \includegraphics[width=0.90\textwidth, keepaspectratio]{assets/wireframes/01-dang-nhap-desktop.png}
+    \caption{Giao diện Web UI trang Đăng nhập kèm chân trang trạng thái trạm trên Desktop (\texttt{grp\_auth\_form}, \texttt{grp\_auth\_footer} -- ID 1, 4, 11)}
+    \label{fig:wf_signin}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.90\textwidth, keepaspectratio]{assets/wireframes/02-dang-ky-desktop.png}
+    \caption{Giao diện Web UI trang Tạo tài khoản kèm kiểm tra độ mạnh mật khẩu trên Desktop (\texttt{grp\_auth\_form}, \texttt{grp\_auth\_footer} -- ID 1, 4, 11)}
+    \label{fig:wf_register}
 \end{figure}
 
 \begin{table}[H]
@@ -199,45 +174,68 @@ Hệ thống giao diện Web UI tự xây dựng được tổ chức theo cấu
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.485\textwidth}
-        \centering
-        \includegraphics[height=4.5cm, width=\linewidth, keepaspectratio]{assets/wireframes/09-cai-dat-tai-khoan-desktop.png}
-        \caption{Tab Tài khoản (Hồ sơ \& Bảo mật)}
-        \label{fig:wf_set_acc}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.485\textwidth}
-        \centering
-        \includegraphics[height=4.5cm, width=\linewidth, keepaspectratio]{assets/wireframes/06-cai-dat-pomodoro-desktop.png}
-        \caption{Tab Pomodoro (Cấu hình thời lượng \& chu kỳ)}
-        \label{fig:wf_set_pomo}
-    \end{subfigure}
-    \par\vspace{0.15cm}
-    \begin{subfigure}[b]{0.485\textwidth}
-        \centering
-        \includegraphics[height=4.5cm, width=\linewidth, keepaspectratio]{assets/wireframes/07-cai-dat-canh-bao-desktop.png}
-        \caption{Tab Cảnh báo (Telegram, Email tuần \& ngưỡng phòng)}
-        \label{fig:wf_set_alert}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.485\textwidth}
-        \centering
-        \includegraphics[height=4.5cm, width=\linewidth, keepaspectratio]{assets/wireframes/08-cai-dat-thiet-bi-desktop.png}
-        \caption{Tab Thiết bị và thẻ (ESP32, SoftAP \& thẻ RFID)}
-        \label{fig:wf_set_dev}
-    \end{subfigure}
-    \caption{Giao diện Trang Cài đặt hệ thống trên Desktop với 4 phân hệ (ID 1--4, 9--12)}
-    \label{fig:wf_settings}
+    \includegraphics[width=0.90\textwidth, keepaspectratio]{assets/wireframes/09-cai-dat-tai-khoan-desktop.png}
+    \caption{Giao diện Trang Cài đặt hệ thống -- Tab Tài khoản, Hồ sơ và Bảo mật (\texttt{grp\_conf\_account} -- ID 11)}
+    \label{fig:wf_set_acc}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[height=5.8cm, width=0.235\linewidth, keepaspectratio]{assets/wireframes/12-tong-quan-mobile-vp.png}\hfill
-    \includegraphics[height=5.8cm, width=0.235\linewidth, keepaspectratio]{assets/wireframes/13-phien-hoc-mobile-vp.png}\hfill
-    \includegraphics[height=5.8cm, width=0.235\linewidth, keepaspectratio]{assets/wireframes/14-lich-su-mobile-vp.png}\hfill
-    \includegraphics[height=5.8cm, width=0.235\linewidth, keepaspectratio]{assets/wireframes/15-cai-dat-mobile-vp.png}
-    \caption{Giao diện Responsive trên thiết bị di động (4 màn hình chính với thanh 4 tab cố định ở cạnh đáy: \textit{Tổng quan, Phiên học, Lịch sử, Cài đặt})}
-    \label{fig:wf_mobile}
+    \includegraphics[width=0.90\textwidth, keepaspectratio]{assets/wireframes/06-cai-dat-pomodoro-desktop.png}
+    \caption{Giao diện Trang Cài đặt hệ thống -- Tab Pomodoro cấu hình thời lượng và chu kỳ (\texttt{grp\_conf\_pomodoro} -- ID 3)}
+    \label{fig:wf_set_pomo}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.90\textwidth, keepaspectratio]{assets/wireframes/07-cai-dat-canh-bao-desktop.png}
+    \caption{Giao diện Trang Cài đặt hệ thống -- Tab Cảnh báo Telegram, Email và ngưỡng phòng (\texttt{grp\_conf\_alerts} -- ID 1, 4, 9, 10)}
+    \label{fig:wf_set_alert}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.90\textwidth, keepaspectratio]{assets/wireframes/08-cai-dat-thiet-bi-desktop.png}
+    \caption{Giao diện Trang Cài đặt hệ thống -- Tab Thiết bị ESP32, SoftAP và danh sách thẻ RFID (\texttt{grp\_conf\_devices} -- ID 2, 12)}
+    \label{fig:wf_set_dev}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.46\textwidth}
+        \centering
+        \includegraphics[height=10.5cm, width=\linewidth, keepaspectratio]{assets/wireframes/12-tong-quan-mobile-vp.png}
+        \caption{Trang Tổng quan trên di động (ID 1, 3, 4)}
+        \label{fig:wf_mob_overview}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.46\textwidth}
+        \centering
+        \includegraphics[height=10.5cm, width=\linewidth, keepaspectratio]{assets/wireframes/13-phien-hoc-mobile-vp.png}
+        \caption{Trang Phiên học trên di động (ID 3, 5)}
+        \label{fig:wf_mob_session}
+    \end{subfigure}
+    \caption{Giao diện Responsive trên thiết bị di động -- Hàng 1: Tổng quan và Phiên học}
+    \label{fig:wf_mobile_row1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.46\textwidth}
+        \centering
+        \includegraphics[height=10.5cm, width=\linewidth, keepaspectratio]{assets/wireframes/14-lich-su-mobile-vp.png}
+        \caption{Trang Lịch sử trên di động (ID 7)}
+        \label{fig:wf_mob_history}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.46\textwidth}
+        \centering
+        \includegraphics[height=10.5cm, width=\linewidth, keepaspectratio]{assets/wireframes/15-cai-dat-mobile-vp.png}
+        \caption{Trang Cài đặt Thiết bị \& thẻ trên di động (ID 2, 12)}
+        \label{fig:wf_mob_settings}
+    \end{subfigure}
+    \caption{Giao diện Responsive trên thiết bị di động -- Hàng 2: Lịch sử và Cài đặt}
+    \label{fig:wf_mobile_row2}
 \end{figure}
 
 \begin{table}[H]

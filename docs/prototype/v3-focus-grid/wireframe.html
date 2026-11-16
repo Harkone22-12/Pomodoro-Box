@@ -42,6 +42,7 @@ a{color:inherit}
 .btn.lg{min-height:52px;font-size:16px}
 .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 .tag{display:inline-block;padding:2px 7px;border:1px dashed var(--line-strong);border-radius:4px;font:500 12px/1.4 var(--mono);color:var(--muted);white-space:nowrap}
+.tag-id{border-style:solid;border-color:#1E40AF;background:#1E40AF;color:#FFFFFF;font-weight:700;letter-spacing:.01em}
 .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-weight:600;font-size:13px;background:var(--ok-soft);color:var(--ok);border:1px solid var(--ok)}
 .dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
 .seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:var(--r-sm);overflow:hidden;flex-wrap:wrap}
@@ -269,7 +270,7 @@ const P = {
 };
 const ico = n => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${P[n]}</svg>`;
 const LOGO = ico("timer");
-const tags = (...t) => `<span class="meta">${t.map(x => `<span class="tag">${x}</span>`).join('')}</span>`;
+const tags = (...t) => `<span class="meta">${t.map(x => `<span class="tag${x.startsWith('ID') ? ' tag-id' : ''}">${x}</span>`).join('')}</span>`;
 const card = (cls, title, meta, body) => `<section class="card ${cls}"><header><h2>${title}</h2>${meta}</header>${body}</section>`;
 const NAV = [['tong-quan','Tổng quan','home'],['phien-hoc','Phiên học','timer'],['lich-su','Lịch sử','history'],['cai-dat','Cài đặt','settings']];
 const link = (s, extra = '') => `?screen=${s}${extra}`;
