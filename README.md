@@ -19,7 +19,7 @@ marks their files (`Owner: <handle>`) and stubs (`TODO(<handle>)`).
 
 | Handle / branch | Member |
 |---|---|
-| `minh` | Nguyễn Trần Tuấn Minh |
+| `minh` | Trần Nguyễn Tuấn Minh |
 | `duong` | Nguyễn Quốc Dương |
 | `hao` | La Anh Hào |
 
