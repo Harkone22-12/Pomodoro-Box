@@ -391,7 +391,7 @@ function overview(){
     <div class="alert" role="status">${ico('warn')}<span><b>Đã 65 phút chưa nghỉ.</b> Đã nhắc qua Telegram lúc 21:48.</span></div>
     <a class="btn push" href="${link('tong-quan', '&state=danh-gia')}">Mô phỏng quẹt thẻ để kết thúc</a>`)}
   ${card('s4 t6', 'Màn hình trên hộp', tags('grp_lcd_preview', 'ID 5'), `
-    ${lcd('On tap chuong 3')}
+    ${lcd('Ôn tập chương 3')}
     <p class="small muted">LCD 1602 đang hiện lời nhắc gần nhất gửi từ web.</p>
     <a class="btn ghost push" href="${link('phien-hoc')}" style="align-self:flex-start">Đổi lời nhắc →</a>`)}
   ${card('s4 t12', 'Hôm nay và 7 ngày', tags('grp_stats_productivity', 'ID 7'), `
@@ -404,7 +404,7 @@ function overview(){
 
 /* ---------- Phiên học ---------- */
 function session(){
-  const log = [['21:48:02','Telegram','Nhắc nghỉ: đã 65 phút','Đã gửi'],['21:20:41','study/timer','{"minutes":25}','Hộp đã nhận'],['21:20:05','study/lcd','{"text":"On tap chuong 3"}','Hộp đã nhận'],['20:43:17','study/rfid','{"uid":"A1B2C3D4","action":"start"}','Từ hộp'],['20:42:50','study/timer','{"minutes":5}','Hộp đã nhận']];
+  const log = [['21:48:02','Telegram','Nhắc nghỉ: đã 65 phút','Đã gửi'],['21:20:41','study/timer','{"minutes":25}','Hộp đã nhận'],['21:20:05','study/lcd','{"text":"Ôn tập chương 3"}','Hộp đã nhận'],['20:43:17','study/rfid','{"uid":"A1B2C3D4","action":"start"}','Từ hộp'],['20:42:50','study/timer','{"minutes":5}','Hộp đã nhận']];
   const body = `<div class="grid">
   ${card('s7 t12', 'Hẹn giờ Pomodoro', tags('grp_pomodoro_ctrl', 'ID 3'), `
     <div class="seg" role="group" aria-label="Chế độ"><button aria-pressed="true">Tập trung 25p</button><button aria-pressed="false">Nghỉ ngắn 5p</button><button aria-pressed="false">Nghỉ dài 15p</button><button aria-pressed="false">Tùy chỉnh 1–120p</button></div>
@@ -412,13 +412,13 @@ function session(){
     <div><div class="xs muted" style="margin-bottom:4px">Bản tin MQTT sẽ gửi</div><code class="code">study/timer ← {"minutes":25}</code></div>
     <div class="note">${ico('info')}<span>Hộp tự đếm giờ bằng FreeRTOS. Mất mạng giữa chừng còi vẫn kêu đúng lúc.</span></div>`)}
   ${card('s5 t12', 'Lời nhắc trên LCD 16×2', tags('grp_lcd_composer', 'ID 5'), `
-    ${lcd('On tap chuong 3')}
+    ${lcd('Ôn tập chương 3')}
     <div class="field" style="margin:0"><label>Lời nhắc</label><div class="input filled">Ôn tập chương 3</div>
       <div class="row xs muted mono" style="justify-content:space-between"><span>Dòng 1: 15/16</span><span>Dòng 2: 0/16</span><span>Tổng: 15/32</span></div></div>
-    <div class="note">${ico('info')}<span>LCD không có dấu tiếng Việt. Hộp sẽ hiện: <b class="mono">On tap chuong 3</b></span></div>
+    <div class="note">${ico('info')}<span>LCD hiện tiếng Việt có dấu bằng ký tự tự vẽ, tối đa 8 ký tự có dấu khác nhau mỗi lần. Lời nhắc này dùng <b class="mono">4/8</b>.</span></div>
     <div><div class="lab" style="margin-bottom:8px">Câu mẫu</div><div class="chips"><button class="chip">Đang tập trung</button><button class="chip">Đừng làm phiền</button><button class="chip">Giờ nghỉ 5 phút</button><button class="chip">Uống nước đi</button><button class="chip">Ôn tập chương 3</button></div></div>
     <button class="btn primary mfull" style="align-self:flex-start">${ico('send')}Gửi lên màn hình</button>
-    <code class="code">study/lcd ← {"text":"On tap chuong 3"}</code>`)}
+    <code class="code">study/lcd ← {"text":"Ôn tập chương 3"}</code>`)}
   ${card('s12', 'Nhật ký lệnh và sự kiện', tags('grp_command_feed', 'ID 7'), `
     <table class="stack"><thead><tr><th>Thời điểm</th><th>Kênh</th><th>Nội dung</th><th>Trạng thái</th></tr></thead><tbody>
     ${log.map(r => `<tr><td data-l="Thời điểm" class="mono">${r[0]}</td><td data-l="Kênh" class="mono">${r[1]}</td><td data-l="Nội dung" class="mono" style="overflow-wrap:anywhere">${r[2]}</td><td data-l="Trạng thái">${r[3]}</td></tr>`).join('')}
