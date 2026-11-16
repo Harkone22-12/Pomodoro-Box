@@ -42,6 +42,7 @@ a{color:inherit}
 .btn.lg{min-height:52px;font-size:16px}
 .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 .tag{display:inline-block;padding:2px 7px;border:1px dashed var(--line-strong);border-radius:4px;font:500 12px/1.4 var(--mono);color:var(--muted);white-space:nowrap}
+.tag-id{border-style:solid;border-color:#1E40AF;background:#1E40AF;color:#FFFFFF;font-weight:700;letter-spacing:.01em}
 .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-weight:600;font-size:13px;background:var(--ok-soft);color:var(--ok);border:1px solid var(--ok)}
 .dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
 .seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:var(--r-sm);overflow:hidden;flex-wrap:wrap}
@@ -269,7 +270,7 @@ const P = {
 };
 const ico = n => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${P[n]}</svg>`;
 const LOGO = ico("timer");
-const tags = (...t) => `<span class="meta">${t.map(x => `<span class="tag">${x}</span>`).join('')}</span>`;
+const tags = (...t) => `<span class="meta">${t.map(x => `<span class="tag${x.startsWith('ID') ? ' tag-id' : ''}">${x}</span>`).join('')}</span>`;
 const card = (cls, title, meta, body) => `<section class="card ${cls}"><header><h2>${title}</h2>${meta}</header>${body}</section>`;
 const NAV = [['tong-quan','Tổng quan','home'],['phien-hoc','Phiên học','timer'],['lich-su','Lịch sử','history'],['cai-dat','Cài đặt','settings']];
 const link = (s, extra = '') => `?screen=${s}${extra}`;
@@ -304,7 +305,7 @@ function shell(cur, title, sub, tools, body){
     <div class="brand"><span class="logo">${LOGO}</span><span class="lbl">Trạm học tập</span></div>
     <nav class="nav" aria-label="Điều hướng chính">${nav}</nav>
     <div class="tele"><h3>Hộp lúc này <span class="live"><span class="dot"></span>Đang kết nối</span></h3>
-      <dl><dt>Nhiệt độ</dt><dd class="mono">29,5 °C</dd><dt>Độ ẩm</dt><dd class="mono">70 %</dd><dt>Mức sáng</dt><dd>Đủ sáng</dd><dt>Thẻ</dt><dd>Đang học</dd><dt>MQTT cuối</dt><dd class="mono">2 giây</dd></dl></div>
+      <dl><dt>Nhiệt độ</dt><dd class="mono">29,5 °C</dd><dt>Độ ẩm</dt><dd class="mono">70 %</dd><dt>Mức sáng</dt><dd>Đủ sáng</dd><dt>Thẻ</dt><dd>Đang học</dd><dt>LED đỏ</dt><dd>Đang bật</dd><dt>MQTT cuối</dt><dd class="mono">2 giây</dd></dl></div>
     <div class="me"><span class="avatar">LH</span><div class="who"><div class="lab">La Anh Hào</div><div class="xs muted">Sinh viên</div></div></div>
   </aside>
   <header class="appbar"><strong>${title}</strong><span class="live small"><span class="dot"></span>Hộp đang kết nối</span></header>
@@ -328,7 +329,7 @@ function auth(reg){
     <button class="btn primary block lg">Tạo tài khoản</button>` : `
     <div class="field"><label>Email sinh viên</label><div class="input">${ico('mail')}ban@student.hcmus.edu.vn</div><div class="help">Kiểm tra định dạng ngay khi rời ô nhập</div></div>
     <div class="field"><label>Mật khẩu</label><div class="input">${ico('lock')}<span style="flex:1">Tối thiểu 8 ký tự</span>${ico('eye')}</div></div>
-    <div class="row" style="justify-content:space-between;margin-bottom:16px"><span class="check"><span class="box">✓</span>Ghi nhớ đăng nhập</span><a href="#" class="small">Quên mật khẩu?</a></div>
+    <div class="row" style="justify-content:space-between;margin-bottom:16px"><span class="check"><span class="box">✓</span>Ghi nhớ đăng nhập</span></div>
     <button class="btn primary block lg">Đăng nhập</button>`;
   return `<div class="auth"><div class="auth-in">
     <section class="hero">
@@ -346,7 +347,7 @@ function auth(reg){
       ${form}
       <p class="help" style="margin-top:12px;text-align:center">Mật khẩu được băm bằng bcrypt trước khi lưu.</p>
     </section></div>
-    <footer class="foot"><span class="live"><span class="dot"></span>Hộp đang kết nối</span><span>Nhiệt độ <b class="mono">29,4 °C</b></span><span>Độ ẩm <b class="mono">70 %</b></span><span>Ánh sáng <b>Đủ sáng</b></span><span class="tag">grp_auth_footer</span></footer>
+    <footer class="foot"><span class="live"><span class="dot"></span>Hộp đang kết nối</span><span>Nhiệt độ <b class="mono">29,4 °C</b></span><span>Độ ẩm <b class="mono">70 %</b></span><span>Ánh sáng <b>Đủ sáng</b></span>${tags('grp_auth_footer', 'ID 1', 'ID 4', 'ID 11')}</footer>
   </div>`;
 }
 
@@ -370,13 +371,13 @@ function overview(){
       <div class="tile"><span class="k">${ico('drop')}Độ ẩm</span><span class="v">70<small> %</small></span><span class="small"><b>Bình thường</b></span>${spark([72,71,71,70,69,70,70,71,70,70])}<span class="xs muted">1 giờ qua · DHT22</span></div>
       <div class="tile wide"><span class="k">${ico('sun')}Mức sáng</span><span class="v">2106<small> / 4095</small></span><span class="small"><b>Đủ sáng</b></span>
         <div class="meter" role="img" aria-label="Mức sáng 2106 trên 4095, ngưỡng thiếu sáng 1200"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
-        <span class="xs muted">Vạch đứt: ngưỡng thiếu sáng 1200</span></div>
+        <span class="xs muted">Vạch đứt: ngưỡng thiếu sáng 1200 (~300 lux)</span></div>
     </div>
     <div class="note">${ico('info')}<span>Phòng đang hơi ấm. Bật quạt để giữ <b>26 – 28 °C</b>, khoảng nhiệt độ học tốt nhất.</span></div>`)}
   ${STATE === 'danh-gia'
-    ? card('s4 t6', 'Phiên quẹt thẻ', tags('grp_rfid_session', 'ID 2', 'mới'), `
+    ? card('s4 t6', 'Phiên quẹt thẻ', tags('grp_rfid_session', 'ID 2', 'ID 6', 'ID 13'), `
     <div class="row" style="justify-content:space-between"><span class="badge" style="background:var(--soft);color:var(--muted);border-color:var(--line-strong)"><span class="dot"></span>Đã kết thúc</span><span class="xs muted">LED đỏ trên hộp đã tắt</span></div>
-    <div><div class="mono" style="font-size:40px;font-weight:600;line-height:1.1">0:57:02</div><div class="small muted">Thẻ <span class="mono">A1B2C3D4</span> · 20:43 → 21:40 · 2 vòng</div></div>
+    <div><div class="mono" style="font-size:40px;font-weight:600;line-height:1.1">1:05:12</div><div class="small muted">Thẻ <span class="mono">A1B2C3D4</span> · 20:43 → 21:48 · 2 vòng</div></div>
     <div class="rate" role="group" aria-label="Đánh giá phiên học vừa xong">
       <div><div class="lab">Phiên vừa rồi thế nào?</div><div class="help">Chạm một lần là lưu, không cần bấm gửi.</div></div>
       <div class="rate-opts"><button class="rate-btn">${ico('faceLow')}Mất tập trung</button><button class="rate-btn">${ico('faceMid')}Tạm ổn</button><button class="rate-btn">${ico('faceHigh')}Tập trung tốt</button></div>
@@ -384,14 +385,14 @@ function overview(){
     </div>`)
     : card('s4 t6', 'Phiên quẹt thẻ', tags('grp_rfid_session', 'ID 2', 'ID 6', 'ID 9'), `
     <div class="row" style="justify-content:space-between"><span class="badge"><span class="dot"></span>Đang học</span><span class="xs muted">LED đỏ trên hộp đang bật</span></div>
-    <div><div class="mono" style="font-size:40px;font-weight:600;line-height:1.1">0:56:23</div><div class="small muted">Thẻ <span class="mono">A1B2C3D4</span> · bắt đầu 20:43</div></div>
-    <div class="alert" role="status">${ico('warn')}<span><b>Đã 56 phút chưa nghỉ.</b> Đã nhắc qua Telegram lúc 21:39.</span></div>
+    <div><div class="mono" style="font-size:40px;font-weight:600;line-height:1.1">1:05:12</div><div class="small muted">Thẻ <span class="mono">A1B2C3D4</span> · bắt đầu 20:43</div></div>
+    <div class="alert" role="status">${ico('warn')}<span><b>Đã 65 phút chưa nghỉ.</b> Đã nhắc qua Telegram lúc 21:48.</span></div>
     <a class="btn push" href="${link('tong-quan', '&state=danh-gia')}">Mô phỏng quẹt thẻ để kết thúc</a>`)}
   ${card('s4 t6', 'Màn hình trên hộp', tags('grp_lcd_preview', 'ID 5'), `
     ${lcd('On tap chuong 3')}
     <p class="small muted">LCD 1602 đang hiện lời nhắc gần nhất gửi từ web.</p>
     <a class="btn ghost push" href="${link('phien-hoc')}" style="align-self:flex-start">Đổi lời nhắc →</a>`)}
-  ${card('s4 t12', 'Hôm nay và 7 ngày', tags('grp_stats_productivity'), `
+  ${card('s4 t12', 'Hôm nay và 7 ngày', tags('grp_stats_productivity', 'ID 7'), `
     <div class="stats"><div class="stat"><b>2</b><span>Vòng xong</span></div><div class="stat"><b>50p</b><span>Tập trung</span></div><div class="stat"><b>7</b><span>Ngày liên tiếp</span></div></div>
     ${bars([['T2',4],['T3',5],['T4',3],['T5',6],['T6',4],['T7',2],['CN',2,1]], {label:'Số vòng hoàn thành 7 ngày'})}
     <div class="legend"><span><i class="sq"></i>Hôm nay</span><span>Số vòng Pomodoro mỗi ngày</span></div>`)}
@@ -401,7 +402,7 @@ function overview(){
 
 /* ---------- Phiên học ---------- */
 function session(){
-  const log = [['21:39:02','Telegram','Nhắc nghỉ: đã 56 phút','Đã gửi'],['21:20:41','study/timer','{"minutes":25}','Hộp đã nhận'],['21:20:05','study/lcd','{"text":"On tap chuong 3"}','Hộp đã nhận'],['20:43:17','study/rfid','{"uid":"A1B2C3D4","action":"start"}','Từ hộp'],['20:42:50','study/timer','{"minutes":5}','Hộp đã nhận']];
+  const log = [['21:48:02','Telegram','Nhắc nghỉ: đã 65 phút','Đã gửi'],['21:20:41','study/timer','{"minutes":25}','Hộp đã nhận'],['21:20:05','study/lcd','{"text":"On tap chuong 3"}','Hộp đã nhận'],['20:43:17','study/rfid','{"uid":"A1B2C3D4","action":"start"}','Từ hộp'],['20:42:50','study/timer','{"minutes":5}','Hộp đã nhận']];
   const body = `<div class="grid">
   ${card('s7 t12', 'Hẹn giờ Pomodoro', tags('grp_pomodoro_ctrl', 'ID 3'), `
     <div class="seg" role="group" aria-label="Chế độ"><button aria-pressed="true">Tập trung 25p</button><button aria-pressed="false">Nghỉ ngắn 5p</button><button aria-pressed="false">Nghỉ dài 15p</button><button aria-pressed="false">Tùy chỉnh 1–120p</button></div>
@@ -433,13 +434,13 @@ function history(){
   for (let i = 0; i < 24; i++){ T.push(27.4 + 2.3 * Math.sin((i - 9) / 24 * 6.283) + (i % 3 - 1) * .15); H.push(67 - 7 * Math.sin((i - 9) / 24 * 6.283) + (i % 4 - 1.5) * .5); }
   const pl = (a, lo, hi) => a.map((v, i) => `${(i / 23 * 100).toFixed(2)},${(100 - (v - lo) / (hi - lo) * 100).toFixed(1)}`).join(' ');
   const rows = [['15/11','20:43 → đang học','2','A1B2C3D4','29,4 °C','Đủ sáng','Chưa có'],['14/11','19:05 → 21:40','5','A1B2C3D4','27,8 °C','Đủ sáng','Tập trung tốt'],['13/11','14:10 → 15:35','3','A1B2C3D4','30,6 °C','Đủ sáng','Mất tập trung'],['12/11','20:15 → 22:30','4','9F3E21B7','27,1 °C','Thiếu sáng','Tạm ổn'],['11/11','08:30 → 10:05','3','A1B2C3D4','26,4 °C','Đủ sáng','Tập trung tốt']];
-  const tools = `<div class="row"><div class="seg three" role="group" aria-label="Khoảng thời gian"><button aria-pressed="false">7 ngày</button><button aria-pressed="true">30 ngày</button><button aria-pressed="false">90 ngày</button></div><button class="btn mfull">${ico('download')}Xuất CSV</button></div>`;
+  const tools = `<div class="row"><div class="seg three" role="group" aria-label="Khoảng thời gian"><button aria-pressed="false">7 ngày</button><button aria-pressed="true">30 ngày</button><button aria-pressed="false">90 ngày</button></div></div>`;
   const kpi = (t, v, u, s) => `<section class="card s3 t6 m6 kpi"><span class="small muted">${t}</span><b>${v}<small> ${u}</small></b><span class="xs muted">${s}</span></section>`;
   const body = `<div class="grid">
   ${kpi('Vòng hoàn thành', '98', 'vòng', 'TB 3,3 vòng/ngày')}${kpi('Thời gian tập trung', '40,8', 'giờ', '30 ngày qua')}${kpi('Dừng giữa chừng', '11', 'vòng', '10 % số vòng')}${kpi('Nhắc nghỉ Telegram', '9', 'tin', 'Ngồi quá 60 phút')}
-  ${card('s5 t12', 'Lịch học 30 ngày', tags('grp_habit_analysis'), `<div class="heat" role="img" aria-label="Bản đồ nhiệt số vòng theo ngày">${heat}</div>
+  ${card('s5 t12', 'Lịch học 30 ngày', tags('grp_habit_analysis', 'ID 7'), `<div class="heat" role="img" aria-label="Bản đồ nhiệt số vòng theo ngày">${heat}</div>
     <div class="scale"><span>Ít</span><i class="l0"></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i><span>Nhiều vòng</span></div>`)}
-  ${card('s7 t12', 'Năng suất theo giờ', tags('grp_habit_analysis'), `${bars(hrs, {cls:'tall', label:'Số vòng theo giờ trong ngày, từ 6 giờ đến 23 giờ'})}
+  ${card('s7 t12', 'Năng suất theo giờ', tags('grp_habit_analysis', 'ID 7', 'ID 13'), `${bars(hrs, {cls:'tall', label:'Số vòng theo giờ trong ngày, từ 6 giờ đến 23 giờ'})}
     <div class="legend"><span><i class="sq"></i>Khung giờ tốt nhất: <b style="color:var(--ink)">19:00 – 22:00</b></span><span>Số vòng theo giờ, 6h → 23h</span></div>`)}
   ${card('s8 t12', 'Nhiệt độ và độ ẩm 24 giờ', tags('grp_chart_timeseries', 'ID 7', 'ID 8'), `
     <div class="legend"><span><i></i>Nhiệt độ (24 – 32 °C)</span><span><i class="dash"></i>Độ ẩm (55 – 80 %)</span></div>
@@ -449,9 +450,9 @@ function history(){
     <div class="xaxis"><span>00h</span><span>04h</span><span>08h</span><span>12h</span><span>16h</span><span>20h</span><span>24h</span></div></div>
     <p class="xs muted">Nguồn: bảng <span class="mono">sensor_data</span>, lưu mỗi 60 giây.</p>`)}
   ${card('s4 t12', 'Điều kiện học tốt nhất', tags('grp_ai_insights', 'ID 13'), `
-    <div class="kv"><div><span class="muted">Khung giờ vàng</span><b>19:00 – 22:00</b></div><div><span class="muted">Nhiệt độ</span><b>26 – 28 °C</b></div><div><span class="muted">Độ ẩm</span><b>60 – 70 %</b></div><div><span class="muted">Ánh sáng</span><b>Đủ sáng</b></div><div><span class="muted">Tỷ lệ hoàn thành dự đoán</span><b>91 %</b></div></div>
+    <div class="kv"><div><span class="muted">Thời lượng lý tưởng</span><b>25 phút</b></div><div><span class="muted">Khung giờ vàng</span><b>19:00 – 22:00</b></div><div><span class="muted">Nhiệt độ</span><b>26 – 28 °C</b></div><div><span class="muted">Độ ẩm</span><b>60 – 70 %</b></div><div><span class="muted">Ánh sáng</span><b>Đủ sáng</b></div><div><span class="muted">Tỷ lệ hoàn thành dự đoán</span><b>91 %</b></div></div>
     <div class="note push">${ico('info')}<span>Gợi ý từ mô hình phân tích trên 30 ngày dữ liệu của bạn.</span></div>`)}
-  ${card('s12', 'Các phiên học', tags('grp_sessions_table'), `
+  ${card('s12', 'Các phiên học', tags('grp_sessions_table', 'ID 7', 'ID 13'), `
     <table class="stack"><thead><tr><th>Ngày</th><th>Bắt đầu → Kết thúc</th><th>Số vòng</th><th>Mã thẻ</th><th>Nhiệt độ TB</th><th>Ánh sáng</th><th>Đánh giá</th></tr></thead><tbody>
     ${rows.map(r => `<tr><td data-l="Ngày" class="mono">${r[0]}</td><td data-l="Thời gian" class="mono">${r[1]}</td><td data-l="Số vòng" class="mono">${r[2]}</td><td data-l="Mã thẻ" class="mono">${r[3]}</td><td data-l="Nhiệt độ TB" class="mono">${r[4]}</td><td data-l="Ánh sáng">${r[5]}</td><td data-l="Đánh giá">${r[6]}</td></tr>`).join('')}
     </tbody></table>`)}
@@ -475,14 +476,14 @@ function settings(){
       ${card('s6 t12', 'Nhắc nghỉ qua Telegram', tags('grp_conf_alerts', 'ID 9'), `<div>
         ${setrow('Bật nhắc nghỉ Telegram', 'Bot nhắn khi bạn ngồi học quá lâu', true)}</div>
         <div class="field" style="margin:0"><label>Telegram Chat ID</label><div class="input filled mono">5820194637</div><div class="help">Nhắn /start cho bot để lấy mã này</div></div>
-        <div>${slider('Ngưỡng ngồi lâu', 60, 'phút', 50, 60, 'Học liên tục không nghỉ')}</div>`)}
-      ${card('s6 t12', 'Email và môi trường', tags('grp_conf_alerts', 'ID 10'), `<div>
+        <div>${slider('Ngưỡng ngồi lâu', 60, 'phút', 10, 240, 'Học liên tục không nghỉ')}</div>`)}
+      ${card('s6 t12', 'Email và môi trường', tags('grp_conf_alerts', 'ID 10', 'ID 1', 'ID 4'), `<div>
         ${setrow('Email tổng kết tuần', 'Gửi lúc 20:00 tối Chủ nhật qua Gmail', true)}
         ${slider('Báo phòng nóng khi trên', 30, '°C', 26, 36, '')}${slider('Báo thiếu sáng khi dưới', 1200, '', 400, 2400, 'Giá trị ADC 0 – 4095')}</div>${save}`)}</div>`,
     'thiet-bi': `<div class="grid">
       ${card('s5 t12', 'Hộp trên bàn học', tags('grp_conf_devices', 'ID 12'), `
         <div class="kv"><div><span class="muted">Bo mạch</span><b>ESP32 DevKit V1</b></div><div><span class="muted">Trạng thái MQTT</span><b class="live"><span class="dot"></span>Đang kết nối</b></div><div><span class="muted">Nhịp tin cuối</span><b class="mono">2 giây trước</b></div><div><span class="muted">Wi-Fi</span><b>KTX-Khu-B</b></div></div>
-        <div class="note">${ico('info')}<span>Đổi Wi-Fi: giữ nút trên hộp 5 giây, kết nối mạng <b class="mono">PomodoroBox_Config</b> rồi mở <b class="mono">192.168.4.1</b>.</span></div>`)}
+        <div class="note">${ico('info')}<span>Đổi Wi-Fi: khi không tìm thấy mạng đã lưu, kết nối mạng <b class="mono">Pomodoro-Box-Setup</b> rồi mở <b class="mono">192.168.4.1</b>.</span></div>`)}
       ${card('s7 t12', 'Thẻ được phép học', tags('grp_conf_devices', 'ID 2'), `
         <table class="stack"><thead><tr><th>Mã thẻ (UID)</th><th>Tên gợi nhớ</th><th>Lần quẹt cuối</th><th></th></tr></thead><tbody>
         <tr><td data-l="Mã thẻ" class="mono">A1B2C3D4</td><td data-l="Tên">Thẻ sinh viên</td><td data-l="Lần cuối" class="mono">15/11 20:43</td><td data-l=""><a href="#">Xóa</a></td></tr>
@@ -509,11 +510,12 @@ if (FRAME_W) {
   // Headless Edge cannot open a window narrower than ~500 px, so phone shots load the
   // page inside an iframe of the wanted width; the script crops the picture afterwards.
   const minH = +q.get('minh') || 0;
-  q.delete('w'); q.delete('minh');
+  const lockH = +q.get('lockh') || 0;
+  q.delete('w'); q.delete('minh'); q.delete('lockh');
   document.body.style.background = '#fff';
-  document.getElementById('app').innerHTML = `<iframe title="Wireframe" src="${location.pathname.split('/').pop()}?${q}" style="display:block;border:0;width:${FRAME_W}px;height:${minH || 100}px"></iframe>`;
+  document.getElementById('app').innerHTML = `<iframe title="Wireframe" src="${location.pathname.split('/').pop()}?${q}" style="display:block;border:0;width:${FRAME_W}px;height:${lockH || minH || 100}px"></iframe>`;
   addEventListener('message', e => {
-    const h = Math.max(minH, +e.data.h || 0);
+    const h = lockH || Math.max(minH, +e.data.h || 0);
     document.querySelector('iframe').style.height = h + 'px';
     document.documentElement.dataset.h = h;
   });
