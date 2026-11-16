@@ -27,12 +27,12 @@ Gốc tọa độ (0, 0) ở góc trước bên trái. x: sang phải (0 đến 
 
 | ID | Vị trí | Lỗ khoét | Tâm |
 |---|---|---|---|
-| 6 | Nắp | Cửa sổ LCD 73 × 26, bo góc R1 | (52, 68) |
-| 4 | Nắp | Nút nhấn Ø12.2 | (133, 76) |
-| 4 | Nắp | LED Ø6 (đế giữ LED 5 mm) | (110, 76) |
+| 5 | Nắp | Cửa sổ LCD 73 × 26, bo góc R1 | (52, 68) |
+| 6 | Nắp | Nút nhấn Ø12.2 | (133, 76) |
+| 6 | Nắp | LED Ø6 (đế giữ LED 5 mm) | (110, 76) |
 | 3 | Nắp | 19 lỗ Ø2.2: 1 lỗ giữa, 6 lỗ trên vòng R4, 12 lỗ trên vòng R8 | (122, 48) |
-| 2 | Nắp | Quang trở Ø5.6 | (134, 18) |
-| 5 | Nắp | Không khoét. In hoặc khắc nổi 0.5 mm vùng "QUẸT THẺ" 52 × 34 | (42, 26) |
+| 4 | Nắp | Quang trở Ø5.6 | (134, 18) |
+| 2 | Nắp | Không khoét. In hoặc khắc nổi 0.5 mm vùng "QUẸT THẺ" 52 × 34 | (42, 26) |
 | Chung | Mặt sau | USB 13 × 9, bo góc R2 | x = 126, cao 23 |
 | Chung | Mặt sau | Jack DC Ø8 | x = 30, cao 16 |
 | 1 | Mặt trái | 5 khe 30 × 2.4 bo đầu tròn | cách mặt trước 67, cao 9; 13.5; 18; 22.5; 27 |
@@ -42,11 +42,11 @@ Gốc tọa độ (0, 0) ở góc trước bên trái. x: sang phải (0 đến 
 
 | ID | Linh kiện | Gắn ở | Vùng chiếm (x, y) |
 |---|---|---|---|
-| 6 | LCD 1602 + module I2C | Dưới nắp, 4 cột đỡ M3 dài 7 | x 12 đến 92, y 50 đến 86 |
-| 5 | RC522 | Dán dưới nắp, cách nắp 1 mm | x 22 đến 82, y 6 đến 46 |
+| 5 | LCD 1602 + module I2C | Dưới nắp, 4 cột đỡ M3 dài 7 | x 12 đến 92, y 50 đến 86 |
+| 2 | RC522 | Dán dưới nắp, cách nắp 1 mm | x 22 đến 82, y 6 đến 46 |
 | 3 | Module buzzer | Dưới nắp, buzzer sát lưới loa | x 95 đến 128, y 41.5 đến 54.5 |
-| 2 | Module quang trở | Dưới nắp, quang trở nhô lên lỗ | x 104 đến 136, y 11 đến 25 |
-| 4 | Nút nhấn, LED | Bắt ren qua nắp | tâm (133, 76) và (110, 76) |
+| 4 | Module quang trở | Dưới nắp, quang trở nhô lên lỗ | x 104 đến 136, y 11 đến 25 |
+| 6 | Nút nhấn, LED | Bắt ren qua nắp | tâm (133, 76) và (110, 76) |
 | Chung | Board đục lỗ 70 × 50 | Đáy, 4 cột đồng cao 5 | x 75 đến 145, y 46 đến 96 |
 | Chung | ESP32 DevKit V1 | Cắm header cái trên board, USB quay ra sau | x 112 đến 140, y 45.5 đến 97 |
 | 1 | DHT22 | Đáy, kẹp L sát thành trái, mặt lưới quay ra khe | y 59.5 đến 74.5, cao 5 đến 30 |

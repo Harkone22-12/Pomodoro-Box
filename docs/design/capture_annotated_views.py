@@ -292,13 +292,13 @@ vp.fit()
     raw_1, _, p2d_1 = capture_scene_with_points("view1_front", setup_1, pts_1)
     canvas_1, tp_1 = clean_background_and_pad(raw_1, p2d_1, out_w=2200, out_h=1060, scale_render=1.12)
     callouts_1 = [
-        {"side": "left", "box_y": 250, "id_text": "ID 6", "label": "LCD 1602 (lời nhắc)", "color": "#6d4c41", "target": tp_1["lcd"]},
-        {"side": "left", "box_y": 330, "id_text": "ID 5", "label": "Vùng quẹt thẻ (RC522)", "color": "#43a047", "target": tp_1["rfid"]},
-        {"side": "right", "box_y": 220, "id_text": "ID 4", "label": 'LED đỏ "đang tập trung"', "color": "#8e24aa", "target": tp_1["led"]},
-        {"side": "right", "box_y": 310, "id_text": "ID 4", "label": "Nút nhấn", "color": "#8e24aa", "target": tp_1["btn"]},
-        {"side": "right", "box_y": 410, "id_text": "ID 3", "label": "Lỗ thoát âm buzzer", "color": "#1e88e5", "target": tp_1["buzzer"]},
-        {"side": "right", "box_y": 510, "id_text": None, "label": "Khe thoát nhiệt", "color": "#546e7a", "target": tp_1["vent_right"]},
-        {"side": "right", "box_y": 605, "id_text": "ID 2", "label": "Quang trở (lỗ lấy sáng)", "color": "#fb8c00", "target": tp_1["ldr"]},
+        {"side": "left", "box_y": 250, "id_text": "ID 5", "label": "LCD 1602 (lời nhắc)", "color": "#6d4c41", "target": tp_1["lcd"]},
+        {"side": "left", "box_y": 330, "id_text": "ID 2", "label": "Vùng quẹt thẻ (RC522)", "color": "#43a047", "target": tp_1["rfid"]},
+        {"side": "right", "box_y": 220, "id_text": "ID 6", "label": 'LED đỏ "đang tập trung"', "color": "#8e24aa", "target": tp_1["led"]},
+        {"side": "right", "box_y": 310, "id_text": "ID 6", "label": "Nút nhấn", "color": "#8e24aa", "target": tp_1["btn"]},
+        {"side": "right", "box_y": 410, "id_text": "ID 3", "label": "Lỗ thoát âm buzzer (19 lỗ)", "color": "#1e88e5", "target": tp_1["buzzer"]},
+        {"side": "right", "box_y": 510, "id_text": None, "label": "Khe thoát nhiệt (3 khe)", "color": "#546e7a", "target": tp_1["vent_right"]},
+        {"side": "right", "box_y": 605, "id_text": "ID 4", "label": "Quang trở (lỗ lấy sáng)", "color": "#fb8c00", "target": tp_1["ldr"]},
     ]
     img_1 = draw_callouts(canvas_1, callouts_1)
     save_both(img_1, "hinh_3d_1_ben_ngoai_truoc.png")
@@ -331,10 +331,10 @@ vp.fit()
     canvas_2, tp_2 = clean_background_and_pad(raw_2, p2d_2, out_w=2200, out_h=1060, scale_render=1.12)
     callouts_2 = [
         {"side": "left", "box_y": 420, "id_text": None, "label": "Cổng USB nạp code", "color": "#546e7a", "target": tp_2["usb"]},
-        {"side": "right", "box_y": 320, "id_text": "ID 6", "label": "LCD 1602", "color": "#6d4c41", "target": tp_2["lcd"]},
+        {"side": "right", "box_y": 320, "id_text": "ID 5", "label": "LCD 1602", "color": "#6d4c41", "target": tp_2["lcd"]},
         {"side": "right", "box_y": 430, "id_text": None, "label": "Vít M3 giữ nắp (4 góc)", "color": "#546e7a", "target": tp_2["screw"]},
-        {"side": "right", "box_y": 565, "id_text": "ID 1", "label": "Khe hút gió cho DHT22", "color": "#e53935", "target": tp_2["vent_dht"]},
-        {"side": "right", "box_y": 665, "id_text": None, "label": "Jack DC 5V", "color": "#546e7a", "target": tp_2["dc_jack"]},
+        {"side": "right", "box_y": 565, "id_text": "ID 1", "label": "Khe hút gió cho DHT22 (5 khe)", "color": "#e53935", "target": tp_2["vent_dht"]},
+        {"side": "right", "box_y": 665, "id_text": None, "label": "Jack nguồn DC 5V", "color": "#546e7a", "target": tp_2["dc_jack"]},
     ]
     img_2 = draw_callouts(canvas_2, callouts_2)
     save_both(img_2, "hinh_3d_2_ben_ngoai_sau.png")
@@ -370,7 +370,7 @@ vp.fit()
         {"side": "left", "box_y": 235, "id_text": None, "label": "Jack nguồn DC 5V", "color": "#546e7a", "target": tp_3["dc_jack"]},
         {"side": "left", "box_y": 325, "id_text": "ID 1", "label": "DHT22 sát khe hút gió", "color": "#e53935", "target": tp_3["dht22"]},
         {"side": "right", "box_y": 395, "id_text": None, "label": "Cổng USB (thẳng lỗ mặt sau)", "color": "#546e7a", "target": tp_3["usb"]},
-        {"side": "right", "box_y": 495, "id_text": None, "label": "ESP32 DevKit V1", "color": "#546e7a", "target": tp_3["esp32"]},
+        {"side": "right", "box_y": 495, "id_text": "ID 1-6,12", "label": "ESP32 DevKit V1", "color": "#1e293b", "target": tp_3["esp32"]},
         {"side": "right", "box_y": 590, "id_text": None, "label": "Board đục lỗ (hàn mạch)", "color": "#546e7a", "target": tp_3["perfboard"]},
     ]
     img_3 = draw_callouts(canvas_3, callouts_3)
@@ -405,12 +405,12 @@ vp.fit()
     raw_4, _, p2d_4 = capture_scene_with_points("view4_under_lid", setup_4, pts_4)
     canvas_4, tp_4 = clean_background_and_pad(raw_4, p2d_4, out_w=2200, out_h=1060, scale_render=1.12)
     callouts_4 = [
-        {"side": "left", "box_y": 230, "id_text": "ID 5", "label": "Đầu đọc RFID RC522", "color": "#43a047", "target": tp_4["rc522"]},
-        {"side": "left", "box_y": 510, "id_text": "ID 6", "label": "LCD 1602 + module I2C", "color": "#6d4c41", "target": tp_4["lcd_i2c"]},
-        {"side": "right", "box_y": 355, "id_text": "ID 2", "label": "Module quang trở LM393", "color": "#fb8c00", "target": tp_4["ldr"]},
+        {"side": "left", "box_y": 230, "id_text": "ID 2", "label": "Đầu đọc RFID RC522", "color": "#43a047", "target": tp_4["rc522"]},
+        {"side": "left", "box_y": 510, "id_text": "ID 5", "label": "LCD 1602 + module I2C", "color": "#6d4c41", "target": tp_4["lcd_i2c"]},
+        {"side": "right", "box_y": 355, "id_text": "ID 4", "label": "Module quang trở LM393", "color": "#fb8c00", "target": tp_4["ldr"]},
         {"side": "right", "box_y": 450, "id_text": "ID 3", "label": "Buzzer chủ động", "color": "#1e88e5", "target": tp_4["buzzer"]},
-        {"side": "right", "box_y": 695, "id_text": "ID 4", "label": "LED đỏ 5 mm + đế giữ", "color": "#8e24aa", "target": tp_4["led"]},
-        {"side": "right", "box_y": 780, "id_text": "ID 4", "label": "Nút nhấn (thân ren + đai ốc)", "color": "#8e24aa", "target": tp_4["btn"]},
+        {"side": "right", "box_y": 695, "id_text": "ID 6", "label": "LED đỏ 5 mm + đế giữ", "color": "#8e24aa", "target": tp_4["led"]},
+        {"side": "right", "box_y": 780, "id_text": "ID 6", "label": "Nút nhấn (thân ren + đai ốc)", "color": "#8e24aa", "target": tp_4["btn"]},
     ]
     img_4 = draw_callouts(canvas_4, callouts_4)
     save_both(img_4, "hinh_3d_4_ben_trong_mat_duoi_nap.png")
@@ -475,16 +475,16 @@ for i in range(root.bRepBodies.count):
     raw_5, _, p2d_5 = capture_scene_with_points("view5_exploded", setup_5, pts_5, cleanup_code=cleanup_5)
     canvas_5, tp_5 = clean_background_and_pad(raw_5, p2d_5, out_w=2200, out_h=1120, scale_render=1.12)
     callouts_5 = [
-        {"side": "left", "box_y": 175, "id_text": "ID 6", "label": "LCD 1602 + module I2C", "color": "#6d4c41", "target": tp_5["lcd"]},
-        {"side": "left", "box_y": 255, "id_text": "ID 5", "label": "Đầu đọc RFID RC522", "color": "#43a047", "target": tp_5["rc522"]},
+        {"side": "left", "box_y": 175, "id_text": "ID 5", "label": "LCD 1602 + module I2C", "color": "#6d4c41", "target": tp_5["lcd"]},
+        {"side": "left", "box_y": 255, "id_text": "ID 2", "label": "Đầu đọc RFID RC522", "color": "#43a047", "target": tp_5["rc522"]},
         {"side": "left", "box_y": 565, "id_text": "ID 1", "label": "DHT22 sát khe hút gió", "color": "#e53935", "target": tp_5["dht22"]},
         {"side": "left", "box_y": 645, "id_text": None, "label": "Jack nguồn DC 5V", "color": "#546e7a", "target": tp_5["dc_jack"]},
-        {"side": "right", "box_y": 135, "id_text": "ID 4", "label": 'LED đỏ "đang tập trung"', "color": "#8e24aa", "target": tp_5["led"]},
-        {"side": "right", "box_y": 210, "id_text": "ID 4", "label": "Nút nhấn", "color": "#8e24aa", "target": tp_5["btn"]},
+        {"side": "right", "box_y": 135, "id_text": "ID 6", "label": 'LED đỏ "đang tập trung"', "color": "#8e24aa", "target": tp_5["led"]},
+        {"side": "right", "box_y": 210, "id_text": "ID 6", "label": "Nút nhấn", "color": "#8e24aa", "target": tp_5["btn"]},
         {"side": "right", "box_y": 300, "id_text": "ID 3", "label": "Buzzer chủ động", "color": "#1e88e5", "target": tp_5["buzzer"]},
-        {"side": "right", "box_y": 380, "id_text": "ID 2", "label": "Module quang trở LM393", "color": "#fb8c00", "target": tp_5["ldr"]},
+        {"side": "right", "box_y": 380, "id_text": "ID 4", "label": "Module quang trở LM393", "color": "#fb8c00", "target": tp_5["ldr"]},
         {"side": "right", "box_y": 640, "id_text": None, "label": "Cổng USB (thẳng lỗ mặt sau)", "color": "#546e7a", "target": tp_5["usb"]},
-        {"side": "right", "box_y": 725, "id_text": None, "label": "ESP32 DevKit V1", "color": "#546e7a", "target": tp_5["esp32"]},
+        {"side": "right", "box_y": 725, "id_text": "ID 1-6,12", "label": "ESP32 DevKit V1", "color": "#1e293b", "target": tp_5["esp32"]},
     ]
     img_5 = draw_callouts(canvas_5, callouts_5)
     save_both(img_5, "hinh_3d_5_tach_nap.png")
@@ -681,12 +681,12 @@ for i in range(root.bRepBodies.count):
             drw.text((x + 12, y + 6), text_str, font=f_small, fill=(30, 30, 30))
 
     # Panel (a) badges & dimensions
-    draw_badge(224, 235, "ID 6", "LCD 1602 (cửa sổ 73 × 26)", "#6d4c41")
-    draw_badge(615, 235, "ID 4", "Ø6 LED", "#8e24aa")
-    draw_badge(860, 235, "ID 4", "Ø12.2 nút nhấn", "#8e24aa")
+    draw_badge(224, 235, "ID 5", "LCD 1602 (cửa sổ 73 × 26)", "#6d4c41")
+    draw_badge(615, 235, "ID 6", "Ø6 LED", "#8e24aa")
+    draw_badge(860, 235, "ID 6", "Ø12.2 nút nhấn", "#8e24aa")
     draw_badge(775, 550, "ID 3", "19 lỗ Ø2.2", "#1e88e5")
-    draw_badge(685, 680, "ID 2", "Ø5.6 quang trở", "#fb8c00")
-    draw_badge(240, 720, "ID 5", "Vùng quẹt thẻ RC522 (52 × 34)", "#43a047")
+    draw_badge(685, 680, "ID 4", "Ø5.6 quang trở", "#fb8c00")
+    draw_badge(240, 720, "ID 2", "Vùng quẹt thẻ RC522 (52 × 34)", "#43a047")
     drw.text((200, 185), "4 lỗ Ø3.4 (vít M3)", font=f_small, fill=(60, 80, 95))
 
     # Dimension lines for Panel (a): 150 mm width, 100 mm depth
@@ -715,12 +715,12 @@ for i in range(root.bRepBodies.count):
     # Panel (b) labels
     draw_badge(1360, 360, "ID 1", "DHT22 sát khe gió", "#e53935")
     draw_badge(1450, 200, None, "Jack DC 5V", "#546e7a")
-    draw_badge(1540, 390, "ID 6", "LCD 1602 + I2C", "#6d4c41")
-    draw_badge(1540, 610, "ID 5", "RFID RC522", "#43a047")
+    draw_badge(1540, 390, "ID 5", "LCD 1602 + I2C", "#6d4c41")
+    draw_badge(1540, 610, "ID 2", "RFID RC522", "#43a047")
     draw_badge(1800, 200, None, "Board đục lỗ 70×50", "#7a5c1f")
-    draw_badge(2020, 360, None, "ESP32 DevKit V1", "#1e293b")
+    draw_badge(1945, 360, "ID 1–6,12", "ESP32 DevKit V1", "#1e293b")
     draw_badge(1905, 485, "ID 3", "Buzzer", "#1e88e5")
-    draw_badge(1960, 650, "ID 2", "Quang trở LM393", "#fb8c00")
+    draw_badge(1960, 650, "ID 4", "Quang trở LM393", "#fb8c00")
     drw.text((1430, 805), "DHT22 cách ESP32 khoảng 100 mm để nhiệt của ESP32 không làm sai số đo.", font=f_small, fill=(50, 50, 50))
     drw.text((1415, 835), "Khe hút gió đặt thấp bên trái, khe thoát nhiệt đặt cao bên phải (đối lưu tự nhiên).", font=f_small, fill=(50, 50, 50))
 
