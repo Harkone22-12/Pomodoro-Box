@@ -13,13 +13,13 @@ Vỏ hộp sản phẩm được thiết kế trên phần mềm Autodesk Fusion
 \hline
 \textbf{STT} & \textbf{Vị trí bố trí trên vỏ hộp 3D} & \textbf{Chi tiết khoét lỗ / Gia công cơ khí} & \textbf{ID CN} \\ \hline
 1 & Màn hình LCD 1602 mặt trên & Khoét cửa sổ chữ nhật $73.0 \times 26.0\text{ mm}$ (bo góc $R1$) & \textbf{ID 5} \\ \hline
-2 & Nút nhấn cơ học đổi trạng thái & Khoét lỗ tròn $\varnothing 12.2\text{ mm}$ bắt ren/đai ốc trên nắp (cách mép phải $17\text{ mm}$) & \textbf{ID 6} \\ \hline
+2 & Nút nhấn cơ học đổi trạng thái & Khoét lỗ tròn $\varnothing 12.2\text{ mm}$ cho mũ nút in 3D (cách mép phải $17\text{ mm}$); nút nhấn $6 \times 6\text{ mm}$ hàn trên mảnh phíp đục lỗ bắt vít vào 2 cột đỡ dưới nắp & \textbf{ID 6} \\ \hline
 3 & Đèn LED đỏ báo tập trung & Khoét lỗ tròn $\varnothing 6.0\text{ mm}$ kèm đế giữ LED $5\text{ mm}$ & \textbf{ID 6} \\ \hline
 4 & Vùng cảm ứng quẹt thẻ RFID & Khu vực $52 \times 34\text{ mm}$ đánh dấu trên nắp; mạch RC522 dán sát mặt dưới nắp (đọc xuyên nhựa $3\text{ mm}$) & \textbf{ID 2} \\ \hline
 5 & Đầu đón sáng quang trở LM393 & Khoét lỗ tròn $\varnothing 5.6\text{ mm}$ đón ánh sáng trực tiếp từ bàn học & \textbf{ID 4} \\ \hline
 6 & Còi báo âm thanh Active Buzzer & Cụm 19 lỗ tròn thoát âm $\varnothing 2.2\text{ mm}$ bố trí đồng tâm & \textbf{ID 3} \\ \hline
 7 & Khe thông khí DHT22 \& tản nhiệt & 5 khe hút gió $30.0 \times 2.4\text{ mm}$ ở vách trái cho DHT22; 3 khe thoát nhiệt $30.0 \times 2.4\text{ mm}$ đặt cao ở vách phải & \textbf{ID 1} \\ \hline
-8 & Khoang vi điều khiển ESP32 & Cắm trên board đục lỗ hàn mạch $70 \times 50\text{ mm}$ (cắt từ phíp đục lỗ $7 \times 9\text{ cm}$) gắn trên 4 trụ đồng ở đáy hộp & \textbf{ID 1--6, 12} \\ \hline
+8 & Khoang vi điều khiển ESP32 & ESP32 cắm tháo rời trên 2 thanh hàng rào cái $1 \times 15$ (cắt từ thanh $1 \times 40$) hàn lên board đục lỗ $70 \times 50\text{ mm}$ (cắt từ phíp đục lỗ $7 \times 9\text{ cm}$); board gắn trên 4 trụ đồng ở đáy hộp & \textbf{ID 1--6, 12} \\ \hline
 9 & Cổng USB \& Jack nguồn DC 5V & Khoét lỗ USB $13.0 \times 9.0\text{ mm}$ thẳng cổng nạp ESP32 và lỗ tròn $\varnothing 8.0\text{ mm}$ lắp Jack DC 5V ở vách sau & Cấp nguồn \\ \hline
 \end{tabularx}
 \caption{Bảng ánh xạ vị trí lắp đặt linh kiện trên vỏ hộp 3D với ID chức năng}
@@ -80,7 +80,7 @@ Website quản lý sản phẩm được xây dựng theo kiến trúc kết h�
 \textbf{STT} & \textbf{Vùng giao diện trên Web UI} & \textbf{Thành phần hiển thị \& Tác vụ tương tác} & \textbf{ID CN} \\ \hline
 1 & Khối \textit{Góc học lúc này} -- Nhiệt \& Ẩm & Chỉ số nhiệt độ ($^\circ\text{C}$), độ ẩm (\%), nhãn tiện nghi và biểu đồ xu hướng 1 giờ & \textbf{ID 1} \\ \hline
 2 & Khối \textit{Góc học lúc này} -- Mức sáng & Giá trị ADC quang trở ($0 - 4095$), thanh đo mức, vạch ngưỡng $1200$ ($\approx 300\text{ lux}$), nhãn Đủ/Thiếu sáng & \textbf{ID 4} \\ \hline
-3 & Khối \textit{Hẹn giờ nhanh} \& \textit{Hẹn giờ Pomodoro} & Đồng hồ đếm ngược, thanh tiến trình vòng học, bộ chọn chế độ (25p/5p/15p/Tùy chỉnh), xem trước bản tin MQTT, nút Gửi xuống hộp / Dừng & \textbf{ID 3} \\ \hline
+3 & Khối \textit{Hẹn giờ nhanh} \& \textit{Hẹn giờ Pomodoro} & Đồng hồ đếm ngược, thanh tiến trình vòng học, bộ chọn chế độ (25p/5p/15p/Tùy chỉnh), xem trước bản tin MQTT, nút Bắt đầu đếm giờ / Tạm dừng & \textbf{ID 3} \\ \hline
 4 & Khối \textit{Màn hình trên hộp} \& \textit{Lời nhắc LCD 16×2} & Mô phỏng 2 dòng 16 ký tự LCD, ô nhập lời nhắc có bộ đếm ký tự, mẫu câu nhanh, nút Gửi lên màn hình & \textbf{ID 5} \\ \hline
 5 & Khối \textit{Phiên quẹt thẻ} \& \textit{Đánh giá sau phiên} & Bộ đếm thời gian học, mã thẻ UID, cảnh báo Telegram ($>60$p), nút mô phỏng quẹt thẻ, 3 nút đánh giá chất lượng tập trung sau phiên & \textbf{ID 2, 6, 9, 13} \\ \hline
 6 & Chỉ báo trạng thái đèn LED tập trung & Nhãn đồng bộ trạng thái đèn LED đỏ GPIO26 trên khối \textit{Phiên quẹt thẻ} và thanh trạng thái thiết bị & \textbf{ID 6} \\ \hline
@@ -132,8 +132,8 @@ Hệ thống giao diện Web UI tự xây dựng được tổ chức theo cấu
 \begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4.7cm}|>{\raggedright\arraybackslash}p{3.9cm}|>{\raggedright\arraybackslash}X|c|}
 \hline
 \textbf{Khối giao diện} & \textbf{Kênh Node-RED} & \textbf{Chức năng hiển thị \& Tác vụ tương tác} & \textbf{ID} \\ \hline
-\textbf{Hẹn giờ nhanh / Pomodoro} \newline {\small(\texttt{grp\_quick\_timer}, \newline \texttt{grp\_pomodoro\_ctrl})} & REST API \newline {\small\texttt{POST /api/timer}} $\rightarrow$ \texttt{study/timer} & Đồng hồ đếm ngược, thanh tiến trình, bộ chọn chế độ (25p, 5p, 15p, Tùy chỉnh 1--120p), xem trước payload JSON, nút Gửi xuống hộp / Dừng & \textbf{ID 3} \\ \hline
-\textbf{Lời nhắc trên LCD 16×2} \newline {\small(\texttt{grp\_lcd\_preview}, \newline \texttt{grp\_lcd\_composer})} & REST API \newline {\small\texttt{POST /api/lcd}} $\rightarrow$ \texttt{study/lcd} & Mô phỏng màn hình LCD $16 \times 2$, ô nhập chuỗi văn bản (tự lọc dấu tiếng Việt, tối đa 32 ký tự), bộ câu mẫu nhanh, nút Gửi lên màn hình & \textbf{ID 5} \\ \hline
+\textbf{Hẹn giờ nhanh / Pomodoro} \newline {\small(\texttt{grp\_quick\_timer}, \newline \texttt{grp\_pomodoro\_ctrl})} & REST API \newline {\small\texttt{POST /api/timer}} $\rightarrow$ \texttt{study/timer} & Đồng hồ đếm ngược, thanh tiến trình, bộ chọn chế độ (25p, 5p, 15p, Tùy chỉnh 1--120p), xem trước payload JSON, nút Bắt đầu đếm giờ / Tạm dừng & \textbf{ID 3} \\ \hline
+\textbf{Lời nhắc trên LCD 16×2} \newline {\small(\texttt{grp\_lcd\_preview}, \newline \texttt{grp\_lcd\_composer})} & REST API \newline {\small\texttt{POST /api/lcd}} $\rightarrow$ \texttt{study/lcd} & Mô phỏng màn hình LCD $16 \times 2$, ô nhập chuỗi văn bản (giữ tiếng Việt có dấu, tối đa 32 ký tự và 8 ký tự có dấu khác nhau), bộ câu mẫu nhanh, nút Gửi lên màn hình & \textbf{ID 5} \\ \hline
 \textbf{Góc học lúc này} \newline {\small(\texttt{grp\_room\_monitor})} & WebSocket đẩy từ \newline {\small\texttt{study/dht}, \texttt{study/light}} & Hiển thị nhiệt độ ($^\circ\text{C}$), độ ẩm (\%) kèm sparkline 1 giờ từ DHT22; giá trị ADC quang trở ($0-4095$), thanh chia mức và vạch ngưỡng thiếu sáng $1200$ ($\approx 300\text{ lux}$) & \textbf{ID 1, 4} \\ \hline
 \textbf{Phiên quẹt thẻ} \newline {\small(\texttt{grp\_rfid\_session})} & WebSocket đẩy từ \newline {\small\texttt{study/rfid}, \texttt{study/focus}}, Telegram & Hiển thị mã thẻ UID, thời gian học hiện tại, trạng thái LED đỏ trên hộp, khung cảnh báo nhắc nghỉ Telegram khi vượt $60$ phút và nút mô phỏng quẹt thẻ & \textbf{ID 2, 6, 9} \\ \hline
 \textbf{Nhật ký lệnh \& Hôm nay} \newline {\small(\texttt{grp\_command\_feed}, \newline \texttt{grp\_stats\_productivity})} & REST API {\small\texttt{GET /api/logs}} truy vấn Supabase & Bảng ghi nhận các bản tin MQTT và thông báo Telegram theo thời gian thực; thống kê số vòng hoàn thành trong ngày và 7 ngày gần nhất & \textbf{ID 7} \\ \hline

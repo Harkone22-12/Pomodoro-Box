@@ -10,6 +10,7 @@ Saves output to:
 import json
 import os
 import shutil
+import tempfile
 import urllib.request
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
@@ -17,7 +18,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 BRIDGE_URL = "http://127.0.0.1:18080"
 OUT_DIR_PROPOSAL = r"D:\Pomodoro\Pomodoro-Box\proposal\assets\design_fusion360"
 OUT_DIR_DOCS = r"D:\Pomodoro\Pomodoro-Box\docs\design_fusion360"
-RAW_DIR = r"C:\Users\Admin\.gemini\antigravity\brain\ad1ce98c-dc99-4061-8c0c-1872cfcd08c2\scratch\raw_fusion"
+RAW_DIR = os.path.join(tempfile.gettempdir(), "pomodoro_fusion_raw")
 
 os.makedirs(OUT_DIR_PROPOSAL, exist_ok=True)
 os.makedirs(OUT_DIR_DOCS, exist_ok=True)
@@ -74,6 +75,12 @@ def capture_scene_with_points(scene_name, setup_code, points_dict, cleanup_code=
     pts_json = json.dumps(points_dict)
     query_code = f"""
 doc.activate()
+root.isOriginFolderLightBulbOn = False
+root.xYConstructionPlane.isLightBulbOn = False
+root.xZConstructionPlane.isLightBulbOn = False
+root.yZConstructionPlane.isLightBulbOn = False
+if ui.activeSelections.count > 0:
+    ui.activeSelections.clear()
 {setup_code}
 vp = app.activeViewport
 vp.refresh()
@@ -284,7 +291,7 @@ vp.fit()
         "lcd": [52.0, 68.0, 47.1],
         "rfid": [34.0, 27.0, 50.15],
         "led": [110.0, 76.0, 54.5],
-        "btn": [133.0, 76.0, 54.0],
+        "btn": [133.0, 76.0, 52.0],
         "buzzer": [122.0, 48.0, 50.0],
         "vent_right": [150.0, 72.0, 35.5],
         "ldr": [134.0, 18.0, 50.0],
@@ -333,8 +340,8 @@ vp.fit()
         {"side": "left", "box_y": 420, "id_text": None, "label": "Cổng USB nạp code", "color": "#546e7a", "target": tp_2["usb"]},
         {"side": "right", "box_y": 320, "id_text": "ID 5", "label": "LCD 1602", "color": "#6d4c41", "target": tp_2["lcd"]},
         {"side": "right", "box_y": 430, "id_text": None, "label": "Vít M3 giữ nắp (4 góc)", "color": "#546e7a", "target": tp_2["screw"]},
-        {"side": "right", "box_y": 565, "id_text": "ID 1", "label": "Khe hút gió cho DHT22 (5 khe)", "color": "#e53935", "target": tp_2["vent_dht"]},
-        {"side": "right", "box_y": 665, "id_text": None, "label": "Jack nguồn DC 5V", "color": "#546e7a", "target": tp_2["dc_jack"]},
+        {"side": "right", "box_y": 590, "id_text": "ID 1", "label": "Khe hút gió cho DHT22 (5 khe)", "color": "#e53935", "target": tp_2["vent_dht"]},
+        {"side": "right", "box_y": 800, "id_text": None, "label": "Jack nguồn DC 5V", "color": "#546e7a", "target": tp_2["dc_jack"]},
     ]
     img_2 = draw_callouts(canvas_2, callouts_2)
     save_both(img_2, "hinh_3d_2_ben_ngoai_sau.png")
@@ -400,7 +407,7 @@ vp.fit()
         "ldr": [120.0, 18.0, 39.0],
         "buzzer": [111.0, 48.0, 36.0],
         "led": [110.0, 76.0, 42.5],
-        "btn": [133.0, 76.0, 35.0],
+        "btn": [133.0, 76.0, 38.9],
     }
     raw_4, _, p2d_4 = capture_scene_with_points("view4_under_lid", setup_4, pts_4)
     canvas_4, tp_4 = clean_background_and_pad(raw_4, p2d_4, out_w=2200, out_h=1060, scale_render=1.12)
@@ -410,7 +417,7 @@ vp.fit()
         {"side": "right", "box_y": 355, "id_text": "ID 4", "label": "Module quang trở LM393", "color": "#fb8c00", "target": tp_4["ldr"]},
         {"side": "right", "box_y": 450, "id_text": "ID 3", "label": "Buzzer chủ động", "color": "#1e88e5", "target": tp_4["buzzer"]},
         {"side": "right", "box_y": 695, "id_text": "ID 6", "label": "LED đỏ 5 mm + đế giữ", "color": "#8e24aa", "target": tp_4["led"]},
-        {"side": "right", "box_y": 780, "id_text": "ID 6", "label": "Nút nhấn (thân ren + đai ốc)", "color": "#8e24aa", "target": tp_4["btn"]},
+        {"side": "right", "box_y": 780, "id_text": "ID 6", "label": "Nút nhấn 6×6 + mũ nút in 3D", "color": "#8e24aa", "target": tp_4["btn"]},
     ]
     img_4 = draw_callouts(canvas_4, callouts_4)
     save_both(img_4, "hinh_3d_4_ben_trong_mat_duoi_nap.png")
@@ -464,7 +471,7 @@ for i in range(root.bRepBodies.count):
         "lcd": [52.0, 68.0, 46.8 + dz_explode],
         "rc522": [52.0, 26.0, 45.2 + dz_explode],
         "led": [110.0, 76.0, 54.5 + dz_explode],
-        "btn": [133.0, 76.0, 54.0 + dz_explode],
+        "btn": [133.0, 76.0, 52.0 + dz_explode],
         "buzzer": [122.0, 48.0, 42.0 + dz_explode],
         "ldr": [120.0, 18.0, 39.8 + dz_explode],
         "dht22": [6.5, 67.0, 20.0],
@@ -670,11 +677,15 @@ for i in range(root.bRepBodies.count):
         tb = drw.textbbox((0, 0), text_str, font=f_small)
         tw = tb[2] - tb[0]
         if id_str:
-            bw = 54 + tw + 26
+            id_tb = drw.textbbox((0, 0), id_str, font=f_bold_sm)
+            id_tw = id_tb[2] - id_tb[0]
+            id_pill_w = max(50, id_tw + 16)
+            bw = 3 + id_pill_w + 8 + tw + 14
             drw.rounded_rectangle([x, y, x + bw, y + 32], radius=6, fill=(255, 255, 255), outline=c_rgb, width=2)
-            drw.rounded_rectangle([x + 3, y + 3, x + 53, y + 29], radius=4, fill=c_rgb)
-            drw.text((x + 10, y + 6), id_str, font=f_bold_sm, fill=(255, 255, 255))
-            drw.text((x + 60, y + 6), text_str, font=f_small, fill=(30, 30, 30))
+            drw.rounded_rectangle([x + 3, y + 3, x + 3 + id_pill_w, y + 29], radius=4, fill=c_rgb)
+            id_tx = x + 3 + (id_pill_w - id_tw) // 2 - id_tb[0]
+            drw.text((id_tx, y + 6), id_str, font=f_bold_sm, fill=(255, 255, 255))
+            drw.text((x + 3 + id_pill_w + 8, y + 6), text_str, font=f_small, fill=(30, 30, 30))
         else:
             bw = tw + 24
             drw.rounded_rectangle([x, y, x + bw, y + 32], radius=6, fill=(255, 255, 255), outline=c_rgb, width=2)
@@ -682,8 +693,8 @@ for i in range(root.bRepBodies.count):
 
     # Panel (a) badges & dimensions
     draw_badge(224, 235, "ID 5", "LCD 1602 (cửa sổ 73 × 26)", "#6d4c41")
-    draw_badge(615, 235, "ID 6", "Ø6 LED", "#8e24aa")
-    draw_badge(860, 235, "ID 6", "Ø12.2 nút nhấn", "#8e24aa")
+    draw_badge(590, 235, "ID 6", "Ø6 LED", "#8e24aa")
+    draw_badge(775, 235, "ID 6", "Ø12.2 mũ nút nhấn", "#8e24aa")
     draw_badge(775, 550, "ID 3", "19 lỗ Ø2.2", "#1e88e5")
     draw_badge(685, 680, "ID 4", "Ø5.6 quang trở", "#fb8c00")
     draw_badge(240, 720, "ID 2", "Vùng quẹt thẻ RC522 (52 × 34)", "#43a047")
@@ -718,7 +729,7 @@ for i in range(root.bRepBodies.count):
     draw_badge(1540, 390, "ID 5", "LCD 1602 + I2C", "#6d4c41")
     draw_badge(1540, 610, "ID 2", "RFID RC522", "#43a047")
     draw_badge(1800, 200, None, "Board đục lỗ 70×50", "#7a5c1f")
-    draw_badge(1945, 360, "ID 1–6,12", "ESP32 DevKit V1", "#1e293b")
+    draw_badge(1910, 360, "ID 1–6,12", "ESP32 DevKit V1", "#1e293b")
     draw_badge(1905, 485, "ID 3", "Buzzer", "#1e88e5")
     draw_badge(1960, 650, "ID 4", "Quang trở LM393", "#fb8c00")
     drw.text((1430, 805), "DHT22 cách ESP32 khoảng 100 mm để nhiệt của ESP32 không làm sai số đo.", font=f_small, fill=(50, 50, 50))

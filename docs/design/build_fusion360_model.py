@@ -9,21 +9,42 @@ All coordinates and dimensions strictly follow:
 """
 
 import json
+import sys
+import urllib.error
 import urllib.request
 
 BRIDGE_URL = "http://127.0.0.1:18080"
 
 FUSION_CODE = r'''
-# Reset current document by deleting existing occurrences, bodies, and sketches in root
-for i in range(root.occurrences.count - 1, -1, -1):
-    root.occurrences.item(i).deleteMe()
-for i in range(root.bRepBodies.count - 1, -1, -1):
-    root.bRepBodies.item(i).deleteMe()
-for i in range(root.sketches.count - 1, -1, -1):
-    root.sketches.item(i).deleteMe()
+# Ensure an active Fusion design document exists
+if design is None or root is None:
+    doc = app.documents.add(adsk.core.DocumentTypes.FusionDesignDocumentType)
+    doc.activate()
+    adsk.doEvents()
+    design = adsk.fusion.Design.cast(app.activeProduct)
+    root = design.rootComponent
+
+# Reset current document cleanly (occurrences, features, bodies, and sketches)
+while root.occurrences.count > 0:
+    root.occurrences.item(root.occurrences.count - 1).deleteMe()
+for feat_col in (
+    root.features.moveFeatures,
+    root.features.chamferFeatures,
+    root.features.filletFeatures,
+    root.features.extrudeFeatures,
+):
+    while feat_col.count > 0:
+        feat_col.item(feat_col.count - 1).deleteMe()
+while root.bRepBodies.count > 0:
+    root.bRepBodies.item(root.bRepBodies.count - 1).deleteMe()
+while root.sketches.count > 0:
+    root.sketches.item(root.sketches.count - 1).deleteMe()
 
 # Hide origin planes/axes for a clean viewport
 root.isOriginFolderLightBulbOn = False
+root.xYConstructionPlane.isLightBulbOn = False
+root.xZConstructionPlane.isLightBulbOn = False
+root.yZConstructionPlane.isLightBulbOn = False
 
 # Appearance helper
 lib = app.materialLibraries.itemByName('Fusion Appearance Library')
@@ -232,9 +253,9 @@ extrude_all(
 
 # 2c. Circular Through-Holes on Lid:
 # - 4 corner M3 holes Ø3.4 at (7,7), (143,7), (7,93), (143,93)
-# - ID 4 Button Ø12.2 at (133, 76)
-# - ID 4 Red LED Ø6.0 at (110, 76)
-# - ID 2 Photoresistor LDR Ø5.6 at (134, 18)
+# - ID 6 Button cap hole Ø12.2 at (133, 76) (3D-printed cap over a 6x6 mm tactile switch)
+# - ID 6 Red LED Ø6.0 at (110, 76)
+# - ID 4 Photoresistor LDR Ø5.6 at (134, 18)
 # - ID 3 Buzzer 19 holes Ø2.2 at (122, 48): 1 center + 6 on R4 + 12 on R8
 sk_holes = comp_top.sketches.add(comp_top.xYConstructionPlane)
 sk_holes.name = "Sk_Cac_Lo_Tron_Tren_Nap"
@@ -275,7 +296,7 @@ extrude_all(
     target_bodies=[body_lid]
 )
 
-# 2e. ID 5: RFID Tap Zone "QUET THE" (52 x 34 mm at center (42, 26), embossed/inlaid 0.15 mm on top surface, not cut through)
+# 2e. ID 2: RFID Tap Zone "QUET THE" (52 x 34 mm at center (42, 26), embossed/inlaid 0.15 mm on top surface, not cut through)
 sk_rfid_zone = comp_top.sketches.add(comp_top.xYConstructionPlane)
 sk_rfid_zone.name = "Sk_Vung_Quet_The_52x34"
 draw_rounded_rect_xy(sk_rfid_zone, 42.0 - 20.0, 26.0 - 7.0, 42.0 + 4.0, 26.0 + 9.0, 2.5)
@@ -293,6 +314,18 @@ for lx, ly in lcd_standoffs:
     sk_lcd_post.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_lcd_post, lx, ly, 0), mm(2.75))
 extrude_all(
     comp_top, sk_lcd_post, 40.0, 47.0,
+    adsk.fusion.FeatureOperations.JoinFeatureOperation,
+    target_bodies=[body_lid]
+)
+
+# 2g. 2 Underside Posts for the push-button perfboard piece (Ø5, Z = 40.5..47 mm, M2 screws)
+btn_posts = [(133.0, 65.5), (133.0, 86.5)]
+sk_btn_post = comp_top.sketches.add(comp_top.xYConstructionPlane)
+sk_btn_post.name = "Sk_2_Cot_Do_Phip_Nut_Nhan"
+for px_, py_ in btn_posts:
+    sk_btn_post.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_post, px_, py_, 0), mm(2.5))
+extrude_all(
+    comp_top, sk_btn_post, 40.5, 47.0,
     adsk.fusion.FeatureOperations.JoinFeatureOperation,
     target_bodies=[body_lid]
 )
@@ -426,7 +459,7 @@ extrude_all(
 # 4. LINH KIEN DUOI NAP (Underside of Lid Components)
 # ==============================================================================
 
-# 4a. ID 6: LCD 1602 + I2C Module (x=12..92, y=50..86, under lid at Z=35..47)
+# 4a. ID 5: LCD 1602 + I2C Module (x=12..92, y=50..86, under lid at Z=35..47)
 sk_lcd_pcb = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
 sk_lcd_pcb.name = "Sk_LCD1602_PCB_80x36"
 sk_lcd_pcb.sketchCurves.sketchLines.addTwoPointRectangle(sk_pt(sk_lcd_pcb, 12.0, 50.0, 0), sk_pt(sk_lcd_pcb, 92.0, 86.0, 0))
@@ -463,7 +496,7 @@ extrude_all(
     name="LCD1602_Module_I2C", color=col_dark_gray
 )
 
-# 4b. ID 5: RFID RC522 Module (x=22..82, y=6..46, Z=44.4..46.0, 1mm below lid)
+# 4b. ID 2: RFID RC522 Module (x=22..82, y=6..46, Z=44.4..46.0, 1mm below lid)
 sk_rc522 = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
 sk_rc522.name = "Sk_RFID_RC522_60x40"
 sk_rc522.sketchCurves.sketchLines.addTwoPointRectangle(sk_pt(sk_rc522, 22.0, 6.0, 0), sk_pt(sk_rc522, 82.0, 46.0, 0))
@@ -492,7 +525,7 @@ extrude_all(
     name="Buzzer_Chu_Dong_D12", color=col_dark_gray
 )
 
-# 4d. ID 2: LDR Photoresistor Module LM393 (x=104..136, y=11..25, sensor at (134, 18))
+# 4d. ID 4: LDR Photoresistor Module LM393 (x=104..136, y=11..25, sensor at (134, 18))
 sk_ldr_pcb = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
 sk_ldr_pcb.name = "Sk_Module_Quang_Tro_PCB"
 sk_ldr_pcb.sketchCurves.sketchLines.addTwoPointRectangle(sk_pt(sk_ldr_pcb, 104.0, 11.0, 0), sk_pt(sk_ldr_pcb, 136.0, 25.0, 0))
@@ -511,33 +544,110 @@ extrude_all(
     name="Quang_Tro_Cam_Bien", color=col_perfboard
 )
 
-# 4e. ID 4: Push Button at (133, 76) & Red LED 5mm at (110, 76)
-sk_btn_body = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
-sk_btn_body.name = "Sk_Nut_Nhan_Than_Ren"
-sk_btn_body.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_body, 133.0, 76.0, 0), mm(5.9))
+# 4e. ID 6: Push Button at (133, 76) & Red LED 5mm at (110, 76)
+# The button is a 6x6 mm tactile switch (4.5 mm tall, through-hole) soldered on a small
+# perfboard piece (12 x 28 mm) screwed to 2 lid posts. A single-piece 3D-printed cap
+# rides in the Ø12.2 lid hole and attaches directly onto the Ø3.5 mm switch plunger via
+# a centering socket sleeve (Ø6.0 OD / Ø3.65 ID) with a 0.25 mm lead-in chamfer.
+# Z stack (mm): perfboard 38.9..40.5, switch body 40.5..44.0, plunger 44.0..45.0,
+# cap socket sleeve 44.35..45.0 (0.35 mm travel gap above switch body),
+# cap retaining flange Ø14 at 45.0..47.0, cap stem Ø11.8 at 47.0..52.0 (0.8 mm top fillet).
+sk_btn_pcb = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
+sk_btn_pcb.name = "Sk_Nut_Nhan_Phip_12x28"
+sk_btn_pcb.sketchCurves.sketchLines.addTwoPointRectangle(sk_pt(sk_btn_pcb, 127.0, 62.0, 0), sk_pt(sk_btn_pcb, 139.0, 90.0, 0))
 extrude_all(
-    comp_top_parts, sk_btn_body, 32.0, 50.0,
+    comp_top_parts, sk_btn_pcb, 38.9, 40.5,
     adsk.fusion.FeatureOperations.NewBodyFeatureOperation,
-    name="Nut_Nhan_Than_Duoi", color=col_dark_gray
+    name="Nut_Nhan_Phip_Do", color=col_perfboard
 )
 
-sk_btn_bezel = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
-sk_btn_bezel.name = "Sk_Nut_Nhan_Vien_Va_De_LED"
-sk_btn_bezel.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_bezel, 133.0, 76.0, 0), mm(7.4))
-sk_btn_bezel.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_bezel, 110.0, 76.0, 0), mm(3.8))
+sk_btn_body = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
+sk_btn_body.name = "Sk_Nut_Nhan_6x6_Than"
+sk_btn_body.sketchCurves.sketchLines.addTwoPointRectangle(sk_pt(sk_btn_body, 130.0, 73.0, 0), sk_pt(sk_btn_body, 136.0, 79.0, 0))
 extrude_all(
-    comp_top_parts, sk_btn_bezel, 50.0, 51.3,
+    comp_top_parts, sk_btn_body, 40.5, 44.0,
     adsk.fusion.FeatureOperations.NewBodyFeatureOperation,
-    name="Vien_Giu_Nut_Va_LED", color=col_silver
+    name="Nut_Nhan_6x6_Than", color=col_dark_gray
+)
+
+sk_btn_plunger = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
+sk_btn_plunger.name = "Sk_Nut_Nhan_6x6_Truc"
+sk_btn_plunger.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_plunger, 133.0, 76.0, 0), mm(1.75))
+extrude_all(
+    comp_top_parts, sk_btn_plunger, 44.0, 45.0,
+    adsk.fusion.FeatureOperations.NewBodyFeatureOperation,
+    name="Nut_Nhan_6x6_Truc", color=col_dark_gray
 )
 
 sk_btn_cap = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
-sk_btn_cap.name = "Sk_Nut_Nhan_Mu_Do"
-sk_btn_cap.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_cap, 133.0, 76.0, 0), mm(5.5))
-extrude_all(
-    comp_top_parts, sk_btn_cap, 51.3, 54.5,
+sk_btn_cap.name = "Sk_Nut_Nhan_Mu_Do_D11_8"
+sk_btn_cap.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_cap, 133.0, 76.0, 0), mm(5.9))
+feat_btn_cap = extrude_all(
+    comp_top_parts, sk_btn_cap, 47.0, 52.0,
     adsk.fusion.FeatureOperations.NewBodyFeatureOperation,
-    name="Nut_Nhan_Do_ID4", color=col_red_accent
+    name="Nut_Nhan_Mu_In3D_ID6", color=col_red_accent
+)
+body_btn_cap = feat_btn_cap.bodies.item(0)
+
+sk_btn_flange = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
+sk_btn_flange.name = "Sk_Nut_Nhan_Mu_Vanh_D14"
+sk_btn_flange.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_flange, 133.0, 76.0, 0), mm(7.0))
+extrude_all(
+    comp_top_parts, sk_btn_flange, 45.0, 47.0,
+    adsk.fusion.FeatureOperations.JoinFeatureOperation,
+    target_bodies=[body_btn_cap]
+)
+
+sk_btn_sleeve = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
+sk_btn_sleeve.name = "Sk_Nut_Nhan_Mu_Co_D6"
+sk_btn_sleeve.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_sleeve, 133.0, 76.0, 0), mm(3.0))
+extrude_all(
+    comp_top_parts, sk_btn_sleeve, 44.35, 45.0,
+    adsk.fusion.FeatureOperations.JoinFeatureOperation,
+    target_bodies=[body_btn_cap]
+)
+
+sk_btn_socket = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
+sk_btn_socket.name = "Sk_Nut_Nhan_Mu_Lo_Chup_D3_65"
+sk_btn_socket.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_btn_socket, 133.0, 76.0, 0), mm(1.825))
+extrude_all(
+    comp_top_parts, sk_btn_socket, 44.20, 45.0,
+    adsk.fusion.FeatureOperations.CutFeatureOperation,
+    target_bodies=[body_btn_cap]
+)
+
+# Ergonomic 0.8 mm fillet on cap top rim (Z=52.0) and 0.25 mm lead-in chamfer at socket mouth (Z=44.35)
+top_edges = adsk.core.ObjectCollection.create()
+sock_edges = adsk.core.ObjectCollection.create()
+for edge in body_btn_cap.edges:
+    geom = edge.geometry
+    if geom.curveType == adsk.core.Curve3DTypes.Circle3DCurveType:
+        bb = edge.boundingBox
+        z_mid = 0.5 * (bb.minPoint.z + bb.maxPoint.z)
+        if abs(z_mid - mm(52.0)) < 1e-4 and geom.radius > mm(5.0):
+            top_edges.add(edge)
+        elif abs(z_mid - mm(44.35)) < 1e-4 and abs(geom.radius - mm(1.825)) < 1e-4:
+            sock_edges.add(edge)
+
+if top_edges.count > 0:
+    fil_in = comp_top_parts.features.filletFeatures.createInput()
+    fil_in.addConstantRadiusEdgeSet(top_edges, adsk.core.ValueInput.createByReal(mm(0.8)), True)
+    comp_top_parts.features.filletFeatures.add(fil_in)
+
+if sock_edges.count > 0:
+    ch_in = comp_top_parts.features.chamferFeatures.createInput2()
+    ch_in.chamferEdgeSets.addEqualDistanceChamferEdgeSet(sock_edges, adsk.core.ValueInput.createByReal(mm(0.25)), True)
+    comp_top_parts.features.chamferFeatures.add(ch_in)
+
+body_btn_cap.appearance = col_red_accent
+
+sk_led_bezel = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
+sk_led_bezel.name = "Sk_De_Giu_LED"
+sk_led_bezel.sketchCurves.sketchCircles.addByCenterRadius(sk_pt(sk_led_bezel, 110.0, 76.0, 0), mm(3.8))
+extrude_all(
+    comp_top_parts, sk_led_bezel, 50.0, 51.3,
+    adsk.fusion.FeatureOperations.NewBodyFeatureOperation,
+    name="Vien_Giu_LED", color=col_silver
 )
 
 sk_led_dome = comp_top_parts.sketches.add(comp_top_parts.xYConstructionPlane)
@@ -576,9 +686,12 @@ def main():
         with urllib.request.urlopen(req, timeout=65.0) as resp:
             data = json.loads(resp.read().decode("utf-8"))
             print(json.dumps(data, indent=2, ensure_ascii=False))
+            if not data.get("ok"):
+                sys.exit(1)
     except urllib.error.HTTPError as e:
         print("HTTP ERROR:", e.code)
         print(e.read().decode("utf-8"))
+        sys.exit(1)
 
 
 if __name__ == "__main__":

@@ -254,6 +254,8 @@ const P = {
   sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/>',
   send:'<path d="M4 12l16-8-6 16-3-7z"/>',
   stop:'<rect x="6" y="6" width="12" height="12" rx="1"/>',
+  play:'<path d="M7 5l12 7-12 7z"/>',
+  pause:'<path d="M9 5v14M15 5v14"/>',
   user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
   mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 8l9 6 9-6"/>',
   lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
@@ -357,7 +359,7 @@ const timerCore = `
     <span class="rounds" role="img" aria-label="Vòng 3 trên 4"><i class="done"></i><i class="done"></i><i class="now"></i><i></i><span class="small muted">&nbsp;Vòng 3/4</span></span></div>
   <div><div class="clock">18:37 <small>/ 25:00</small></div></div>
   <div class="bar" role="progressbar" aria-valuenow="26" aria-valuemin="0" aria-valuemax="100" aria-label="Tiến độ vòng"><i style="width:26%"></i></div>`;
-const timerBtns = `<div class="row"><button class="btn primary mfull">${ico('send')}Gửi xuống hộp</button><button class="btn mfull">${ico('stop')}Dừng</button></div>`;
+const timerBtns = `<div class="row"><button class="btn primary mfull">${ico('play')}Bắt đầu đếm giờ</button><button class="btn mfull">${ico('pause')}Tạm dừng</button></div>`;
 
 /* ---------- Tổng quan ---------- */
 function overview(){
@@ -389,7 +391,7 @@ function overview(){
     <div class="alert" role="status">${ico('warn')}<span><b>Đã 65 phút chưa nghỉ.</b> Đã nhắc qua Telegram lúc 21:48.</span></div>
     <a class="btn push" href="${link('tong-quan', '&state=danh-gia')}">Mô phỏng quẹt thẻ để kết thúc</a>`)}
   ${card('s4 t6', 'Màn hình trên hộp', tags('grp_lcd_preview', 'ID 5'), `
-    ${lcd('On tap chuong 3')}
+    ${lcd('Ôn tập chương 3')}
     <p class="small muted">LCD 1602 đang hiện lời nhắc gần nhất gửi từ web.</p>
     <a class="btn ghost push" href="${link('phien-hoc')}" style="align-self:flex-start">Đổi lời nhắc →</a>`)}
   ${card('s4 t12', 'Hôm nay và 7 ngày', tags('grp_stats_productivity', 'ID 7'), `
@@ -402,7 +404,7 @@ function overview(){
 
 /* ---------- Phiên học ---------- */
 function session(){
-  const log = [['21:48:02','Telegram','Nhắc nghỉ: đã 65 phút','Đã gửi'],['21:20:41','study/timer','{"minutes":25}','Hộp đã nhận'],['21:20:05','study/lcd','{"text":"On tap chuong 3"}','Hộp đã nhận'],['20:43:17','study/rfid','{"uid":"A1B2C3D4","action":"start"}','Từ hộp'],['20:42:50','study/timer','{"minutes":5}','Hộp đã nhận']];
+  const log = [['21:48:02','Telegram','Nhắc nghỉ: đã 65 phút','Đã gửi'],['21:20:41','study/timer','{"minutes":25}','Hộp đã nhận'],['21:20:05','study/lcd','{"text":"Ôn tập chương 3"}','Hộp đã nhận'],['20:43:17','study/rfid','{"uid":"A1B2C3D4","action":"start"}','Từ hộp'],['20:42:50','study/timer','{"minutes":5}','Hộp đã nhận']];
   const body = `<div class="grid">
   ${card('s7 t12', 'Hẹn giờ Pomodoro', tags('grp_pomodoro_ctrl', 'ID 3'), `
     <div class="seg" role="group" aria-label="Chế độ"><button aria-pressed="true">Tập trung 25p</button><button aria-pressed="false">Nghỉ ngắn 5p</button><button aria-pressed="false">Nghỉ dài 15p</button><button aria-pressed="false">Tùy chỉnh 1–120p</button></div>
@@ -410,13 +412,13 @@ function session(){
     <div><div class="xs muted" style="margin-bottom:4px">Bản tin MQTT sẽ gửi</div><code class="code">study/timer ← {"minutes":25}</code></div>
     <div class="note">${ico('info')}<span>Hộp tự đếm giờ bằng FreeRTOS. Mất mạng giữa chừng còi vẫn kêu đúng lúc.</span></div>`)}
   ${card('s5 t12', 'Lời nhắc trên LCD 16×2', tags('grp_lcd_composer', 'ID 5'), `
-    ${lcd('On tap chuong 3')}
+    ${lcd('Ôn tập chương 3')}
     <div class="field" style="margin:0"><label>Lời nhắc</label><div class="input filled">Ôn tập chương 3</div>
       <div class="row xs muted mono" style="justify-content:space-between"><span>Dòng 1: 15/16</span><span>Dòng 2: 0/16</span><span>Tổng: 15/32</span></div></div>
-    <div class="note">${ico('info')}<span>LCD không có dấu tiếng Việt. Hộp sẽ hiện: <b class="mono">On tap chuong 3</b></span></div>
+    <div class="note">${ico('info')}<span>LCD hiện tiếng Việt có dấu bằng ký tự tự vẽ, tối đa 8 ký tự có dấu khác nhau mỗi lần. Lời nhắc này dùng <b class="mono">4/8</b>.</span></div>
     <div><div class="lab" style="margin-bottom:8px">Câu mẫu</div><div class="chips"><button class="chip">Đang tập trung</button><button class="chip">Đừng làm phiền</button><button class="chip">Giờ nghỉ 5 phút</button><button class="chip">Uống nước đi</button><button class="chip">Ôn tập chương 3</button></div></div>
     <button class="btn primary mfull" style="align-self:flex-start">${ico('send')}Gửi lên màn hình</button>
-    <code class="code">study/lcd ← {"text":"On tap chuong 3"}</code>`)}
+    <code class="code">study/lcd ← {"text":"Ôn tập chương 3"}</code>`)}
   ${card('s12', 'Nhật ký lệnh và sự kiện', tags('grp_command_feed', 'ID 7'), `
     <table class="stack"><thead><tr><th>Thời điểm</th><th>Kênh</th><th>Nội dung</th><th>Trạng thái</th></tr></thead><tbody>
     ${log.map(r => `<tr><td data-l="Thời điểm" class="mono">${r[0]}</td><td data-l="Kênh" class="mono">${r[1]}</td><td data-l="Nội dung" class="mono" style="overflow-wrap:anywhere">${r[2]}</td><td data-l="Trạng thái">${r[3]}</td></tr>`).join('')}
@@ -471,7 +473,7 @@ function settings(){
       ${card('s5 t12', 'Xem trước một chu kỳ', tags('2 giờ 10 phút'), `
         <div class="cycle" role="img" aria-label="4 vòng 25 phút, 3 lần nghỉ 5 phút, 1 lần nghỉ dài 15 phút">${[[25,''],[5,'brk'],[25,''],[5,'brk'],[25,''],[5,'brk'],[25,''],[15,'long']].map(([m, c]) => `<i class="${c}" style="flex:${m}"></i>`).join('')}</div>
         <div class="kv"><div><span class="muted">■ Tập trung</span><b>4 × 25 phút</b></div><div><span class="muted">▨ Nghỉ ngắn</span><b>3 × 5 phút</b></div><div><span class="muted">■ Nghỉ dài</span><b>1 × 15 phút</b></div><div><span class="muted">Mục tiêu ngày</span><b>8 vòng = 2 chu kỳ</b></div></div>
-        <div class="note push">${ico('info')}<span>Lưu xong, thời lượng mới áp dụng từ lần <b>Gửi xuống hộp</b> kế tiếp.</span></div>`)}</div>`,
+        <div class="note push">${ico('info')}<span>Lưu xong, thời lượng mới áp dụng từ lần <b>Bắt đầu đếm giờ</b> kế tiếp.</span></div>`)}</div>`,
     'canh-bao': `<div class="grid">
       ${card('s6 t12', 'Nhắc nghỉ qua Telegram', tags('grp_conf_alerts', 'ID 9'), `<div>
         ${setrow('Bật nhắc nghỉ Telegram', 'Bot nhắn khi bạn ngồi học quá lâu', true)}</div>

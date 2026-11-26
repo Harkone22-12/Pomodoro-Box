@@ -19,6 +19,16 @@ Phương pháp Pomodoro chia thời gian làm việc thành các phiên tập tr
     \item \textbf{Theo dõi tiến độ học tập có hệ thống:} Người học quẹt thẻ từ RFID (RC522~\cite{mfrc522}) để bắt đầu và kết thúc phiên. Toàn bộ thời gian học được lưu trữ trên cơ sở dữ liệu Supabase, cho phép xem lại lịch sử qua giao diện web và nhận email tổng kết tuần qua Gmail SMTP.
 \end{itemize}
 
+\textbf{Kịch bản sử dụng trong một buổi học} (số ID tương ứng với Bảng~\ref{tab:danh_sach_chuc_nang}):
+\begin{enumerate}[leftmargin=1.2cm, noitemsep, topsep=2pt]
+    \item \textbf{Cài đặt lần đầu:} Người học cấp nguồn cho hộp, dùng điện thoại kết nối vào mạng \texttt{Pomodoro-Box-Setup} để nhập Wi-Fi (ID 12), sau đó tạo tài khoản và đăng nhập trên Web UI (ID 11).
+    \item \textbf{Bắt đầu học:} Người học ngồi vào bàn, quẹt thẻ RFID để mở phiên học (ID 2) và nhấn nút trên hộp để bật đèn LED đỏ báo đang tập trung (ID 6).
+    \item \textbf{Đặt giờ:} Trên Web UI, người học chọn 25 phút và bấm \textit{Bắt đầu đếm giờ} để hộp đếm ngược (ID 3), đồng thời gõ mục tiêu của vòng học để hiện lên màn hình LCD (ID 5).
+    \item \textbf{Trong lúc học:} Hộp tự đo nhiệt độ, độ ẩm (ID 1) và ánh sáng (ID 4), lưu dữ liệu lên Supabase (ID 7); Web UI cảnh báo khi bàn học thiếu sáng. Nếu người học ngồi liên tục quá 60 phút, điện thoại nhận tin nhắn Telegram nhắc nghỉ (ID 9).
+    \item \textbf{Hết giờ:} Còi kêu báo kết thúc vòng học (ID 3). Khi học xong, người học quẹt thẻ lần nữa để đóng phiên (ID 2), tắt đèn đỏ (ID 6) và đánh giá mức độ tập trung của phiên trên Web UI (ID 13).
+    \item \textbf{Xem lại:} Người học xem biểu đồ và lịch sử phiên học (ID 8), nhận khuyến nghị về thời lượng, khung giờ và điều kiện phòng học phù hợp (ID 13), và nhận email tổng kết vào tối Chủ nhật (ID 10).
+\end{enumerate}
+
 \subsection{Danh sách các chức năng có trong sản phẩm}
 
 Toàn bộ 13 chức năng của hệ thống được phân loại thành nhóm \textbf{Chức năng căn bản} và nhóm \textbf{Chức năng nâng cao} trong Bảng~\ref{tab:danh_sach_chuc_nang}. Ký hiệu YC$n$ ở mỗi chức năng nâng cao là số thứ tự yêu cầu nâng cao tương ứng trong Quy định đồ án cuối kỳ.
@@ -47,7 +57,7 @@ Toàn bộ 13 chức năng của hệ thống được phân loại thành nhóm
 
 \textbf{4} & \textbf{YC2 -- Thiết bị phần cứng:} \newline Module quang trở LM393 \newline \textit{(Input -- Dương)} & ESP32 đọc điện áp tương tự từ chân cảm biến qua bộ chuyển đổi ADC1 (chân GPIO34), xuất bản lên topic \texttt{study/light}. Ngưỡng thiếu sáng $<300\text{ lux}$ dự kiến tương ứng mức ADC $<1200$ và sẽ được nhóm hiệu chỉnh lại bằng thực nghiệm khi có linh kiện; Node-RED xử lý và cập nhật mức sáng cùng cảnh báo thiếu sáng lên Web UI. \\ \hline
 
-\textbf{5} & \textbf{YC3 -- Thiết bị phần cứng:} \newline Màn hình LCD 1602 kèm module I2C PCF8574 \newline \textit{(Output -- Hào)} & Người dùng nhập lời nhắc trên Web UI tự xây; giao diện gọi REST API gửi chuỗi văn bản qua Node-RED xuống topic \texttt{study/lcd} (chuẩn hóa bỏ dấu tiếng Việt). ESP32 nhận bản tin, hiển thị lời nhắc trên dòng 1 và thời gian đếm ngược trên dòng 2 qua bus I2C. \\ \hline
+\textbf{5} & \textbf{YC3 -- Thiết bị phần cứng:} \newline Màn hình LCD 1602 kèm module I2C PCF8574 \newline \textit{(Output -- Hào)} & Người dùng nhập lời nhắc trên Web UI tự xây; giao diện gọi REST API gửi chuỗi văn bản qua Node-RED xuống topic \texttt{study/lcd} (giữ nguyên tiếng Việt có dấu, mã hóa UTF-8). ESP32 nhận bản tin, nạp các ký tự có dấu vào bộ nhớ ký tự tự vẽ (CGRAM) của LCD, tối đa 8 ký tự có dấu khác nhau mỗi lần, rồi hiển thị lời nhắc trên dòng 1 và thời gian đếm ngược trên dòng 2 qua bus I2C. \\ \hline
 
 \textbf{6} & \textbf{YC1 -- Thiết bị phần cứng:} \newline Nút nhấn cơ học \& Đèn LED đỏ 5mm \newline \textit{(Input/Output -- Dương)} & Nút nhấn kết nối chân GPIO27 dùng ngắt ngoài chống rung phần mềm (50 ms). Khi bấm nút, ESP32 bật/tắt đèn LED đỏ tại chân GPIO26 báo trạng thái đang tập trung tại chỗ, đồng thời xuất bản trạng thái lên topic \texttt{study/focus} để Node-RED đồng bộ hiển thị lên Web UI. \\ \hline
 

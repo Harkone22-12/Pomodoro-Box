@@ -28,7 +28,7 @@ Gốc tọa độ (0, 0) ở góc trước bên trái. x: sang phải (0 đến 
 | ID | Vị trí | Lỗ khoét | Tâm |
 |---|---|---|---|
 | 5 | Nắp | Cửa sổ LCD 73 × 26, bo góc R1 | (52, 68) |
-| 6 | Nắp | Nút nhấn Ø12.2 | (133, 76) |
+| 6 | Nắp | Lỗ Ø12.2 cho mũ nút in 3D (mũ Ø11.8, nhô 2 mm trên nắp) | (133, 76) |
 | 6 | Nắp | LED Ø6 (đế giữ LED 5 mm) | (110, 76) |
 | 3 | Nắp | 19 lỗ Ø2.2: 1 lỗ giữa, 6 lỗ trên vòng R4, 12 lỗ trên vòng R8 | (122, 48) |
 | 4 | Nắp | Quang trở Ø5.6 | (134, 18) |
@@ -46,13 +46,14 @@ Gốc tọa độ (0, 0) ở góc trước bên trái. x: sang phải (0 đến 
 | 2 | RC522 | Dán dưới nắp, cách nắp 1 mm | x 22 đến 82, y 6 đến 46 |
 | 3 | Module buzzer | Dưới nắp, buzzer sát lưới loa | x 95 đến 128, y 41.5 đến 54.5 |
 | 4 | Module quang trở | Dưới nắp, quang trở nhô lên lỗ | x 104 đến 136, y 11 đến 25 |
-| 6 | Nút nhấn, LED | Bắt ren qua nắp | tâm (133, 76) và (110, 76) |
+| 6 | Nút nhấn 6 × 6, cao 4.5 | Hàn trên mảnh phíp đục lỗ 12 × 28, bắt vít M2 vào 2 cột Ø5 dưới nắp tại (133, 65.5) và (133, 86.5). Mũ nút in 3D có vành Ø14 dưới nắp và cổ chụp Ø3.65 (sâu 0.65 mm, vát mép 0.25 mm) ôm lên trục nút | x 127 đến 139, y 62 đến 90 |
+| 6 | LED đỏ 5 mm | Đế giữ LED xuyên qua nắp | tâm (110, 76) |
 | Chung | Board đục lỗ 70 × 50 | Đáy, 4 cột đồng cao 5 | x 75 đến 145, y 46 đến 96 |
 | Chung | ESP32 DevKit V1 | Cắm header cái trên board, USB quay ra sau | x 112 đến 140, y 45.5 đến 97 |
 | 1 | DHT22 | Đáy, kẹp L sát thành trái, mặt lưới quay ra khe | y 59.5 đến 74.5, cao 5 đến 30 |
 | Chung | Jack DC | Mặt sau | tâm x = 30, cao 16 |
 
-Linh kiện dưới nắp và linh kiện ở đáy chồng lên nhau khi nhìn từ trên, nhưng khác độ cao. Mặt trên ESP32 cao khoảng 25 mm, phần thấp nhất dưới nắp nằm phía trên ESP32 (chân nút nhấn) cao khoảng 28 mm, nên không chạm nhau.
+Linh kiện dưới nắp và linh kiện ở đáy chồng lên nhau khi nhìn từ trên, nhưng khác độ cao. Mặt trên ESP32 cao khoảng 25 mm, phần thấp nhất dưới nắp nằm phía trên ESP32 (chân hàn của nút nhấn dưới mảnh phíp) cao khoảng 36 mm, nên không chạm nhau.
 
 ## Lý do bố trí (dùng khi trình bày)
 
