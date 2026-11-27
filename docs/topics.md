@@ -1,21 +1,22 @@
 # MQTT topics
 
-Single source of truth for topics and payloads. Code copies live in
-`firmware/include/topics.h` and `backend/src/topics.ts`. If you change a topic,
-change all three in the same pull request, and get it reviewed by all members.
+Single source of truth for topics and payloads. Firmware constants live in
+`firmware/include/topics.h`, and Node-RED flows subscribe/publish to these exact topics
+(e.g., `nodered/flows_minh.json`). If you change a topic, update `docs/topics.md`,
+`firmware/include/topics.h`, and the corresponding Node-RED flow in the same pull request.
 
 All payloads are JSON objects encoded as UTF-8.
 
 | Topic | Direction | Publisher | Subscriber | Payload | Owner |
 |---|---|---|---|---|---|
-| `study/dht` | ESP32 → web | ESP32 `dht_flow` | backend `dht.flow.ts` | `{"temp": number, "hum": number}` | minh |
-| `study/light` | ESP32 → web | ESP32 `light_flow` | backend `light.flow.ts` | `{"raw": number, "level": string}` | duong |
-| `study/rfid` | ESP32 → web | ESP32 `rfid_flow` | backend `rfid.flow.ts` | `{"uid": string, "action": "start" \| "stop"}` | duong |
-| `study/focus` | ESP32 → web | ESP32 `focus_flow` | backend `focus.flow.ts` | `{"status": "busy" \| "idle"}` | duong |
-| `study/timer` | web → ESP32 | backend `timer.flow.ts` | ESP32 `timer_flow` | `{"minutes": number}` | hao |
-| `study/lcd` | web → ESP32 | backend `lcd.flow.ts` | ESP32 `lcd_flow` | `{"text": string}` | hao |
+| `study/dht` | ESP32 → Node-RED | ESP32 `dht_flow` | Node-RED (`flows_minh.json`) | `{"temp": number, "hum": number}` | minh |
+| `study/light` | ESP32 → Node-RED | ESP32 `light_flow` | Node-RED (light flow) | `{"raw": number, "level": string}` | duong |
+| `study/rfid` | ESP32 → Node-RED | ESP32 `rfid_flow` | Node-RED (rfid flow) | `{"uid": string, "action": "start" \| "stop"}` | duong |
+| `study/focus` | ESP32 → Node-RED | ESP32 `focus_flow` | Node-RED (focus flow) | `{"status": "busy" \| "idle"}` | duong |
+| `study/timer` | Node-RED → ESP32 | Node-RED (timer flow) | ESP32 `timer_flow` | `{"minutes": number}` | hao |
+| `study/lcd` | Node-RED → ESP32 | Node-RED (lcd flow) | ESP32 `lcd_flow` | `{"text": string}` | hao |
 
-The focus flow (button → red LED) runs on the ESP32 and publishes `study/focus` to sync status with the web dashboard.
+The focus flow (button → red LED) runs on the ESP32 and publishes `study/focus` to sync status with Node-RED Dashboard 2.0.
 
 ## Field notes
 
@@ -31,14 +32,8 @@ The focus flow (button → red LED) runs on the ESP32 and publishes `study/focus
 - Command topics (`study/timer`, `study/lcd`): QoS 1, **not retained**. A retained
   timer command would fire again every time the ESP32 reconnects.
 
-## Socket.IO events (backend ↔ browser)
+## Node-RED Dashboard 2.0 UI sync
 
-These names are a proposal; the owner of each flow can rename theirs, but must update this table.
-
-| Event | Direction | Payload | Owner |
-|---|---|---|---|
-| `dht` | server → client | same as `study/dht` (+ timestamp) | minh |
-| `light` | server → client | same as `study/light` (+ timestamp) | duong |
-| `rfid` | server → client | same as `study/rfid` (+ timestamp) | duong |
-| `timer:set` | client → server | `{"minutes": number}` | hao |
-| `lcd:set` | client → server | `{"text": string}` | hao |
+Node-RED Dashboard 2.0 (`@flowfuse/node-red-dashboard`) pushes state updates directly
+from Node-RED flows to the browser over its built-in Socket.IO channel on `/dashboard`.
+No custom backend REST API or manual Socket.IO event contract is required.

@@ -1,16 +1,17 @@
-# Study Station (Trạm góc học tập)
+# Study Station (Trạm học tập Pomodoro)
 
 University IoT project. An ESP32 box sits on a study desk. Its sensors send data over
-MQTT to our own web app (no Node-RED), and the web app sends commands back to the ESP32.
+MQTT to **Node-RED**, which processes flows, persists time-series & session data to
+**Supabase Cloud PostgreSQL**, and renders the live web interface via **Node-RED Dashboard 2.0**
+(`@flowfuse/node-red-dashboard`).
 
-```
-ESP32 ──MQTT──▶ Mosquitto ──MQTT──▶ backend (Express + Socket.IO) ──▶ MongoDB Atlas
-  ▲                                     │  ▲
-  └──────────────MQTT───────────────────┘  └──Socket.IO──▶ frontend (React)
+```text
+ESP32 ──MQTT──▶ Mosquitto ──MQTT──▶ Node-RED (flows + Dashboard 2.0 UI) ──HTTPS/REST──▶ Supabase PostgreSQL
+  ▲                                        │
+  └──────────────────MQTT──────────────────┘
 ```
 
-> This repository is a **scaffold**. Every flow is a stub marked `TODO(<handle>)`.
-> Each member implements their own flows. See [CONTRIBUTING.md](CONTRIBUTING.md).
+> Each member implements their own flows on their branch. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Team
 
@@ -25,49 +26,46 @@ marks their files (`Owner: <handle>`) and stubs (`TODO(<handle>)`).
 
 ## Repository layout
 
-```
+```text
 firmware/   ESP32 DevKit V1, PlatformIO, Arduino framework
-backend/    Node.js + Express + MQTT.js + Socket.IO + Mongoose
-frontend/   React + TypeScript + Vite + Socket.IO client
-docs/       topics.md: every MQTT topic and Socket.IO event
+nodered/    Node-RED flows (flows_*.json), pure JS logic/tests, Supabase SQL schema
+docs/       topics.md: MQTT topic & payload contract, Wireframe/, design/
 mosquitto/  local broker config for docker-compose
+proposal/   official LaTeX project proposal (main.tex, sections/)
 ```
+
+*(Note: `backend/` and `frontend/` are legacy Express/React scaffolds kept from an earlier draft and are not used in the Node-RED Dashboard 2.0 architecture.)*
 
 ## Flows
 
 Full payload details: [docs/topics.md](docs/topics.md).
 
-| Flow | Owner | Devices | Topic | JSON | Firmware | Backend | Frontend |
-|---|---|---|---|---|---|---|---|
-| DHT | minh | DHT22 | `study/dht` (ESP32 → web) | `{"temp": number, "hum": number}` | `src/flows/dht_flow.*` | `src/flows/dht.flow.ts` | `src/flows/DhtPanel.tsx` |
-| Light | duong | LDR (analog) | `study/light` (ESP32 → web) | `{"raw": number, "level": string}` | `src/flows/light_flow.*` | `src/flows/light.flow.ts` | `src/flows/LightPanel.tsx` |
-| RFID sessions | duong | RC522 | `study/rfid` (ESP32 → web) | `{"uid": string, "action": "start"\|"stop"}` | `src/flows/rfid_flow.*` | `src/flows/rfid.flow.ts` | `src/flows/RfidPanel.tsx` |
-| Focus | duong | button, red LED | none (local on ESP32) | none | `src/flows/focus_flow.*` | none | none |
-| Timer | hao | active buzzer | `study/timer` (web → ESP32) | `{"minutes": number}` | `src/flows/timer_flow.*` | `src/flows/timer.flow.ts` | `src/flows/TimerForm.tsx` |
-| LCD | hao | LCD1602 I2C | `study/lcd` (web → ESP32) | `{"text": string}` | `src/flows/lcd_flow.*` | `src/flows/lcd.flow.ts` | `src/flows/LcdForm.tsx` |
+| Flow | Owner | Devices | Topic | JSON | Firmware | Node-RED / Dashboard 2.0 |
+|---|---|---|---|---|---|---|
+| DHT | minh | DHT22 | `study/dht` (ESP32 → Node-RED) | `{"temp": number, "hum": number}` | `src/flows/dht_flow.*` | `nodered/flows_minh.json` (`/minh`) |
+| Light | duong | LDR (analog) | `study/light` (ESP32 → Node-RED) | `{"raw": number, "level": string}` | `src/flows/light_flow.*` | Dashboard 2.0 Light gauge/alert |
+| RFID sessions | duong | RC522 | `study/rfid` (ESP32 → Node-RED) | `{"uid": string, "action": "start"\|"stop"}` | `src/flows/rfid_flow.*` | Dashboard 2.0 Session panel |
+| Focus | duong | button, red LED | `study/focus` (ESP32 → Node-RED) | `{"status": "busy"\|"idle"}` | `src/flows/focus_flow.*` | Dashboard 2.0 Focus indicator |
+| Timer | hao | active buzzer | `study/timer` (Node-RED → ESP32) | `{"minutes": number}` | `src/flows/timer_flow.*` | Dashboard 2.0 Timer controls |
+| LCD | hao | LCD1602 I2C | `study/lcd` (Node-RED → ESP32) | `{"text": string}` | `src/flows/lcd_flow.*` | Dashboard 2.0 LCD input |
 
 Advanced goals:
 
-- **minh**: time-series storage, chart, own analysis model.
-- **duong**: RFID study sessions, button → red LED, Telegram alert
-  (`backend/src/notify/telegram.ts`), weekly email (`backend/src/notify/email.ts`).
-- **hao**: own website, register/login with the database (`backend/src/auth/`,
-  `frontend/src/auth/`), web text → LCD.
+- **minh**: Supabase time-series storage (`sensor_data`, `study_sessions`), 24h chart & stats (YC4, YC5), optimal study condition analysis model (YC11).
+- **duong**: RFID study sessions, button → red LED (YC1), LDR light alert (YC2), Telegram alert (YC6), weekly email backup (YC7).
+- **hao**: LCD1602 I2C Vietnamese text (YC3), account authentication with Supabase `bcrypt` (YC9), ESP32 SoftAP Wi-Fi provisioning server (YC12).
 
 ### Shared foundation
 
 | Part | Owner | Files |
 |---|---|---|
 | WiFi + MQTT connect, auto-reconnect | duong | `firmware/src/net/net.*` |
-| Broker connection | minh | `backend/src/mqtt/client.ts` |
-| MongoDB connection | minh | `backend/src/db/connect.ts` |
-| Server, Socket.IO, auth routes | hao | `backend/src/server.ts`, `backend/src/socket.ts`, `backend/src/auth/` |
-| Frontend layout | hao | `frontend/src/App.tsx`, `frontend/src/layout/`, `frontend/src/socket.ts` |
-| Pin map, topics, `main.cpp`, flow registry | everyone, via PR | `firmware/include/pins.h`, `firmware/include/topics.h`, `firmware/src/main.cpp`, `backend/src/topics.ts`, `backend/src/flows/index.ts` |
+| Supabase schema (`sensor_data`, `study_sessions`) | minh | `nodered/supabase_schema.sql` |
+| Pin map, topics, `main.cpp` | everyone, via PR | `firmware/include/pins.h`, `firmware/include/topics.h`, `firmware/src/main.cpp`, `docs/topics.md` |
 
 ## Pin map (ESP32 DevKit V1)
 
-This is a **proposed** map and can change. Source of truth: `firmware/include/pins.h`.
+Source of truth: `firmware/include/pins.h`.
 
 | Device | Pin(s) | Notes |
 |---|---|---|
@@ -81,8 +79,7 @@ This is a **proposed** map and can change. Source of truth: `firmware/include/pi
 
 ## Running locally
 
-Requirements: Docker, Node.js ≥ 20.6, PlatformIO (VS Code extension or CLI),
-a MongoDB Atlas cluster.
+Requirements: Docker, Node.js ≥ 20.6, Node-RED with `@flowfuse/node-red-dashboard`, PlatformIO (VS Code extension or CLI), and a Supabase project.
 
 ### 1. Broker
 
@@ -90,22 +87,20 @@ a MongoDB Atlas cluster.
 docker compose up -d          # Mosquitto on port 1883
 ```
 
-### 2. Backend
+### 2. Supabase
+
+Run [nodered/supabase_schema.sql](nodered/supabase_schema.sql) in your Supabase SQL Editor.
+
+### 3. Node-RED + Dashboard 2.0
 
 ```bash
-cd backend
-cp .env.example .env          # fill in MONGODB_URI etc.
-npm install
-npm run dev                   # http://localhost:3000
+npm install -g node-red
+# Inside ~/.node-red: npm install @flowfuse/node-red-dashboard
+# Set environment variables SUPABASE_URL and SUPABASE_KEY, then start Node-RED:
+node-red
 ```
 
-### 3. Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev                   # http://localhost:5173 (proxies /api and Socket.IO to :3000)
-```
+Import `nodered/flows_minh.json` in Node-RED (`http://localhost:1880`) and open Dashboard 2.0 at `http://localhost:1880/dashboard/minh`.
 
 ### 4. Firmware
 
@@ -124,13 +119,3 @@ To watch MQTT traffic while debugging:
 ```bash
 docker exec -it study-station-mosquitto mosquitto_sub -t 'study/#' -v
 ```
-
-## Pending dependencies
-
-Not added yet. Each needs team approval before it goes into `package.json` /
-`platformio.ini`. Candidates:
-
-- Firmware: MQTT client, DHT22 driver, MFRC522 driver, LCD1602 I2C driver, JSON library.
-- Backend: password hashing and session/token library (auth), SMTP library (email),
-  scheduler (weekly email). Telegram can use plain `fetch` with no library.
-- Frontend: chart library, router.

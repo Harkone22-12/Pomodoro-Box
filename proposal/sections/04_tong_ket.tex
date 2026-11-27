@@ -37,7 +37,7 @@ Bảng~\ref{tab:chi_tiet_barem} đối chiếu chi tiết các yêu cầu trong 
 \multirow{4}{=}{\textbf{Trần Nguyễn Tuấn Minh} \newline \footnotesize MSSV: 24127084} 
  & YCCB & Luồng cảm biến DHT22 $\rightarrow$ ESP32 $\rightarrow$ MQTT $\rightarrow$ Node-RED $\rightarrow$ Web UI + Tích hợp & 4.0 + 1.0 & 5.0 / 5.0 \\ \cline{2-5}
  & YC4 & Lưu dữ liệu cảm biến và nhật ký phiên theo chuỗi thời gian lên Supabase PostgreSQL & 1.0 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
- & YC5 & Truy vấn dữ liệu đám mây qua API Node-RED hiển thị trên Web UI dạng biểu đồ chuỗi thời gian 24h và thẻ thống kê & 0.5 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
+ & YC5 & Truy vấn dữ liệu đám mây trên Node-RED hiển thị lên Dashboard 2.0 dạng biểu đồ chuỗi thời gian 24h và thẻ thống kê & 0.5 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
  & YC11 & Tự xây dựng mô hình phân tích điều kiện học tập tối ưu trên Node-RED & 1.0 -- 2.0 & 2.0 / 2.0 \\ \hline
 
 \multirow{5}{=}{\textbf{Nguyễn Quốc Dương} \newline \footnotesize MSSV: 24127349}
@@ -48,9 +48,9 @@ Bảng~\ref{tab:chi_tiet_barem} đối chiếu chi tiết các yêu cầu trong 
  & YC7 & Dịch vụ gửi email định kỳ tổng kết tuần qua Gmail SMTP \textit{(bổ sung/dự phòng thay thế YC6, không cộng dồn)} & 1.0 & Dự phòng* \\ \hline
 \pagebreak
 \multirow{4}{=}{\textbf{La Anh Hào} \newline \footnotesize MSSV: 24127361}
- & YCCB & Luồng điều khiển: Web UI $\rightarrow$ API Node-RED $\rightarrow$ MQTT $\rightarrow$ ESP32 $\rightarrow$ Còi Active Buzzer 5V + Tích hợp & 4.0 + 1.0 & 5.0 / 5.0 \\ \cline{2-5}
- & YC3 & Luồng hiển thị thông tin: Web UI $\rightarrow$ API Node-RED $\rightarrow$ MQTT $\rightarrow$ ESP32 $\rightarrow$ Màn hình LCD 1602 (I2C) & 1.0 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
- & YC9 & Bảo mật tài khoản: Đăng ký/đăng nhập từ Web UI qua REST API Node-RED, lưu Supabase và băm mật khẩu \texttt{bcrypt} & 1.0 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
+ & YCCB & Luồng điều khiển: Dashboard 2.0 $\rightarrow$ Node-RED $\rightarrow$ MQTT $\rightarrow$ ESP32 $\rightarrow$ Còi Active Buzzer 5V + Tích hợp & 4.0 + 1.0 & 5.0 / 5.0 \\ \cline{2-5}
+ & YC3 & Luồng hiển thị thông tin: Dashboard 2.0 $\rightarrow$ Node-RED $\rightarrow$ MQTT $\rightarrow$ ESP32 $\rightarrow$ Màn hình LCD 1602 (I2C) & 1.0 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
+ & YC9 & Bảo mật tài khoản: Đăng ký/đăng nhập từ Dashboard 2.0 qua luồng Node-RED, lưu Supabase và băm mật khẩu \texttt{bcrypt} & 1.0 -- 1.5 & 1.5 / 1.5 \\ \cline{2-5}
  & YC12 & Tự xây dựng Web Server SoftAP cấu hình mạng Wi-Fi mới trực tiếp trên ESP32 & 1.0 -- 2.0 & 2.0 / 2.0 \\ \hline
 
 \multicolumn{4}{|l|}{\textbf{Điểm Báo cáo thuyết minh và đồ án cuối kỳ:}} & \textbf{1.0 / 1.0} \\ \hline
@@ -63,7 +63,7 @@ Bảng~\ref{tab:chi_tiet_barem} đối chiếu chi tiết các yêu cầu trong 
 
 Nhóm sinh viên thực hiện đề tài \textbf{Trạm học tập Pomodoro (Nhóm 07, Lớp 24C07)} cam kết:
 \begin{enumerate}[leftmargin=1.0cm, noitemsep, topsep=1pt]
-    \item Hoàn thiện sản phẩm phần cứng thực tế, lắp ráp hoàn chỉnh trong vỏ hộp in 3D và kết nối ổn định với hệ thống máy chủ Node-RED, Web UI tự xây dựng và Supabase Cloud theo đúng các mốc thời gian đã đăng ký.
+    \item Hoàn thiện sản phẩm phần cứng thực tế, lắp ráp hoàn chỉnh trong vỏ hộp in 3D và kết nối ổn định với hệ thống máy chủ Node-RED, giao diện Dashboard 2.0 và Supabase Cloud theo đúng các mốc thời gian đã đăng ký.
     \item Hiện thực hóa đầy đủ các chức năng đã trình bày trong thuyết minh; tuân thủ quy định điều chỉnh tối đa không quá 1 chức năng khi báo cáo cuối kỳ.
     \item Bản thuyết minh, thiết kế và mã nguồn do nhóm tự nghiên cứu, thực hiện và tuân thủ các quy định về liêm chính học thuật của nhà trường.
 \end{enumerate}

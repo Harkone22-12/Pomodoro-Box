@@ -21,12 +21,12 @@ git merge main                  # bring in teammates' merged work
   README flow table lists them too.
 - Replace `TODO(<handle>)` comments as you implement them, so leftover TODOs
   are easy to find with `git grep "TODO(minh)"`.
-- Shared files (`main.cpp`, `pins.h`, `topics.h`, `backend/src/topics.ts`,
+- Shared files (`main.cpp`, `pins.h`, `topics.h`,
   `docs/topics.md`, `README.md`, `docker-compose.yml`) change only
   through a pull request that every member has seen.
 - Need a change in someone else's file? Open an issue or ask them. Do not edit it yourself.
-- Never commit secrets: `firmware/include/secrets.h` and `backend/.env` are gitignored.
-- Adding a dependency (npm package or PlatformIO library) needs team agreement first.
+- Never commit secrets: `firmware/include/secrets.h` and Node-RED `SUPABASE_KEY` / `.env` are gitignored.
+- Adding a dependency (Node-RED palette package or PlatformIO library) needs team agreement first.
 
 ## Merging to main
 
